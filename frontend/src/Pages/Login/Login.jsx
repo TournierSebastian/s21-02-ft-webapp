@@ -25,8 +25,8 @@ const Login = () => {
     <div className='Contenido'>
       <nav><Navbar /></nav>
       <main>
-      <div className='flex container mt-10 mx-auto items-stretch w'>
-      <div className='w-1/2 p-6 flex flex-col justify-between min-h-full'>
+      <div className='flex sm:flex-row flex-col container mt-10 mx-auto items-stretch'>
+      <div className="w-full sm:w-1/2 p-6 flex flex-col justify-between min-h-full">
       <div>
               <h2 className="text-5xl font-bold  text-center ">Bienvenido a Wallex</h2>
               <p className='text-2xl'>¡Accede a tu cuenta y empieza a gestionar tu dinero de manera fácil y segura! </p>
@@ -38,7 +38,7 @@ const Login = () => {
             </div>
           </div>
 
-          <div className='w-1/2 px-13 py-6 bg-BlackBlue rounded-4xl min-h-full'>
+          <div className="w-full sm:w-1/2 px-13 py-6 bg-BlackBlue rounded-4xl min-h-full" >
           <div className=' flex justify-center items-center mb-3'>
               <img src={logo} className='w-25 mx-3'></img>
               <h3 className='text-LightGolden text-5xl'>Inicia Sesión</h3>
