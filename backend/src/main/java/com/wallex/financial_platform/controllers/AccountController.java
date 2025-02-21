@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wallex.financial_platform.entities.Account;
-import com.wallex.financial_platform.services.AccountService;
+import com.wallex.financial_platform.services.impl.AccountService;
 
 import lombok.AllArgsConstructor;
 

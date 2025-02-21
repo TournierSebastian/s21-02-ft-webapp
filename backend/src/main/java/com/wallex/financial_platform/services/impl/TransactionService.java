@@ -1,11 +1,11 @@
-package com.wallex.financial_platform.services;
+package com.wallex.financial_platform.services.impl;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.wallex.financial_platform.entities.Transaction;
-import com.wallex.financial_platform.repository.TransactionRepository;
+import com.wallex.financial_platform.repositories.TransactionRepository;
 
 import lombok.AllArgsConstructor;
 
