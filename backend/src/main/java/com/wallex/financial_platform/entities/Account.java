@@ -45,7 +45,7 @@ public class Account {
     private LocalDateTime updatedAt;
 
     @NotNull(message = "Requerid")
-    @JoinColumn(name = "id_user", nullable=false)
+    @JoinColumn(name = "user_id", nullable=false)
     @JsonBackReference
     @ManyToOne
     private User user;

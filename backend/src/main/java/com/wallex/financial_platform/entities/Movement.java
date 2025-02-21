@@ -1,19 +1,17 @@
 package com.wallex.financial_platform.entities;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
 @Entity
 @Table(name = "movements")
+@AllArgsConstructor @NoArgsConstructor
 public class Movement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +30,7 @@ public class Movement {
     private String description;
 
     @Column( nullable = false)
-    private Double amount;
+    private BigDecimal amount;
 
     @Column( nullable = false)
     private LocalDateTime movementDate;
