@@ -1,4 +1,4 @@
-package com.wallex.financial_platform.utils.enums;
+package com.wallex.financial_platform.entities.enums;
 
 public enum TransactionType {
     DEPOSIT, WITHDRAWAL, TRANSFER, INVESTMENT

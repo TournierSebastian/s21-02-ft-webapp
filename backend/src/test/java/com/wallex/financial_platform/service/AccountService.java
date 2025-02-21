@@ -1,6 +1,5 @@
 package com.wallex.financial_platform.service;
 
-import java.util.Currency;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -9,11 +8,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import com.wallex.financial_platform.entities.Account;
-import com.wallex.financial_platform.entities.Transaction;
 import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.services.impl.TransactionService;
 import com.wallex.financial_platform.services.impl.UserService;
-import com.wallex.financial_platform.utils.enums.TransactionType;
 
 public class AccountService {
     @Mock

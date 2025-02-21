@@ -10,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Data
+@Table(name = "accounts")
 @NoArgsConstructor @AllArgsConstructor
 public class User {
 
@@ -46,8 +47,8 @@ public class User {
     @Column(nullable = false)
     private Boolean active ;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Account> accountList;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Account> accounts;
 
     @PrePersist
     protected void onCreate() {

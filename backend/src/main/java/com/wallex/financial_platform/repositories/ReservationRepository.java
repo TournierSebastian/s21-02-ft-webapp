@@ -1,10 +1,10 @@
 package com.wallex.financial_platform.repositories;
 
+import com.wallex.financial_platform.entities.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import com.wallex.financial_platform.entities.Movement;
 
 @Repository
-public interface MovementRepository extends JpaRepository<Movement, Long> {
+public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
 }

@@ -1,66 +1,77 @@
 package com.wallex.financial_platform.entities;
 
-import java.util.Currency;
-import java.util.Date;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
-import com.wallex.financial_platform.utils.enums.AccountStatus;
-
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-
+@Data
 @Entity
-@Table(name="accounts")
-@Getter
-@Setter
-@Builder
-
+@NoArgsConstructor @AllArgsConstructor
+@Table(name = "accounts")
 public class Account {
+
     @Id
-    @Column(name="account_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(length = 11)
-    private Long cbu;
+    @Column(name = "account_id")
+    private Long accountId;
+
+    @Column(nullable = false, unique = true)
+    private String cbu;
+
+    @Column(nullable = false, unique = true)
     private String alias;
 
-    // @Column(name="available_balance")
-    // private Double balance;
-    
-    // @Column(name="reserved_balance")
-    // private Double reservedBalance;
+    @Column(nullable = false)
+    private BigDecimal availableBalance;
 
-    private Currency currency;
+    @Column(nullable = false)
+    private BigDecimal reservedBalance;
 
-    @CreationTimestamp
-    @Column(name="creation_date")
-    private Date creationDate;
+    @Column( nullable = false)
+    private String currency;
 
-    private AccountStatus status;
+    @Column( nullable = false)
+    private Boolean active;
 
-    @JoinColumn(name = "user_id")
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false, length = 20)
+    private LocalDateTime updatedAt;
+
+    @NotNull(message = "Requerid")
+    @JoinColumn(name = "id_user", nullable=false)
+    @JsonBackReference
     @ManyToOne
     private User user;
-    
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name="transactions", 
-        joinColumns = @JoinColumn(name="source_account_id"),
-        inverseJoinColumns = @JoinColumn(name="id")
-    )
-    private List<Transaction> sendedTransactions;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name="transactions", 
-        joinColumns = @JoinColumn(name="destination_account_id"),
-        inverseJoinColumns = @JoinColumn(name="id")
-    )
-    private List<Transaction> receivedTransactions;
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reservation> reservations;
+
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Movement> movements;
+
+    @OneToMany(mappedBy = "sourceAccount", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Transaction> sourceTransactions;
+
+    @OneToMany(mappedBy = "destinationAccount", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Transaction> destinationTransactions;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt =  LocalDateTime.now();
+        active = true;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 
 }
