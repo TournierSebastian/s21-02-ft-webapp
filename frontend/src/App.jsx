@@ -8,6 +8,7 @@ import NotFound from './Pages/NotFound/NotFound.jsx'
 import TuDinero from './Pages/TuDinero/TuDinero.jsx'
 import Actividad from './Pages/Actividad/Actividad.jsx'
 import './Styles/Global.css'
+import { AuthProvider } from './Context/AuthContext.jsx'
 
 const  router = createBrowserRouter([
   {
@@ -52,7 +53,9 @@ function App() {
 
   return (
     <div>
+      <AuthProvider>
       <RouterProvider router={router}></RouterProvider>
+      </AuthProvider>
     </div>
   );
 }
