@@ -12,9 +12,9 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class TransactionService {
-    private TransactionRepository transactionRepository;
+   // private TransactionRepository transactionRepository;
 
-    public List<Transaction> getAllTransactions(){
+    /*public List<Transaction> getAllTransactions(){
         return transactionRepository.findAll();
-    }
+    }*/
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.wallex.financial_platform.entities.Account;
 
-@Repository
-public interface AccountRepository extends JpaRepository<Account, Long> {
+
+public interface AccountRepository  {
     
 }

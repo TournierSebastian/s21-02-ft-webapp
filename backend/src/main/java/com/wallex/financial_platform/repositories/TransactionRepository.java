@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.wallex.financial_platform.entities.Transaction;
 
-@Repository
-public interface TransactionRepository extends JpaRepository<Transaction, Long> {
+
+public interface TransactionRepository {
 
 }

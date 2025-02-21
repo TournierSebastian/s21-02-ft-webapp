@@ -32,7 +32,7 @@ public class AccountService {
     @BeforeEach
     void setup(){
 
-        sampleUser1 = User.builder()
+       /* sampleUser1 = User.builder()
             .id(1L)
             .fullName("Gustavo Paz")
             .email("gusti.paz@gmail.com")
@@ -77,8 +77,8 @@ public class AccountService {
             .build();
         sampleUser1Accounts = List.of(accountPesos,accountDolar);
         sampleUser2Accounts = List.of(account3);
+    */
     }
-
 
     @Test
     void findAllAccountsByUser(){

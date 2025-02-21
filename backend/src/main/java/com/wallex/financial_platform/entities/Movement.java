@@ -21,7 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor*/
-@Entity
+
 public class Movement {
 /*    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="movement_id")

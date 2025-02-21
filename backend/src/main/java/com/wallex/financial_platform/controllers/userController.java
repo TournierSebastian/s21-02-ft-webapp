@@ -15,8 +15,8 @@ import com.wallex.financial_platform.entities.User;
 public class userController {
     private UserService userService;
     
-    @GetMapping
+  /*  @GetMapping
     public List<User> getAllUsers() {
         return userService.getAllUsers();
-    }
+    }*/
 }

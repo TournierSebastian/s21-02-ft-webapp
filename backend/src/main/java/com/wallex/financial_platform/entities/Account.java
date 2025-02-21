@@ -4,35 +4,24 @@ import java.util.Currency;
 import java.util.Date;
 import java.util.List;
 
+import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import com.wallex.financial_platform.utils.enums.AccountStatus;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-/*@Entity
+@Entity
 @Table(name="accounts")
 @Getter
 @Setter
-@Builder/*
- */
-@Entity
+@Builder
+
 public class Account {
-    /*@Id
+    @Id
     @Column(name="account_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -54,8 +43,8 @@ public class Account {
 
     private AccountStatus status;
 
-    @OneToMany
     @JoinColumn(name = "user_id")
+    @ManyToOne
     private User user;
     
     @OneToMany(fetch = FetchType.LAZY)
@@ -73,5 +62,5 @@ public class Account {
         inverseJoinColumns = @JoinColumn(name="id")
     )
     private List<Transaction> receivedTransactions;
-*/
+
 }

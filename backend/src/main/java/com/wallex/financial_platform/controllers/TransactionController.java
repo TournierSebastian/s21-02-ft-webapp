@@ -19,8 +19,8 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
     
-    @GetMapping
+    /*@GetMapping
     public List<Transaction> getAllTransactions() {
         return transactionService.getAllTransactions();
-    }
+    }*/
 }

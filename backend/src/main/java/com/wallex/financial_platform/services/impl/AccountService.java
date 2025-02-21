@@ -12,9 +12,9 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class AccountService {
-    private AccountRepository accountRepository;
+   // private AccountRepository accountRepository;
     
-    public List<Account> getAllWallets() {
+    /*public List<Account> getAllWallets() {
         return accountRepository.findAll();
-    }
+    }*/
 }

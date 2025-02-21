@@ -17,8 +17,8 @@ import lombok.AllArgsConstructor;
 public class AccountController {
     private AccountService walletService;
 
-    @GetMapping
+    /*@GetMapping
     public List<Account> getAllWallets() {
         return walletService.getAllWallets();
-    }
+    }*/
 }
