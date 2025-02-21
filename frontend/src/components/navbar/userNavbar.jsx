@@ -5,7 +5,7 @@ const Navbar = ()=>{
     
     
     return (
-        <nav className="bg-gray-800 w-full h-16 flex items-center justify-between px-4 fixed top-0">
+        <nav className="bg-gray-800 w-full h-16 flex items-center justify-between px-4 top-0">
           <div className="flex items-center space-x-4">
             <div className="relative">
               <button 

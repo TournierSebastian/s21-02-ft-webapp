@@ -1,0 +1,33 @@
+/* Paleta de colores */
+.PrimaryColor{
+    color: #102848;
+}
+.SecondaryColor{
+    color: #121212;
+}
+.ThirdColor{
+    color: #4A4A4A;
+}
+
+.bg-Primary{
+    background-color: #102848;
+}
+
+.bg-Secondary{
+    background-color: #F5E7BE;
+}
+
+.bg-Third{
+    background-color: #CCCCCC;
+}
+
+/* Centrado para el navbar */
+main {
+    flex: 1;
+}
+
+.Contenido {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
