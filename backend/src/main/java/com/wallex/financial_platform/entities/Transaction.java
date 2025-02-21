@@ -20,13 +20,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 
-@Entity
+/*@Entity
 @Table(name="transactions")
 @Getter
 @Setter
-@Builder
+@Builder*/
 public class Transaction {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+   /* @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="transaction_id")
     private Long id;
 
@@ -45,5 +45,5 @@ public class Transaction {
     @CreationTimestamp
     @Column(name="transaction_date")
     private Date transactionDate;
-    
+    */
 }

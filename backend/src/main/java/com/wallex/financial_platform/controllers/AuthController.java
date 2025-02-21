@@ -2,6 +2,7 @@ package com.wallex.financial_platform.controllers;
 
 import com.wallex.financial_platform.dtos.requests.LoginRequestDTO;
 import com.wallex.financial_platform.dtos.requests.RegisterUserRequestDTO;
+import com.wallex.financial_platform.dtos.responses.UserResponseDTO;
 import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.services.impl.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +19,8 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody RegisterUserRequestDTO registerUserRequestDTO) {
-        User user = authService.register(registerUserRequestDTO);
+    public ResponseEntity<UserResponseDTO> register(@RequestBody RegisterUserRequestDTO registerUserRequestDTO) {
+        UserResponseDTO user = authService.register(registerUserRequestDTO);
         return ResponseEntity.ok(user);
     }
 

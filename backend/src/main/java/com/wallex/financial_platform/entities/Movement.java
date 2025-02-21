@@ -16,13 +16,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
+/*
 @Table(name="movements")
 @Getter
 @Setter
-@AllArgsConstructor
+@AllArgsConstructor*/
+@Entity
 public class Movement {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+/*    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="movement_id")
     private Long id;
 
@@ -36,5 +37,5 @@ public class Movement {
     @CreationTimestamp
     @Column(name="movement_date")
     private Date movementDate;
-    
+    */
 }

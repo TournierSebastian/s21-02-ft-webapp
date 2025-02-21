@@ -9,10 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.Map;
 
-public interface IAuthService extends UserDetailsService {
-    User register(RegisterUserRequestDTO registerUserRequestDTO);
+public interface IAuthService {
+    UserResponseDTO register(RegisterUserRequestDTO registerUserRequestDTO);
     String login(LoginRequestDTO loginRequestDTO);
-
-    @Override
-    UserDetails loadUserByUsername(String username);
 }

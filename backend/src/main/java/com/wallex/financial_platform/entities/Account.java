@@ -24,13 +24,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
+/*@Entity
 @Table(name="accounts")
 @Getter
 @Setter
-@Builder
+@Builder/*
+ */
+@Entity
 public class Account {
-    @Id 
+    /*@Id
     @Column(name="account_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -71,5 +73,5 @@ public class Account {
         inverseJoinColumns = @JoinColumn(name="id")
     )
     private List<Transaction> receivedTransactions;
-
+*/
 }
