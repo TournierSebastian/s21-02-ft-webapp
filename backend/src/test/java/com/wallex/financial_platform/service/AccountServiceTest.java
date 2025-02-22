@@ -1,10 +1,13 @@
 package com.wallex.financial_platform.service;
 
+import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import com.wallex.financial_platform.entities.Transaction;
+import com.wallex.financial_platform.entities.enums.TransactionType;
 import com.wallex.financial_platform.utils.SampleDataTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,12 +50,25 @@ public class AccountServiceTest {
 
     @Test
     void findAllAccountsByUser(){
-         given(accountRepository.findById(any(Long.class)))
-             .willReturn(Optional.ofNullable(sampleUserAccounts.getFirst()));
+        given(accountRepository.findById(any(Long.class)))
+            .willReturn(Optional.ofNullable(sampleUserAccounts.getFirst()));
 
-         Account account = accountService.getAccountById(1L);
+        Account account = accountService.getAccountById(1L);
 
-         assertThat(account).isEqualTo(sampleUserAccounts.getFirst());
+        BigDecimal totalRecibidos = account.getDestinationTransactions().stream()
+                //.filter(transaction -> transaction.getType().equals(TransactionType.DEPOSIT))
+                .map(Transaction::getAmount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal totalEnviados = account.getSourceTransactions().stream()
+                //.filter(transaction -> transaction.getType().equals(TransactionType.WITHDRAWAL))
+                .map(Transaction::getAmount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        account.setAvailableBalance(totalRecibidos.subtract(totalEnviados));
+
+        System.out.println(account.getAvailableBalance());
+
+        assertThat(account).isEqualTo(sampleUserAccounts.getFirst());
     }
 
 }

@@ -13,10 +13,10 @@ import com.wallex.financial_platform.entities.User;
 @RequestMapping("/user")
 @AllArgsConstructor
 public class userController {
-    private UserService userService;
-    
-  @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
-    }
+//    private UserService userService;
+//
+//    @GetMapping
+//    public List<User> getAllUsers() {
+//        return userService.getAllUsers();
+//    }
 }

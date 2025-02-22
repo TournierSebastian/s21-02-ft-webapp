@@ -15,10 +15,10 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/accounts")
 @AllArgsConstructor
 public class AccountController {
-    private AccountService accountService;
-
-    /*@GetMapping
-    public List<Account> getAllWallets() {
-        return walletService.getAllWallets();
-    }*/
+//    private AccountService accountService;
+//
+//    @GetMapping
+//    public List<Account> getAccounts() {
+//        return accountService.getAllAccounts();
+//    }
 }

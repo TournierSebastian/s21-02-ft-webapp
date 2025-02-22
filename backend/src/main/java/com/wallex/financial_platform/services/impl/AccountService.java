@@ -14,7 +14,7 @@ import lombok.AllArgsConstructor;
 public class AccountService {
     private AccountRepository accountRepository;
     
-    public List<Account> getAllWallets() {
+    public List<Account> getAllAccounts() {
         return accountRepository.findAll();
     }
 

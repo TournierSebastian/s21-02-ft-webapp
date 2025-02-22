@@ -1,13 +1,9 @@
 package com.wallex.financial_platform.utils;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Currency;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import com.wallex.financial_platform.entities.enums.TransactionStatus;
 import lombok.Getter;
@@ -15,10 +11,10 @@ import lombok.Getter;
 import com.wallex.financial_platform.entities.Account;
 import com.wallex.financial_platform.entities.Transaction;
 import com.wallex.financial_platform.entities.User;
-import com.wallex.financial_platform.entities.enums.AccountStatus;
 import com.wallex.financial_platform.entities.enums.TransactionType;
 
 import net.datafaker.Faker;
+
 
 @Getter
 public class SampleDataTest {
@@ -95,7 +91,11 @@ public class SampleDataTest {
                 .amount(BigDecimal.valueOf(faker.number().randomDouble(2, 10000, 999999)))
                 .type(TransactionType.TRANSFER)
                 .reason("Buy appliance: "+faker.appliance().equipment())
-                .transactionDateTime(LocalDateTime.from(faker.timeAndDate().between(Instant.parse ("2024-06-01"), Instant.parse("2025-02-28"))))
+                .transactionDateTime(LocalDateTime.ofInstant(
+                                faker.timeAndDate().between(
+                                        Instant.parse("2024-06-01T00:00:00Z"),
+                                        Instant.parse("2025-02-28T00:00:00Z")
+                                ), TimeZone.getDefault().toZoneId()))
                 .status(TransactionStatus.values()[(int) (Math.random() * TransactionStatus.values().length)])
                 .build();
             transactionsList.add(transaction);
