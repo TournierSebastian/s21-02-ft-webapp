@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.wallex.financial_platform.entities.enums.TransactionStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,10 +25,12 @@ public class Transaction {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonBackReference
     private Account sourceAccount;
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonBackReference
     private Account destinationAccount;
 
     @Column(nullable = false)

@@ -6,6 +6,7 @@ import java.util.Currency;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.wallex.financial_platform.entities.enums.CurrencyType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -50,19 +51,23 @@ public class Account {
 
     @NotNull(message = "Requerid")
     @JoinColumn(name = "user_id", nullable=false)
-    @JsonBackReference
     @ManyToOne
+    @JsonBackReference
     private User user;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservations;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Movement> movements;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "sourceAccount", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Transaction> sourceTransactions;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "destinationAccount", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Transaction> destinationTransactions;
 
