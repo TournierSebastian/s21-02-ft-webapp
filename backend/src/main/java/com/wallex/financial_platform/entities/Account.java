@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.wallex.financial_platform.entities.enums.CurrencyType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -32,8 +33,9 @@ public class Account {
     @Column(nullable = false)
     private BigDecimal reservedBalance;
 
+    @Enumerated(EnumType.STRING)
     @Column( nullable = false)
-    private String currency;
+    private CurrencyType currency;
 
     @Column( nullable = false)
     private Boolean active;
