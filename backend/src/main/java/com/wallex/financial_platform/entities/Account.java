@@ -60,10 +60,10 @@ public class Account {
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Movement> movements;
 
-    @OneToMany(mappedBy = "sourceAccount", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "sourceAccount", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Transaction> sourceTransactions;
 
-    @OneToMany(mappedBy = "destinationAccount", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "destinationAccount", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Transaction> destinationTransactions;
 
     @PrePersist
