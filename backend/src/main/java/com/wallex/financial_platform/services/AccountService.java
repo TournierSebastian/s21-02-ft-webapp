@@ -17,4 +17,8 @@ public class AccountService {
     public List<Account> getAllWallets() {
         return accountRepository.findAll();
     }
+
+    public Account getAccountById(Long id) {
+        return accountRepository.findById(id).orElse(null);
+    }
 }

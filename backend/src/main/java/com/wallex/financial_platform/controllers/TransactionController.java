@@ -16,7 +16,6 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/transactions")
 @AllArgsConstructor
 public class TransactionController {
-    @Autowired
     private TransactionService transactionService;
     
     @GetMapping
