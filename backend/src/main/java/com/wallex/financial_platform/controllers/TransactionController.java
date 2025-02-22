@@ -16,11 +16,10 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/transactions")
 @AllArgsConstructor
 public class TransactionController {
-    @Autowired
-    private TransactionService transactionService;
-    
-    /*@GetMapping
-    public List<Transaction> getAllTransactions() {
-        return transactionService.getAllTransactions();
-    }*/
+//    private TransactionService transactionService;
+//
+//    @GetMapping
+//    public List<Transaction> getAllTransactions() {
+//        return transactionService.getAllTransactions();
+//    }
 }
