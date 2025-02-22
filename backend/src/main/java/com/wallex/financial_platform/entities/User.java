@@ -1,4 +1,5 @@
 package com.wallex.financial_platform.entities;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.validation.constraints.*;
 
 import jakarta.persistence.*;
@@ -48,12 +49,15 @@ public class User {
     private Boolean active ;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Account> accounts;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Notification> notifications;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Card> cards;
 
     @PrePersist

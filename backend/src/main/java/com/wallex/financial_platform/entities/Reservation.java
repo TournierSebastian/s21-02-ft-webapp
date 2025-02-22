@@ -1,5 +1,6 @@
 package com.wallex.financial_platform.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.wallex.financial_platform.entities.enums.ReservationStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,7 @@ public class Reservation {
 
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)
+    @JsonBackReference
     private Account account;
 
     @Column( nullable = false)

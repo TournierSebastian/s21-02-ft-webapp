@@ -1,50 +1,45 @@
 package com.wallex.financial_platform.configs.auth;
 
-
 import io.jsonwebtoken.*;
-import org.springframework.beans.factory.annotation.Value;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
+import java.security.Key;
 import java.util.Date;
-import java.util.function.Function;
 
 @Component
 public class JwtTokenProvider {
+    private final String SECRET_KEY = "SECRETOMUYSEGURODEMASDE256BITS...........";
 
-    @Value("${jwt.secret}")  // Se obtiene de application.properties
-    private String secretKey;
-
-    @Value("${jwt.expiration}")
-    private long expirationTime;
-
-    // ✅ Genera un token JWT con los datos del usuario
     public String generateToken(String email) {
         return Jwts.builder()
-                .setSubject(email) // Se almacena el email en el token
+                .setSubject(email)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expirationTime)) // Expira en X tiempo
-                .signWith(SignatureAlgorithm.HS512, secretKey) // Firma el token con la clave secreta
+                .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 24 horas
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    // ✅ Obtiene el email del usuario desde el token
-    public String getEmailFromToken(String token) {
-        return getClaimFromToken(token, Claims::getSubject);
+    private Key getSigningKey() {
+        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
 
-    // ✅ Valida si el token es correcto
+    public String getEmailFromToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
+
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            Jwts.parserBuilder().setSigningKey(getSigningKey()).build().parseClaimsJws(token);
             return true;
-        } catch (ExpiredJwtException | MalformedJwtException | UnsupportedJwtException | SignatureException e) {
-            return false;
+        } catch (SecurityException | MalformedJwtException | ExpiredJwtException | UnsupportedJwtException | IllegalArgumentException e) {
+            System.out.println("Invalid JWT token: " + e.getMessage());
         }
-    }
-
-    // ✅ Extrae un claim específico del token
-    private <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
-        Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
-        return claimsResolver.apply(claims);
+        return false;
     }
 }
