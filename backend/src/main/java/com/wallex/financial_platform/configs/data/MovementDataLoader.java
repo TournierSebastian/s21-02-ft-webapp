@@ -22,53 +22,23 @@ public class MovementDataLoader {
     private final TransactionRepository transactionRepository;
 
     public void load() {
-        // Obtener algunas cuentas para asociar con los movimientos
-        Account account1 = accountRepository.findById(1L).orElseThrow();
-        Account account2 = accountRepository.findById(2L).orElseThrow();
+        // Obtener las transacciones registradas
+        List<Transaction> transactions = transactionRepository.findAll();
 
-        // Obtener algunas transacciones para asociar con los movimientos
-        Transaction transaction1 = transactionRepository.findById(1L).orElseThrow();
-        Transaction transaction2 = transactionRepository.findById(2L).orElseThrow();
-
-        // Crear los movimientos para la cuenta 1 y la transacción 1
-        Movement movement1 = new Movement(
-                null, // ID se genera automáticamente
-                account1, // Relación con la cuenta 1
-                transaction1, // Relación con la transacción 1
-                "Depósito inicial", // Descripción del movimiento
-                new BigDecimal("1000.00"), // Monto del movimiento
-                LocalDateTime.now() // Fecha del movimiento
-        );
-
-        Movement movement2 = new Movement(
-                null,
-                account1,
-                transaction2,
-                "Transferencia recibida",
-                new BigDecimal("500.00"),
-                LocalDateTime.now()
-        );
-
-        // Crear los movimientos para la cuenta 2 y la transacción 1
-        Movement movement3 = new Movement(
-                null,
-                account2,
-                transaction1,
-                "Pago de factura",
-                new BigDecimal("200.00"),
-                LocalDateTime.now()
-        );
-
-        Movement movement4 = new Movement(
-                null,
-                account2,
-                transaction2,
-                "Retiro de efectivo",
-                new BigDecimal("300.00"),
-                LocalDateTime.now()
-        );
+        // Crear movimientos basados en las transacciones
+        List<Movement> movements = transactions.stream().map(transaction -> {
+            Account account = transaction.getSourceAccount();
+            return new Movement(
+                    null,
+                    account,
+                    transaction,
+                    "Movimiento generado para la transacción " + transaction.getTransactionId(),
+                    transaction.getAmount(),
+                    LocalDateTime.now()
+            );
+        }).toList();
 
         // Guardar los movimientos en el repositorio
-        movementRepository.saveAll(List.of(movement1, movement2, movement3, movement4)); // Guardar los movimientos
+        movementRepository.saveAll(movements);
     }
 }
