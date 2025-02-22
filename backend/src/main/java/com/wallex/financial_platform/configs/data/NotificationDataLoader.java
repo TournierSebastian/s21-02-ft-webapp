@@ -23,7 +23,7 @@ public class NotificationDataLoader {
         // Obtener algunos usuarios para asociar con las notificaciones
         User user1 = userRepository.findById(1L).orElseThrow();
         User user2 = userRepository.findById(2L).orElseThrow();
-        User user3 = userRepository.findById(3L).orElseThrow();
+        User user3 = userRepository.findById(4L).orElseThrow();
 
         // Crear las notificaciones para el usuario 1
         Notification notification1 = new Notification(

@@ -22,54 +22,80 @@ public class CardDataLoader {
         // Obtener algunos usuarios para asociar con las tarjetas
         User user1 = userRepository.findById(1L).orElseThrow();
         User user2 = userRepository.findById(2L).orElseThrow();
+        User user3 = userRepository.findById(3L).orElseThrow();
+        User user4 = userRepository.findById(4L).orElseThrow();
+        User user5 = userRepository.findById(5L).orElseThrow();
 
         // Crear las tarjetas para el usuario 1
         Card card1 = new Card(
                 null,  // ID se genera automáticamente
                 user1, // Relación con el usuario 1
-                "encryptedNumber1234", // Número de tarjeta encriptado (ejemplo)
-                CardType.CREDIT, // Tipo de tarjeta
+                "1234567890123456", // Número de tarjeta real (ejemplo)
+                CardType.DEBIT, // Tipo de tarjeta
                 "Banco Nación", // Banco emisor
                 "12/25", // Fecha de vencimiento
-                "encryptedCvv123", // CVV encriptado (ejemplo)
+                "123", // CVV real (ejemplo)
                 LocalDateTime.now() // Fecha de registro
         );
 
         Card card2 = new Card(
                 null,
-                user1,
-                "encryptedNumber5678",
+                user2,
+                "9876543210987654",
                 CardType.DEBIT,
                 "Banco Galicia",
                 "08/24",
-                "encryptedCvv567",
+                "567",
                 LocalDateTime.now()
         );
 
         // Crear las tarjetas para el usuario 2
         Card card3 = new Card(
                 null,
-                user2,
-                "encryptedNumber9876",
-                CardType.CREDIT,
+                user3,
+                "8765432109876543",
+                CardType.DEBIT,
                 "Banco Supervielle",
                 "05/23",
-                "encryptedCvv987",
+                "987",
                 LocalDateTime.now()
         );
 
         Card card4 = new Card(
                 null,
-                user2,
-                "encryptedNumber5432",
+                user4,
+                "5432109876543210",
                 CardType.DEBIT,
                 "Banco Ciudad",
                 "02/27",
-                "encryptedCvv543",
+                "543",
+                LocalDateTime.now()
+        );
+
+        // Crear tarjetas adicionales
+        Card card5 = new Card(
+                null,
+                user5,
+                "1122334455667788",
+                CardType.DEBIT,
+                "Banco Santander",
+                "11/26",
+                "111",
+                LocalDateTime.now()
+        );
+
+        Card card6 = new Card(
+                null,
+                user5,
+                "9988776655443322",
+                CardType.CREDIT,
+                "Banco Macro",
+                "03/28",
+                "222",
                 LocalDateTime.now()
         );
 
         // Guardar las tarjetas en el repositorio
-        cardRepository.saveAll(List.of(card1, card2, card3, card4)); // Guardar las tarjetas
+        cardRepository.saveAll(List.of(card1, card2, card3, card4, card5)); // Guardar las tarjetas
     }
 }

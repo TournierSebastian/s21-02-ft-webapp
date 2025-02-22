@@ -42,6 +42,7 @@ public class Transaction {
     @Column( nullable = false)
     private LocalDateTime transactionDateTime;
 
+    @Enumerated(EnumType.STRING)
     @Column( nullable = false)
     private TransactionStatus status;
 
