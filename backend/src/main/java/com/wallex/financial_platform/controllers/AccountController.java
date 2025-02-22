@@ -12,13 +12,13 @@ import com.wallex.financial_platform.services.impl.AccountService;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/wallets")
+@RequestMapping("/accounts")
 @AllArgsConstructor
 public class AccountController {
-    private AccountService walletService;
-
-    /*@GetMapping
-    public List<Account> getAllWallets() {
-        return walletService.getAllWallets();
-    }*/
+//    private AccountService accountService;
+//
+//    @GetMapping
+//    public List<Account> getAccounts() {
+//        return accountService.getAllAccounts();
+//    }
 }

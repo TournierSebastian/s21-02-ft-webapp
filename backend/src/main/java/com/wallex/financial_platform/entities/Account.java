@@ -2,6 +2,7 @@ package com.wallex.financial_platform.entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -12,6 +13,7 @@ import lombok.*;
 
 @Data
 @Entity
+@Builder
 @NoArgsConstructor @AllArgsConstructor
 @Table(name = "accounts")
 public class Account {

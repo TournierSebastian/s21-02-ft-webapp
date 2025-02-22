@@ -2,15 +2,14 @@ package com.wallex.financial_platform.entities;
 import jakarta.validation.constraints.*;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Data
+@Builder
 @Table(name = "users")
 @NoArgsConstructor @AllArgsConstructor
 public class User {
