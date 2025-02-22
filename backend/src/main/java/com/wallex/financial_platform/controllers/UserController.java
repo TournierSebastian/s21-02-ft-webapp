@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @GetMapping("/by-email")
-    public ResponseEntity<UserResponseDTO> getUserByEmail(@RequestParam EmailRequestDTO emailRequestDTO) {
+    public ResponseEntity<UserResponseDTO> getUserByEmail(@RequestBody EmailRequestDTO emailRequestDTO) {
         UserResponseDTO response = userService.getUserByEmail(emailRequestDTO.getEmail());
         return ResponseEntity.ok(response);
     }
