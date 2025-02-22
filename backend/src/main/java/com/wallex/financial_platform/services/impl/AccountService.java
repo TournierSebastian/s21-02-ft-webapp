@@ -1,6 +1,7 @@
 package com.wallex.financial_platform.services.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
@@ -21,4 +22,9 @@ public class AccountService {
     public Account getAccountById(Long id) {
         return accountRepository.findById(id).orElse(null);
     }
+
+//    public Set<Account> getAccountsByUserId(Long userId) {
+//            accountRepository.findByUserId(userId)
+//                .stream().sorted();
+//    }
 }

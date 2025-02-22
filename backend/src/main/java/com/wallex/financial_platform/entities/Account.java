@@ -28,13 +28,13 @@ public class Account {
     @Column(nullable = false, unique = true)
     private String alias;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private BigDecimal availableBalance;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private BigDecimal reservedBalance;
 
-    @Column( nullable = false)
+    @Column(nullable = false)
     private String currency;
 
     @Column( nullable = false)
@@ -75,5 +75,10 @@ public class Account {
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
+
+//    @PostLoad
+//    protected void onLoad() {
+//        availableBalance = availableBalance.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+//    }
 
 }

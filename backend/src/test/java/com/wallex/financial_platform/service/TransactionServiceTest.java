@@ -5,7 +5,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
-import java.util.Currency;
 import java.util.List;
 
 import com.wallex.financial_platform.utils.SampleDataTest;
@@ -22,7 +21,6 @@ import com.wallex.financial_platform.entities.Transaction;
 import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.repositories.TransactionRepository;
 import com.wallex.financial_platform.services.impl.TransactionService;
-import com.wallex.financial_platform.entities.enums.TransactionType;
 
 @ExtendWith(MockitoExtension.class)
 public class TransactionServiceTest {

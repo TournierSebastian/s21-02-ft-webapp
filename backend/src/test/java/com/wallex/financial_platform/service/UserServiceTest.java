@@ -4,7 +4,6 @@ import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.repositories.UserRepository;
 import com.wallex.financial_platform.services.impl.UserService;
 import com.wallex.financial_platform.utils.SampleDataTest;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

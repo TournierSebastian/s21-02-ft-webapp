@@ -36,9 +36,15 @@ public class SampleDataTest {
                 .id((long) (i + 1))
                 .fullName(firstName+" "+lastName)
                 .dni(faker.numerify("########"))
-                .email(firstName+"."+lastName+"@"+faker.company().name().toLowerCase().replaceAll("\\s+","")+".com")
-                .phoneNumber(faker.phoneNumber().phoneNumberInternational())
-                .password(faker.examplify("abc123"))
+                .email(firstName+"."+lastName+"@"+faker.app().name().replaceAll("\\s+","").toLowerCase()+".com")
+                .phoneNumber(faker.numerify("+54##########"))
+                .password(faker.examplify("qwertyui"))
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .accounts(new ArrayList<>())
+                .notifications(new ArrayList<>())
+                .cards(new ArrayList<>())
+                .active(true)
                 .build();
             userList.add(user);
             String accnumber = "000000000000".substring(0, 12-String.valueOf(accountList.size()+1).length())+(accountList.size()+1);
@@ -48,6 +54,8 @@ public class SampleDataTest {
                 .alias(faker.animal().name()+"."+faker.construction().materials()+"."+faker.commerce().material())
                 .currency("ARS")
                 .user(user)
+                .availableBalance(BigDecimal.valueOf(0))
+                .reservedBalance(BigDecimal.valueOf(0))
                 .movements(new ArrayList<>())
                 .reservations(new ArrayList<>())
                 .sourceTransactions(new ArrayList<>())
@@ -61,10 +69,13 @@ public class SampleDataTest {
                 .alias(faker.animal().name()+"."+faker.construction().materials()+"."+faker.commerce().material())
                 .currency("ARS")
                 .user(user)
+                .availableBalance(BigDecimal.valueOf(0))
+                .reservedBalance(BigDecimal.valueOf(0))
                 .movements(new ArrayList<>())
                 .reservations(new ArrayList<>())
                 .sourceTransactions(new ArrayList<>())
                 .destinationTransactions(new ArrayList<>())
+                .active(true)
                 .build();
             accountList.add(account2);
             user.setAccounts(List.of(account1,account2));
@@ -79,10 +90,10 @@ public class SampleDataTest {
                 .toList();
                 destAccount = ArsAccounts.get((int) (Math.random() * ArsAccounts.size()));
             } else {
-                List<Account> ArsAccounts = accountList.stream()
+                List<Account> UsdAccounts = accountList.stream()
                 .filter(acc -> Objects.equals(acc.getCurrency(), "USD") && !Objects.equals(acc.getAccountId(), sourceAccount.getAccountId()))
                 .toList();
-                destAccount = ArsAccounts.get((int) (Math.random() * ArsAccounts.size()));
+                destAccount = UsdAccounts.get((int) (Math.random() * UsdAccounts.size()));
             }
             Transaction transaction = Transaction.builder()
                 .transactionId(Long.valueOf(transactionsList.size()+1))
@@ -106,6 +117,7 @@ public class SampleDataTest {
             List<Transaction> destAccountReceivedtransacions = destAccount.getDestinationTransactions();
             destAccountReceivedtransacions.add(transaction);
             destAccount.setDestinationTransactions(destAccountReceivedtransacions);
+
         }
     }
 }
