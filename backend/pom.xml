@@ -104,6 +104,12 @@
 			<version>8.0.32</version> <!-- Asegúrate de especificar la versión -->
 			<scope>runtime</scope>
 		</dependency>
+		<dependency>
+			<groupId>net.datafaker</groupId>
+			<artifactId>datafaker</artifactId>
+			<version>2.4.2</version>
+			<scope>test</scope>
+		</dependency>
 
 	</dependencies>
 	<build>
