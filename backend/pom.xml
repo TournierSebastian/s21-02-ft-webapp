@@ -99,17 +99,10 @@
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
 		<dependency>
-<<<<<<< HEAD
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.32</version> <!-- Asegúrate de especificar la versión -->
 			<scope>runtime</scope>
-=======
-			<groupId>net.datafaker</groupId>
-			<artifactId>datafaker</artifactId>
-			<version>2.4.2</version>
-			<scope>test</scope>
->>>>>>> 8b5f6d8a49d1f5c72c8731bcefe3ad6ccffd1349
 		</dependency>
 
 	</dependencies>
