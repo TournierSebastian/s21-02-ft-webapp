@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wallex.financial_platform.entities.Transaction;
-import com.wallex.financial_platform.services.TransactionService;
+import com.wallex.financial_platform.services.impl.TransactionService;
 
 import lombok.AllArgsConstructor;
 
@@ -18,8 +18,8 @@ import lombok.AllArgsConstructor;
 public class TransactionController {
     private TransactionService transactionService;
     
-    @GetMapping
+    /*@GetMapping
     public List<Transaction> getAllTransactions() {
         return transactionService.getAllTransactions();
-    }
+    }*/
 }

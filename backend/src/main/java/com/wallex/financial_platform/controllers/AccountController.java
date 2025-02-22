@@ -7,18 +7,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wallex.financial_platform.entities.Account;
-import com.wallex.financial_platform.services.AccountService;
+import com.wallex.financial_platform.services.impl.AccountService;
 
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/wallets")
+@RequestMapping("/accounts")
 @AllArgsConstructor
 public class AccountController {
-    private AccountService walletService;
+    private AccountService accountService;
 
-    @GetMapping
+    /*@GetMapping
     public List<Account> getAllWallets() {
         return walletService.getAllWallets();
-    }
+    }*/
 }

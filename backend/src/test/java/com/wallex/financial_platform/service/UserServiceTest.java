@@ -1,8 +1,8 @@
 package com.wallex.financial_platform.service;
 
 import com.wallex.financial_platform.entities.User;
-import com.wallex.financial_platform.repository.UserRepository;
-import com.wallex.financial_platform.services.UserService;
+import com.wallex.financial_platform.repositories.UserRepository;
+import com.wallex.financial_platform.services.impl.UserService;
 import com.wallex.financial_platform.utils.SampleDataTest;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

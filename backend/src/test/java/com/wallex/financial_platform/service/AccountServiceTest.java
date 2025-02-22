@@ -2,6 +2,7 @@ package com.wallex.financial_platform.service;
 
 import java.util.Currency;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import com.wallex.financial_platform.utils.SampleDataTest;
@@ -17,8 +18,8 @@ import static org.mockito.Mockito.*;
 
 import com.wallex.financial_platform.entities.Account;
 import com.wallex.financial_platform.entities.User;
-import com.wallex.financial_platform.repository.AccountRepository;
-import com.wallex.financial_platform.services.AccountService;
+import com.wallex.financial_platform.repositories.AccountRepository;
+import com.wallex.financial_platform.services.impl.AccountService;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
@@ -39,7 +40,7 @@ public class AccountServiceTest {
     void setup(){
         sampleUser = sampleDataTest.getUserList().get(1);
         sampleUserAccounts = sampleDataTest.getAccountList().stream()
-                .filter(account -> account.getUser().getId() === sampleUser.getId())
+                .filter(account -> Objects.equals(account.getUser().getId(), sampleUser.getId()))
                 .toList();
     }
 

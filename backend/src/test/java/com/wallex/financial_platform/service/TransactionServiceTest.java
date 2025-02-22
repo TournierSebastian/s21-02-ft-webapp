@@ -20,9 +20,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.wallex.financial_platform.entities.Account;
 import com.wallex.financial_platform.entities.Transaction;
 import com.wallex.financial_platform.entities.User;
-import com.wallex.financial_platform.repository.TransactionRepository;
-import com.wallex.financial_platform.services.TransactionService;
-import com.wallex.financial_platform.utils.enums.TransactionType;
+import com.wallex.financial_platform.repositories.TransactionRepository;
+import com.wallex.financial_platform.services.impl.TransactionService;
+import com.wallex.financial_platform.entities.enums.TransactionType;
 
 @ExtendWith(MockitoExtension.class)
 public class TransactionServiceTest {
