@@ -99,11 +99,18 @@
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.32</version> <!-- Asegúrate de especificar la versión -->
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
 			<groupId>net.datafaker</groupId>
 			<artifactId>datafaker</artifactId>
 			<version>2.4.2</version>
 			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>
@@ -142,14 +149,14 @@
 					</execution>
 				</executions>
 			</plugin>
-<!--			<plugin>-->
-<!--				<groupId>org.apache.maven.plugins</groupId>-->
-<!--				<artifactId>maven-surefire-plugin</artifactId>-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
 <!--				<configuration>-->
 <!--					&lt;!&ndash;suppress UnresolvedMavenProperty &ndash;&gt;-->
 <!--					<argLine>@{argLine} -javaagent:${org.mockito:mockito-core:jar}</argLine>-->
 <!--				</configuration>-->
-<!--			</plugin>-->
+			</plugin>
 		</plugins>
 	</build>
 

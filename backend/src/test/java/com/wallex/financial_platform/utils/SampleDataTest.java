@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import com.wallex.financial_platform.entities.enums.CurrencyType;
 import com.wallex.financial_platform.entities.enums.TransactionStatus;
 import lombok.Getter;
 
@@ -52,7 +53,7 @@ public class SampleDataTest {
                 .accountId(Long.valueOf(accountList.size()+1))
                 .cbu(faker.numerify("000"+"0351"+"Ø"+accnumber+"Ø"))
                 .alias(faker.animal().name()+"."+faker.construction().materials()+"."+faker.commerce().material())
-                .currency("ARS")
+                .currency(CurrencyType.ARS)
                 .user(user)
                 .availableBalance(BigDecimal.valueOf(0))
                 .reservedBalance(BigDecimal.valueOf(0))
@@ -67,7 +68,7 @@ public class SampleDataTest {
                 .accountId(Long.valueOf(accountList.size()+1))
                 .cbu(faker.numerify("000"+"0351"+"Ø"+accnumber2+"Ø"))
                 .alias(faker.animal().name()+"."+faker.construction().materials()+"."+faker.commerce().material())
-                .currency("ARS")
+                .currency(CurrencyType.USD)
                 .user(user)
                 .availableBalance(BigDecimal.valueOf(0))
                 .reservedBalance(BigDecimal.valueOf(0))
@@ -84,14 +85,14 @@ public class SampleDataTest {
             Account sourceAccount = accountList.get((int) (Math.random() * accountList.size()));
             Account destAccount = null;
 
-            if (sourceAccount.getCurrency() == "ARS") {
+            if (sourceAccount.getCurrency() == CurrencyType.ARS) {
                 List<Account> ArsAccounts = accountList.stream()
-                .filter(acc -> acc.getCurrency() == "ARS" && !Objects.equals(acc.getAccountId(), sourceAccount.getAccountId()))
+                .filter(acc -> acc.getCurrency() == CurrencyType.ARS && !Objects.equals(acc.getAccountId(), sourceAccount.getAccountId()))
                 .toList();
                 destAccount = ArsAccounts.get((int) (Math.random() * ArsAccounts.size()));
             } else {
                 List<Account> UsdAccounts = accountList.stream()
-                .filter(acc -> Objects.equals(acc.getCurrency(), "USD") && !Objects.equals(acc.getAccountId(), sourceAccount.getAccountId()))
+                .filter(acc -> Objects.equals(acc.getCurrency(), CurrencyType.USD) && !Objects.equals(acc.getAccountId(), sourceAccount.getAccountId()))
                 .toList();
                 destAccount = UsdAccounts.get((int) (Math.random() * UsdAccounts.size()));
             }

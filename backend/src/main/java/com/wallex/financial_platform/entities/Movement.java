@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -20,6 +21,7 @@ public class Movement {
 
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)
+    @JsonBackReference
     private Account account;
 
     @ManyToOne

@@ -24,7 +24,7 @@ public class AuthService implements IAuthService {
 
     @Override
     public UserResponseDTO register(RegisterUserRequestDTO registerUserRequestDTO) {
-        if (userRepository.findByEmail(registerUserRequestDTO.email()).isPresent()) {
+        if (!userRepository.findByEmail(registerUserRequestDTO.email()).isEmpty()) {
             throw new RuntimeException("El email ya está registrado");
         }
 

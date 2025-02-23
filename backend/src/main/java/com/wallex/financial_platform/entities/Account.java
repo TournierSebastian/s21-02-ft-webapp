@@ -6,6 +6,8 @@ import java.util.Currency;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.wallex.financial_platform.entities.enums.CurrencyType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -28,14 +30,15 @@ public class Account {
     @Column(nullable = false, unique = true)
     private String alias;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private BigDecimal availableBalance;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private BigDecimal reservedBalance;
 
-    @Column(nullable = false)
-    private String currency;
+    @Enumerated(EnumType.STRING)
+    @Column( nullable = false)
+    private CurrencyType currency;
 
     @Column( nullable = false)
     private Boolean active;
@@ -48,20 +51,24 @@ public class Account {
 
     @NotNull(message = "Requerid")
     @JoinColumn(name = "user_id", nullable=false)
-    @JsonBackReference
     @ManyToOne
+    @JsonBackReference
     private User user;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservations;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Movement> movements;
 
-    @OneToMany(mappedBy = "sourceAccount", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "sourceAccount", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Transaction> sourceTransactions;
 
-    @OneToMany(mappedBy = "destinationAccount", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "destinationAccount", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<Transaction> destinationTransactions;
 
     @PrePersist
@@ -75,10 +82,5 @@ public class Account {
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
-
-//    @PostLoad
-//    protected void onLoad() {
-//        availableBalance = availableBalance.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-//    }
 
 }
