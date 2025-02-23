@@ -2,8 +2,10 @@ package com.wallex.financial_platform.controllers;
 
 import com.wallex.financial_platform.dtos.requests.DniRequestDTO;
 import com.wallex.financial_platform.dtos.requests.EmailRequestDTO;
+import com.wallex.financial_platform.dtos.responses.CardResponseDTO;
 import com.wallex.financial_platform.dtos.responses.UserResponseDTO;
 import com.wallex.financial_platform.entities.User;
+import com.wallex.financial_platform.services.impl.CardService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,7 @@ import java.util.Map;
 
 public class UserController {
     private final UserService userService;
+    private final CardService cardService;
 
     @GetMapping
     public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
@@ -34,13 +37,13 @@ public class UserController {
 
     @GetMapping("/by-dni")
     public ResponseEntity<UserResponseDTO> getUserByDni(@RequestBody DniRequestDTO dniRequestDTO) {
-    UserResponseDTO response = userService.getUserByDni(dniRequestDTO.getDni());
-    return ResponseEntity.ok(response);
+        UserResponseDTO response = userService.getUserByDni(dniRequestDTO.dni());
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/by-email")
     public ResponseEntity<UserResponseDTO> getUserByEmail(@RequestBody EmailRequestDTO emailRequestDTO) {
-        UserResponseDTO response = userService.getUserByEmail(emailRequestDTO.getEmail());
+        UserResponseDTO response = userService.getUserByEmail(emailRequestDTO.email());
         return ResponseEntity.ok(response);
     }
 }
