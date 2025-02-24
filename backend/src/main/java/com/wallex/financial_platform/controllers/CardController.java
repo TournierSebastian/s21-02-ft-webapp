@@ -1,16 +1,12 @@
 package com.wallex.financial_platform.controllers;
 
-import com.wallex.financial_platform.dtos.requests.CardRequestDTO;
+import com.wallex.financial_platform.dtos.requests.RegisterCardRequestDTO;
 import com.wallex.financial_platform.dtos.requests.DniRequestDTO;
 import com.wallex.financial_platform.dtos.responses.CardResponseDTO;
-import com.wallex.financial_platform.dtos.responses.UserResponseDTO;
 import com.wallex.financial_platform.services.impl.CardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,5 +28,15 @@ public class CardController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<CardResponseDTO> createCard(@RequestBody RegisterCardRequestDTO cardRequestDTO) {
+        CardResponseDTO response = cardService.createCard(cardRequestDTO);
+        return ResponseEntity.ok(response);
+    }
 
+    @DeleteMapping("/{cardId}")
+    public ResponseEntity<Void> deleteCard(@PathVariable Long cardId) {
+        cardService.deleteCard(cardId);
+        return ResponseEntity.noContent().build();
+    }
 }
