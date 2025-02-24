@@ -7,6 +7,7 @@ import com.wallex.financial_platform.entities.Card;
 import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.exceptions.auth.UserNotFoundException;
 import com.wallex.financial_platform.exceptions.card.CardAlreadyExistsException;
+import com.wallex.financial_platform.exceptions.card.CardNotFoundException;
 import com.wallex.financial_platform.repositories.CardRepository;
 import com.wallex.financial_platform.repositories.UserRepository;
 import com.wallex.financial_platform.services.ICardService;
