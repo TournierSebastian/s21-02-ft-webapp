@@ -4,6 +4,7 @@ import com.wallex.financial_platform.dtos.requests.LoginRequestDTO;
 import com.wallex.financial_platform.dtos.requests.RegisterUserRequestDTO;
 import com.wallex.financial_platform.dtos.responses.UserResponseDTO;
 import com.wallex.financial_platform.services.impl.AuthService;
+import jakarta.validation.Valid;
 import lombok.Generated;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +17,14 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<UserResponseDTO> register(@RequestBody RegisterUserRequestDTO registerUserRequestDTO) {
+    public ResponseEntity<UserResponseDTO> register(@RequestBody @Valid RegisterUserRequestDTO registerUserRequestDTO) {
         UserResponseDTO user = authService.register(registerUserRequestDTO);
         return ResponseEntity.ok(user);
     }
 
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequestDTO loginRequestDTO) {
+    public ResponseEntity<String> login(@RequestBody @Valid LoginRequestDTO loginRequestDTO) {
         String login = authService.login(loginRequestDTO);
         return ResponseEntity.ok(login);
     }

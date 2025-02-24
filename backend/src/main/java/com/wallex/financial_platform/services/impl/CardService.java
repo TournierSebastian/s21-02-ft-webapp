@@ -5,6 +5,8 @@ import com.wallex.financial_platform.dtos.requests.DniRequestDTO;
 import com.wallex.financial_platform.dtos.responses.CardResponseDTO;
 import com.wallex.financial_platform.entities.Card;
 import com.wallex.financial_platform.entities.User;
+import com.wallex.financial_platform.exceptions.auth.UserNotFoundException;
+import com.wallex.financial_platform.exceptions.card.CardAlreadyExistsException;
 import com.wallex.financial_platform.repositories.CardRepository;
 import com.wallex.financial_platform.repositories.UserRepository;
 import com.wallex.financial_platform.services.ICardService;
@@ -24,23 +26,22 @@ public class CardService implements ICardService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserContextService userContextService;
-    private final EncryptionService encryptionService;  // Agrega un servicio de encriptación
+    private final EncryptionService encryptionService;
 
     @Override
     public CardResponseDTO createCard(RegisterCardRequestDTO cardRequestDTO) {
         if (this.cardRepository.existsByEncryptedNumber(cardRequestDTO.encryptedNumber())) {
-            throw new RuntimeException("La tarjeta ya existe en el sistema");
+            throw new CardAlreadyExistsException("La tarjeta ya existe en el sistema");
         }
-
 
         User user = this.userContextService.getAuthenticatedUser();
 
         Card card = new Card();
-        card.setEncryptedNumber(encryptionService.encrypt(cardRequestDTO.encryptedNumber()));  // Usamos encriptación
+        card.setEncryptedNumber(encryptionService.encrypt(cardRequestDTO.encryptedNumber()));
         card.setType(cardRequestDTO.type());
         card.setIssuingBank(cardRequestDTO.issuingBank());
         card.setExpirationDate(cardRequestDTO.expirationDate());
-        card.setEncryptedCvv(passwordEncoder.encode(cardRequestDTO.encryptedCvv()));  // Encriptar CVV
+        card.setEncryptedCvv(passwordEncoder.encode(cardRequestDTO.encryptedCvv()));
         card.setUser(user);
 
         this.cardRepository.save(card);
@@ -50,24 +51,22 @@ public class CardService implements ICardService {
 
     @Override
     public List<CardResponseDTO> getCardsByUserDni(DniRequestDTO dniRequestDTO) {
-        return userRepository.findByDni(dniRequestDTO.dni())
+        return this.userRepository.findByDni(dniRequestDTO.dni())
                 .map(user -> this.cardRepository.findByUserId(user.getId()).stream()
                         .map(card -> {
-                            // Verifica si el usuario logueado es el dueño de la tarjeta
                             if (userContextService.getAuthenticatedUser().getId().equals(card.getUser().getId())) {
-                                // Si el usuario es el dueño, desencripta el número de tarjeta
                                 card.setEncryptedNumber(encryptionService.decrypt(card.getEncryptedNumber()));
                             }
                             return convertToDTO(card);
                         })
                         .collect(Collectors.toList())
-                ).orElseThrow(() -> new RuntimeException("User not found"));
+                ).orElseThrow(() -> new UserNotFoundException("No existe usuario asociado a la tarjeta"));
     }
 
     @Override
     public void deleteCard(Long cardId) {
         Card card = cardRepository.findById(cardId)
-                .orElseThrow(() -> new RuntimeException("Card not found"));
+                .orElseThrow(() -> new CardNotFoundException("Tarjeta no encontrada"));
         cardRepository.delete(card);
     }
 
