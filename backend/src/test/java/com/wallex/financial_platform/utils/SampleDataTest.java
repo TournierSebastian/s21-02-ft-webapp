@@ -39,7 +39,7 @@ public class SampleDataTest {
                 .dni(faker.numerify("########"))
                 .email(faker.internet().emailAddress())
                 .phoneNumber(faker.numerify("+54##########"))
-                .password(faker.examplify("qwertyui"))
+                .password("qwertyui")
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .accounts(new ArrayList<>())
