@@ -37,7 +37,7 @@ public class SampleDataTest {
                 .id((long) (i + 1))
                 .fullName(firstName+" "+lastName)
                 .dni(faker.numerify("########"))
-                .email(firstName+"."+lastName+"@"+faker.app().name().replaceAll("\\s+","").toLowerCase()+".com")
+                .email(faker.internet().emailAddress())
                 .phoneNumber(faker.numerify("+54##########"))
                 .password(faker.examplify("qwertyui"))
                 .createdAt(LocalDateTime.now())

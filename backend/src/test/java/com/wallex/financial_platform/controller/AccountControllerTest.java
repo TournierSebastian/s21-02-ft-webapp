@@ -43,9 +43,9 @@ class AccountControllerTest {
 
 //    @Test
 //    @DisplayName("Test find all accounts By User")
-    void testFindAllAccountsByUser() throws Exception {
-        given(accountService.getAllAccounts()).willReturn(accountsList);
-        this.mockMvc.perform(get("/accounts").accept(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$", Matchers.hasSize(3)));
-    }
+//    void testFindAllAccountsByUser() throws Exception {
+//        given(accountService.getAllAccounts()).willReturn(accountsList);
+//        this.mockMvc.perform(get("/accounts").accept(MediaType.APPLICATION_JSON))
+//                .andExpect(jsonPath("$", Matchers.hasSize(3)));
+//    }
 }

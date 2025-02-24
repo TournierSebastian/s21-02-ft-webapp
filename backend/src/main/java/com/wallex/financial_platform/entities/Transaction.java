@@ -23,12 +23,12 @@ public class Transaction {
     @Column(name = "transaction_id")
     private Long transactionId;
 
-    @ManyToOne
+    @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(nullable = false)
     @JsonBackReference
     private Account sourceAccount;
 
-    @ManyToOne
+    @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(nullable = false)
     @JsonBackReference
     private Account destinationAccount;

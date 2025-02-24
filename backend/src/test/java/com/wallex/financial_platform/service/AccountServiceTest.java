@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import com.wallex.financial_platform.dtos.responses.AccountResponseDTO;
 import com.wallex.financial_platform.utils.SampleDataTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,9 +50,9 @@ public class AccountServiceTest {
         given(accountRepository.findById(any(Long.class)))
             .willReturn(Optional.ofNullable(sampleUserAccounts.getFirst()));
 
-        Account account = accountService.getAccountById(1L);
+        AccountResponseDTO account = accountService.getAccountById(1L);
 
-        assertThat(account).isEqualTo(sampleUserAccounts.getFirst());
+        assertThat(account.cbu()).isEqualTo(sampleUserAccounts.getFirst().getCbu());
     }
 
 }

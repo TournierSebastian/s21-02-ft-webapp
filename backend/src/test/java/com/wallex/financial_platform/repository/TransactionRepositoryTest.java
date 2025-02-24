@@ -3,11 +3,14 @@ package com.wallex.financial_platform.repository;
 import com.wallex.financial_platform.entities.Account;
 import com.wallex.financial_platform.entities.Transaction;
 import com.wallex.financial_platform.entities.User;
+import com.wallex.financial_platform.entities.enums.TransactionStatus;
+import com.wallex.financial_platform.entities.enums.TransactionType;
 import com.wallex.financial_platform.repositories.AccountRepository;
 import com.wallex.financial_platform.repositories.TransactionRepository;
 import com.wallex.financial_platform.repositories.UserRepository;
 import com.wallex.financial_platform.utils.SampleDataTest;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +20,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -76,7 +78,6 @@ public class TransactionRepositoryTest {
             }
         });
 
-
         sampleAccount1.setSourceTransactions(new ArrayList<>());
         sampleAccount1.setDestinationTransactions(new ArrayList<>());
         User newUser = sampleAccount1.getUser();
@@ -87,7 +88,8 @@ public class TransactionRepositoryTest {
     }
 
     @Test
-    void testSaveAccount() {
+    @DisplayName("Test save transactions, update account balance")
+    void testSaveTransactions() {
         sampleAccount1.setAccountId(null);
         sampleAccount1.setUser(sampleUser);
 
@@ -95,7 +97,7 @@ public class TransactionRepositoryTest {
         Account findAccount1 = accountRepository.findById(sampleAccount1.getAccountId()).orElse(null);
         assertEquals(savedAccount1, findAccount1);
 
-        List<Transaction> sampleTransactions = List.of(
+        List<Transaction> sampleTransactions = Stream.of(
                 sampleDataTest.getAccountList().get(0).getSourceTransactions().stream()
                         .map(transaction -> {
                             transaction.setTransactionId(null);
@@ -118,7 +120,7 @@ public class TransactionRepositoryTest {
                             );
                             return transaction;
                         }).toList()
-        ).stream()
+        )
         .flatMap(List::stream)
         .toList();
 
@@ -129,21 +131,61 @@ public class TransactionRepositoryTest {
         });
 
         Account updatedAccount = accountRepository.findById(savedAccount1.getAccountId()).orElse(null);
+        System.out.println(updatedAccount.toString());
 
-        BigDecimal sampleBalance = calculateBalance(sampleAccount1);
-        BigDecimal savedBalance = calculateBalance(updatedAccount);
+        Map<TransactionType, Map<TransactionStatus, BigDecimal>> sampleBalance = calculateBalance(sampleAccount1);
 
-        assertEquals(sampleBalance, savedBalance);
+        assertEquals(
+                sampleBalance.get(TransactionType.TRANSFER).get(TransactionStatus.COMPLETED),
+                updatedAccount.getTransactionTypeBalances().get(TransactionType.TRANSFER).get(TransactionStatus.COMPLETED)
+        );
+
     }
 
-    private BigDecimal calculateBalance(Account account) {
-        BigDecimal totalRecibidos = account.getDestinationTransactions().stream()
-                .map(transaction -> transaction.getAmount())
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-        BigDecimal totalEnviados = account.getSourceTransactions().stream()
-                .map(transaction -> transaction.getAmount())
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    private Map<TransactionType, Map<TransactionStatus, BigDecimal>> calculateBalance(Account account) {
+        Map<TransactionType, Map<TransactionStatus, BigDecimal>> balances = generateMapping();
 
-        return totalRecibidos.subtract(totalEnviados);
+        if (!account.getDestinationTransactions().isEmpty()) {
+            account.getDestinationTransactions().stream()
+                    .forEach(transaction -> {
+                        System.out.println(balances.toString());
+                        Map<TransactionStatus, BigDecimal> currentBalanceType = balances.get(transaction.getType());
+                        currentBalanceType.put(
+                                transaction.getStatus(),
+                                currentBalanceType.get(transaction.getStatus()).add(transaction.getAmount())
+                        );
+                        balances.put(
+                                transaction.getType(),
+                                currentBalanceType
+                        );
+                    });
+        }
+        if (!account.getSourceTransactions().isEmpty()) {
+            account.getSourceTransactions().stream()
+                    .forEach(transaction -> {
+                        Map<TransactionStatus, BigDecimal> currentBalanceType = balances.get(transaction.getType());
+                        currentBalanceType.put(
+                                transaction.getStatus(),
+                                currentBalanceType.get(transaction.getStatus()).subtract(transaction.getAmount())
+                        );
+                        balances.put(
+                                transaction.getType(),
+                                currentBalanceType
+                        );
+                    });
+        }
+        return balances;
+    }
+
+    private Map<TransactionType, Map<TransactionStatus, BigDecimal>>  generateMapping() {
+        Map<TransactionType, Map<TransactionStatus, BigDecimal>> mapping = new HashMap<>();
+        for (TransactionType transactionType : TransactionType.values()) {
+            Map<TransactionStatus, BigDecimal> balanceType = new HashMap<>();
+            for (TransactionStatus transactionStatus : TransactionStatus.values()) {
+                balanceType.put(transactionStatus, BigDecimal.ZERO);
+            }
+            mapping.put(transactionType, balanceType);
+        }
+        return mapping;
     }
 }
