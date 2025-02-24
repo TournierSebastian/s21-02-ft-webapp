@@ -25,13 +25,13 @@ public class CardService implements ICardService {
     private final PasswordEncoder passwordEncoder;
     private final UserContextService userContextService;
     private final EncryptionService encryptionService;  // Agrega un servicio de encriptación
-    private User user;
 
     @Override
     public CardResponseDTO createCard(RegisterCardRequestDTO cardRequestDTO) {
-        if (this.cardRepository.findByEncryptedNumber(cardRequestDTO.encryptedNumber())) {
+        if (this.cardRepository.existsByEncryptedNumber(cardRequestDTO.encryptedNumber())) {
             throw new RuntimeException("La tarjeta ya existe en el sistema");
         }
+
 
         User user = this.userContextService.getAuthenticatedUser();
 
