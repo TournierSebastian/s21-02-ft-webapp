@@ -1,4 +1,4 @@
-package com.wallex.financial_platform.services.impl;
+package com.wallex.financial_platform.services.utils;
 
 
 import org.springframework.stereotype.Service;
@@ -13,8 +13,7 @@ public class EncryptionService {
     private final SecretKeySpec secretKey;
 
     public EncryptionService() {
-        // Aquí defines la clave para AES. Asegúrate de usar una clave segura.
-        String key = "MySuperSecretKey"; // Asegúrate de que la clave sea segura
+        String key = "MySuperSecretKey";
         secretKey = new SecretKeySpec(key.getBytes(), "AES");
     }
 

@@ -1,4 +1,4 @@
-package com.wallex.financial_platform.services.impl;
+package com.wallex.financial_platform.services.utils;
 
 import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.repositories.UserRepository;

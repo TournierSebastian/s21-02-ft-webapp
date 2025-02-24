@@ -5,9 +5,8 @@ import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.entities.enums.CardType;
 import com.wallex.financial_platform.repositories.CardRepository;
 import com.wallex.financial_platform.repositories.UserRepository;
-import com.wallex.financial_platform.services.impl.EncryptionService;
+import com.wallex.financial_platform.services.utils.EncryptionService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
