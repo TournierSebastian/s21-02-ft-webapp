@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './Register.css'
 import Navbar from '../../components/navbar/userNavbar'
 import logo from '../../assets/Icons/Logo.png'
+import UseRegister from '../../Hooks/Authentication/UseRegister'
 
 const Register = () => {
   const [Email, SetEmail] = useState('');
@@ -11,12 +12,17 @@ const Register = () => {
   const [Dni, SetDni] = useState(null);
   const [ConfirmPassword, SetConfirmPassword] = useState('');
   const [Validate, SetValidate] = useState(false)
+
+  const {UseRegisterUser} = UseRegister();
   const HandlerRegistar  = (e) =>{
        e.preventDefault();
+       
       if(Email == '' || FullName == '' || Telephone == '' || Password === '' || ConfirmPassword != Password || Dni == null){
         SetValidate(true)
+        return;
       }
-
+      UseRegisterUser(FullName, Dni, Email, Telephone, Password)
+      return
   }
   return (
     <div className='Contenido'>

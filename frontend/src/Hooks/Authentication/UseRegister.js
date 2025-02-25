@@ -13,7 +13,7 @@ const UseRegister = () =>{
 
         try{
             const response = await RegisterUserService(FullName, Dni, Email, Telephone, Password)
-            
+            alert('funciono')
              if (response.status == 200){
                 const data  = await response.data;
 
@@ -33,4 +33,4 @@ const UseRegister = () =>{
     return {UseRegisterUser}
 }
 
-export default Uselogin;
+export default UseRegister;
