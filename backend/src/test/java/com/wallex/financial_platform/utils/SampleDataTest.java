@@ -52,7 +52,7 @@ public class SampleDataTest {
             Account account1 = Account.builder()
                 .accountId(Long.valueOf(accountList.size()+1))
                 .cbu(faker.numerify("000"+"0351"+"Ø"+accnumber+"Ø"))
-                .alias(faker.animal().name()+"."+faker.construction().materials()+"."+faker.commerce().material())
+                .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.commerce().material()).toLowerCase())
                 .currency(CurrencyType.ARS)
                 .user(user)
                 .availableBalance(BigDecimal.valueOf(0))
@@ -110,6 +110,7 @@ public class SampleDataTest {
                                 ), TimeZone.getDefault().toZoneId()))
                 .status(TransactionStatus.values()[(int) (Math.random() * TransactionStatus.values().length)])
                 .build();
+
             transactionsList.add(transaction);
 
             List<Transaction> sourceAccountSendedtransacions = sourceAccount.getSourceTransactions();
@@ -118,7 +119,6 @@ public class SampleDataTest {
             List<Transaction> destAccountReceivedtransacions = destAccount.getDestinationTransactions();
             destAccountReceivedtransacions.add(transaction);
             destAccount.setDestinationTransactions(destAccountReceivedtransacions);
-
         }
     }
 }

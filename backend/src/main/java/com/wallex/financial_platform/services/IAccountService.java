@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface IAccountService {
     List<AccountResponseDTO> getByUser();
+    AccountResponseDTO getByCbu(String Cbu);
 
 }

@@ -28,7 +28,6 @@ public class AccountListener {
         account.setAvailableBalance(calculateAvailableBalance(balances));
     }
 
-
     private Map<TransactionType, Map<TransactionStatus, BigDecimal>> calculateBalance(Account account) {
         Map<TransactionType, Map<TransactionStatus, BigDecimal>> balances = generateMapping();
 

@@ -24,7 +24,8 @@ public class UserService implements IUserService {
 
     @Override
     public UserResponseDTO getUserById(Long id) {
-        return this.userRepository.findById(id).map(this::convertToDTO).orElse(null);
+        User user = this.userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        return convertToDTO(user);
     }
 
     @Override

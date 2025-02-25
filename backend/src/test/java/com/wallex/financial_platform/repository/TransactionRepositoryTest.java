@@ -131,7 +131,6 @@ public class TransactionRepositoryTest {
         });
 
         Account updatedAccount = accountRepository.findById(savedAccount1.getAccountId()).orElse(null);
-        System.out.println(updatedAccount.toString());
 
         Map<TransactionType, Map<TransactionStatus, BigDecimal>> sampleBalance = calculateBalance(sampleAccount1);
 

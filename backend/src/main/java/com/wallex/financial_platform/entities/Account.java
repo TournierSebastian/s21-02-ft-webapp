@@ -14,12 +14,13 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-@Data
+@Getter
+@Setter
+@ToString
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-//@RequiredArgsConstructor
 @Table(name = "accounts")
 @EntityListeners(AccountListener.class)
 public class Account {
@@ -27,14 +28,11 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_id")
-    //@NonNull
     private Long accountId;
 
-    @NonNull
     @Column(nullable = false, unique = true)
     private String cbu;
 
-    @NonNull
     @Column(nullable = false, unique = true)
     private String alias;
 
@@ -46,7 +44,6 @@ public class Account {
 
     @Enumerated(EnumType.STRING)
     @Column( nullable = false)
-    @NonNull
     private CurrencyType currency;
 
     @Column( nullable = false)
@@ -58,7 +55,6 @@ public class Account {
     @Column(nullable = false, length = 20)
     private LocalDateTime updatedAt;
 
-    @NonNull
     @NotNull(message = "Requerid")
     @JoinColumn(name = "user_id", nullable=false)
     @ManyToOne
@@ -82,7 +78,6 @@ public class Account {
     private List<Transaction> destinationTransactions;
 
     @Transient
-    @JsonManagedReference
     private Map<TransactionType, Map<TransactionStatus, BigDecimal>> transactionTypeBalances = new HashMap<>();
 
     @PrePersist
