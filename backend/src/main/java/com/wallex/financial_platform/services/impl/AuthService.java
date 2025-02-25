@@ -9,6 +9,7 @@ import com.wallex.financial_platform.exceptions.auth.UserAlreadyExistsException;
 import com.wallex.financial_platform.exceptions.auth.UserNotFoundException;
 import com.wallex.financial_platform.repositories.UserRepository;
 import com.wallex.financial_platform.services.IAuthService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +27,7 @@ public class AuthService implements IAuthService {
     private final JwtUtil jwtUtil;
 
     @Override
+    @Transactional
     public UserResponseDTO register(RegisterUserRequestDTO registerUserRequestDTO) {
         if (this.userRepository.findByEmail(registerUserRequestDTO.email()).isPresent()) {
             throw new UserAlreadyExistsException("El email ya está registrado");
