@@ -30,9 +30,9 @@ public class GlobalExceptionHandler {
         return buildResponseEntity(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
-    // ⚠️ Manejo de usuario no encontrado
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> handleUserNotFoundException(CardNotFoundException ex) {
+    // ⚠️ Manejo de tarjeta no encontrada
+    @ExceptionHandler(CardNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleCardNotFoundException(CardNotFoundException ex) {
         return buildResponseEntity(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
