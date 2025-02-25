@@ -9,5 +9,6 @@ import java.util.List;
 
 public interface CardRepository extends JpaRepository<Card, Long> {
     List<Card> findByUserId(Long userId);
-    boolean findByEncryptedNumber(String encryptedNumber);
+    boolean existsByEncryptedNumber(String encryptedNumber);
+
 }

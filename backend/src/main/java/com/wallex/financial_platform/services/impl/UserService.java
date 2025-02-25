@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.wallex.financial_platform.dtos.responses.UserResponseDTO;
+import com.wallex.financial_platform.exceptions.auth.UserNotFoundException;
 import com.wallex.financial_platform.services.IUserService;
 import org.springframework.stereotype.Service;
 
@@ -19,23 +20,26 @@ public class UserService implements IUserService {
 
     @Override
     public UserResponseDTO getUserByEmail(String email) {
-        return this.userRepository.findByEmail(email).map(this::convertToDTO).orElse(null);
+        return this.userRepository.findByEmail(email).map(this::convertToDTO).orElseThrow(()->new UserNotFoundException("Usuario  con email " + email + " no encontrado"));
     }
 
     @Override
     public UserResponseDTO getUserById(Long id) {
-        User user = this.userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-        return convertToDTO(user);
+        return this.userRepository.findById(id).map(this::convertToDTO).orElseThrow(()->new UserNotFoundException("Usuario  con id " + id + " no encontrado"));
     }
 
     @Override
     public UserResponseDTO getUserByDni(String dni) {
-        return this.userRepository.findByDni(dni).map(this::convertToDTO).orElse(null);
+        return this.userRepository.findByDni(dni).map(this::convertToDTO).orElseThrow(()->new UserNotFoundException("Usuario  con dni " + dni + " no encontrado"));
     }
 
     @Override
     public List<UserResponseDTO> getAllUsers() {
-        return this.userRepository.findAll().stream().map(this::convertToDTO).collect(Collectors.toList());
+        List<User> users = this.userRepository.findAll();
+        if(users.isEmpty()) {
+            throw new UserNotFoundException("No hay usuarios registrados");
+        }
+        return users.stream().map(this::convertToDTO).collect(Collectors.toList());
     }
 
     @Override

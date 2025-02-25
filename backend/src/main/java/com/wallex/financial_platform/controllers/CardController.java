@@ -4,6 +4,7 @@ import com.wallex.financial_platform.dtos.requests.RegisterCardRequestDTO;
 import com.wallex.financial_platform.dtos.requests.DniRequestDTO;
 import com.wallex.financial_platform.dtos.responses.CardResponseDTO;
 import com.wallex.financial_platform.services.impl.CardService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class CardController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<CardResponseDTO> createCard(@RequestBody RegisterCardRequestDTO cardRequestDTO) {
+    public ResponseEntity<CardResponseDTO> createCard(@RequestBody @Valid RegisterCardRequestDTO cardRequestDTO) {
         CardResponseDTO response = cardService.createCard(cardRequestDTO);
         return ResponseEntity.ok(response);
     }

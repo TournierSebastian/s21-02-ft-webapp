@@ -4,8 +4,12 @@ import com.wallex.financial_platform.dtos.requests.LoginRequestDTO;
 import com.wallex.financial_platform.dtos.requests.RegisterUserRequestDTO;
 import com.wallex.financial_platform.dtos.responses.UserResponseDTO;
 import com.wallex.financial_platform.entities.User;
+import com.wallex.financial_platform.exceptions.auth.InvalidCredentialsException;
+import com.wallex.financial_platform.exceptions.auth.UserAlreadyExistsException;
+import com.wallex.financial_platform.exceptions.auth.UserNotFoundException;
 import com.wallex.financial_platform.repositories.UserRepository;
 import com.wallex.financial_platform.services.IAuthService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,9 +27,10 @@ public class AuthService implements IAuthService {
     private final JwtUtil jwtUtil;
 
     @Override
+    @Transactional
     public UserResponseDTO register(RegisterUserRequestDTO registerUserRequestDTO) {
-        if (!userRepository.findByEmail(registerUserRequestDTO.email()).isEmpty()) {
-            throw new RuntimeException("El email ya está registrado");
+        if (this.userRepository.findByEmail(registerUserRequestDTO.email()).isPresent()) {
+            throw new UserAlreadyExistsException("El email ya está registrado");
         }
 
         User user = new User();
@@ -38,7 +43,7 @@ public class AuthService implements IAuthService {
         user.setUpdatedAt(LocalDateTime.now());
         user.setActive(true);
 
-        userRepository.save(user);
+        this.userRepository.save(user);
 
         return new UserResponseDTO(
                 user.getId(), user.getFullName(), user.getDni(), user.getEmail(),
@@ -48,11 +53,11 @@ public class AuthService implements IAuthService {
 
     @Override
     public String login(LoginRequestDTO loginRequestDTO) {
-        User user = userRepository.findByEmail(loginRequestDTO.email())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        User user = this.userRepository.findByEmail(loginRequestDTO.email())
+                .orElseThrow(() -> new UserNotFoundException("Usuario no encontrado"));
 
         if (!passwordEncoder.matches(loginRequestDTO.password(), user.getPassword())) {
-            throw new RuntimeException("Credenciales incorrectas");
+            throw new InvalidCredentialsException("Credenciales incorrectas");
         }
 
         return jwtUtil.generateToken(user.getEmail());
