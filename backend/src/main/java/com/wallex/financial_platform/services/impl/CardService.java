@@ -14,6 +14,7 @@ import com.wallex.financial_platform.repositories.UserRepository;
 import com.wallex.financial_platform.services.ICardService;
 import com.wallex.financial_platform.services.utils.EncryptionService;
 import com.wallex.financial_platform.services.utils.UserContextService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,7 @@ public class CardService implements ICardService {
     private final EncryptionService encryptionService;
 
     @Override
+    @Transactional
     public CardResponseDTO createCard(RegisterCardRequestDTO cardRequestDTO) {
         if (this.cardRepository.existsByEncryptedNumber(cardRequestDTO.encryptedNumber())) {
             throw new CardAlreadyExistsException("La tarjeta ya existe en el sistema");
@@ -75,6 +77,7 @@ public class CardService implements ICardService {
     }
 
     @Override
+    @Transactional
     public void deleteCard(Long cardId) {
         Card card = this.cardRepository.findById(cardId)
                 .orElseThrow(() -> new CardNotFoundException("Tarjeta con ID " + cardId + " no encontrada."));
