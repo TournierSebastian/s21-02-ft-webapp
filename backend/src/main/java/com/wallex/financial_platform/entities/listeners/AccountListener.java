@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.wallex.financial_platform.entities.Account;
-import com.wallex.financial_platform.entities.Transaction;
 import com.wallex.financial_platform.entities.enums.TransactionStatus;
 
 import com.wallex.financial_platform.entities.enums.TransactionType;

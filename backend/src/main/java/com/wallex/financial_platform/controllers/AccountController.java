@@ -2,18 +2,18 @@ package com.wallex.financial_platform.controllers;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
+import com.wallex.financial_platform.dtos.requests.AccountRequestDTO;
+import com.wallex.financial_platform.dtos.requests.CheckAccountRequestDto;
 import com.wallex.financial_platform.dtos.responses.AccountResponseDTO;
-import lombok.RequiredArgsConstructor;
+import com.wallex.financial_platform.dtos.responses.CheckAccountResponseDTO;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.wallex.financial_platform.entities.Account;
 import com.wallex.financial_platform.services.impl.AccountService;
 
 import lombok.AllArgsConstructor;
@@ -28,4 +28,24 @@ public class AccountController {
     public ResponseEntity<List<AccountResponseDTO>> getAccounts() {
         return ResponseEntity.ok(accountService.getByUser());
     }
+
+    @PostMapping
+    public ResponseEntity<AccountResponseDTO> createAccount(
+            @RequestBody @Valid AccountRequestDTO account
+    ) {
+        return ResponseEntity.ok(accountService.createAccount(account));
+    }
+
+    @PostMapping("/check")
+    public ResponseEntity<CheckAccountResponseDTO> createDestinationAccount(@RequestBody @Valid CheckAccountRequestDto accountData) {
+        if (!accountData.alias().isBlank()) {
+            return ResponseEntity.ok(accountService.getByAlias(accountData.alias()));
+        }
+        if (!accountData.cbu().isBlank()) {
+            return ResponseEntity.ok(accountService.getByCbu(accountData.cbu()));
+        } else {
+            throw new IllegalArgumentException("Alias or cbu is required");
+        }
+    }
+
 }
