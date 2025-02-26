@@ -88,10 +88,10 @@ public class CardService implements ICardService {
     }
 
     @Override
-    public List<CardResponseDTO> getAllCards() {
-        List<Card> cards = this.cardRepository.findAll();
+    public List<CardResponseDTO> getAllCardsByUserOnline() {
+        List<Card> cards = this.cardRepository.findByUserId(userContextService.getAuthenticatedUser().getId());
         if (cards.isEmpty()) {
-            throw new CardNotFoundException("No hay tarjetas registradas en el sistema.");
+            throw new CardNotFoundException("No hay tarjetas asociadas a este usuario.");
         }
 
         return cards.stream()
