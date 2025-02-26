@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 import com.wallex.financial_platform.dtos.responses.TransactionResponseDTO;
+import com.wallex.financial_platform.dtos.responses.UserResponseDTO;
 import com.wallex.financial_platform.repositories.UserRepository;
+import com.wallex.financial_platform.services.impl.UserService;
+import com.wallex.financial_platform.services.utils.UserContextService;
 import com.wallex.financial_platform.utils.SampleDataTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -35,7 +38,7 @@ public class TransactionServiceTest {
     @Mock
     private TransactionRepository transactionRepository;
     @Mock
-    private UserRepository userRepository;
+    private UserContextService userContextService;
 
     @InjectMocks
     private TransactionService transactionService;
@@ -56,16 +59,8 @@ public class TransactionServiceTest {
         sampleUser2Accounts = sampleDataTest.getAccountList().subList(2, 3);
         sampleTransacctions = sampleDataTest.getTransactionsList();
 
-        given(userRepository.findByEmail(any()))
-                .willReturn(java.util.Optional.of(sampleUser1));
-
-        SecurityContext securityContext = mock(SecurityContext.class);
-        Authentication auth = Mockito.mock(Authentication.class);
-        when(securityContext.getAuthentication())
-                .thenReturn(auth);
-        when(auth.getPrincipal())
-                .thenReturn(sampleUser1.getEmail());
-        SecurityContextHolder.setContext(securityContext);
+        when(userContextService.getAuthenticatedUser())
+                .thenReturn(sampleUser1);
     }
 
     @Test

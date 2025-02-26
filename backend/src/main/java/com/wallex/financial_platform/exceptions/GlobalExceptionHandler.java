@@ -36,6 +36,23 @@ public class GlobalExceptionHandler {
         return buildResponseEntity(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
+    // ⚠️ Manejo de Account no encontrado
+    @ExceptionHandler(AccountNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleAccountNotFoundException(AccountNotFoundException ex) {
+        return buildResponseEntity(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+    // ⚠️ Manejo de Transaccion no encontrado
+    @ExceptionHandler(TransactionNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleTransactionNotFoundException(TransactionNotFoundException ex) {
+        return buildResponseEntity(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    // ⚠️ Manejo de validaciones en Transaction Service
+    @ExceptionHandler(TransactionErrorException.class)
+    public ResponseEntity<Map<String, Object>> handleTransactionErrorException(TransactionErrorException ex) {
+        return buildResponseEntity(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
     // ⚠️ Manejo de usuario ya existente
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<Map<String, Object>> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {

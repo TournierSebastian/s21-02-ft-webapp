@@ -1,13 +1,21 @@
 package com.wallex.financial_platform.services.impl;
 
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
+import com.wallex.financial_platform.dtos.requests.TransactionRequestDTO;
 import com.wallex.financial_platform.dtos.responses.TransactionResponseDTO;
+import com.wallex.financial_platform.entities.Account;
 import com.wallex.financial_platform.entities.User;
+import com.wallex.financial_platform.entities.enums.TransactionStatus;
+import com.wallex.financial_platform.entities.enums.TransactionType;
+import com.wallex.financial_platform.exceptions.AccountNotFoundException;
+import com.wallex.financial_platform.exceptions.TransactionErrorException;
 import com.wallex.financial_platform.exceptions.TransactionNotFoundException;
+import com.wallex.financial_platform.repositories.AccountRepository;
 import com.wallex.financial_platform.repositories.UserRepository;
 import com.wallex.financial_platform.services.ITransactionService;
+import com.wallex.financial_platform.services.utils.UserContextService;
 import lombok.SneakyThrows;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -20,21 +28,49 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class TransactionService implements ITransactionService {
-   private TransactionRepository transactionRepository;
-   private UserRepository userRepository;
+    private TransactionRepository transactionRepository;
+    private AccountRepository accountRepository;
+    private UserContextService userContextService;
 
     @Override
     @SneakyThrows
     public TransactionResponseDTO getById(Long transactionId) {
-        var auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.isAuthenticated() && auth.getPrincipal() == "anonymousUser") {
-            throw new Exception("User not authenticated");
-        }
-        User user = userRepository.findByEmail(auth.getPrincipal().toString())
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        User user = this.userContextService.getAuthenticatedUser();
         Transaction foundTransaction = transactionRepository.findByTransactionIdAndUser(transactionId, user.getId())
                 .orElseThrow(() -> new TransactionNotFoundException("Transaction not found"));
         return mapToDTO(foundTransaction);
+    }
+
+    @Override
+    @SneakyThrows
+    public TransactionResponseDTO save(TransactionRequestDTO transactionReq) {
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.isAuthenticated() && auth.getPrincipal() == "anonymousUser") {
+            throw new TransactionErrorException("User not authenticated");
+        }
+        Account sourceAccount = accountRepository.findByCbu(transactionReq.sourceCbu())
+                .orElseThrow(()-> new AccountNotFoundException("Source Account not found"));
+        if (!Objects.equals(sourceAccount.getUser().getEmail(), auth.getPrincipal().toString())) {
+            throw new TransactionErrorException("User not authorized to perform this transaction");
+        }
+        Account destinationAccount = accountRepository.findByCbu(transactionReq.destinationCbu())
+                .orElseThrow(()-> new AccountNotFoundException("Destination Account not found"));
+        if (sourceAccount.getCurrency() != destinationAccount.getCurrency()) {
+            throw new TransactionErrorException("Currency mismatch");
+        }
+
+        if (sourceAccount.getAvailableBalance().compareTo(transactionReq.amount()) < 0) {
+            throw new TransactionErrorException("Insufficient funds");
+        }
+        Transaction transaction = mapToEntity(transactionReq);
+        transaction.setSourceAccount(sourceAccount);
+        transaction.setDestinationAccount(destinationAccount);
+        if (transactionReq.type() == TransactionType.TRANSFER) {
+            transaction.setStatus(TransactionStatus.COMPLETED);
+        } else {
+            transaction.setStatus(TransactionStatus.PENDING);
+        }
+        return mapToDTO(transactionRepository.save(transaction));
     }
 
     private TransactionResponseDTO mapToDTO(Transaction transaction) {
@@ -46,5 +82,14 @@ public class TransactionService implements ITransactionService {
                 transaction.getAmount(),
                 transaction.getReason()
         );
+    }
+
+    private Transaction mapToEntity(TransactionRequestDTO transaction) {
+        return Transaction.builder()
+                .reason(transaction.reason())
+                .amount(transaction.amount())
+                .type(transaction.type())
+                .transactionDateTime(LocalDateTime.now())
+                .build();
     }
 }
