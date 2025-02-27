@@ -10,15 +10,10 @@ export const AuthUserService = () => {
                 password:  password
             };
     
-            //llamar api
-            alert("Email: " + email + ", Password: " + password);
+         
              const response = await api.post("api/auth/login", formData);
              return response
 
-            // return {
-            //     status: 200,
-            //     data: { message: "Login exitoso" }
-            // };
         } catch (error) {
           
             throw error;

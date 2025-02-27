@@ -33,7 +33,7 @@ const Login = () => {
               <p className='text-2xl'>Solo necesitas tus credenciales para continuar.</p>
             </div>
             <div>
-              <button className='flex bg-LightGolden items-center p-3 rounded-2xl text-lg'>  <ShieldAlert /> Tengo un problema de seguridad  <ChevronRight size={20} strokeWidth={1.25} /></button>
+              <button className='flex bg-LightGolden items-center p-3 rounded-2xl text-lg  hover:bg-DarkGolden'>  <ShieldAlert /> Tengo un problema de seguridad  <ChevronRight size={20} strokeWidth={1.25} /></button>
               <p className='text-lg'>Necesito ayuda!</p>
             </div>
           </div>
@@ -63,7 +63,7 @@ const Login = () => {
                 }
               </div>
               {(Validations && password === '') && <p className=' text-red-500 text-sm font-bold mt-1'>Ingrese una contraseña</p> }
-              <button className='bg-LightGolden w-1/2 mx-auto my-10 p-2 rounded-3xl text-2xl' onClick={hanlderlogin}>Ingresar</button>
+              <button className='bg-LightGolden w-1/2 mx-auto my-10 p-2 rounded-3xl text-2xl  hover:bg-DarkGolden' onClick={hanlderlogin}>Ingresar</button>
             </div>
             </form>
           </div>

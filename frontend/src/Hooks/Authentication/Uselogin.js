@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom"
 import Toastify from "toastify-js"; 
 import { AuthUserService } from "../../Services/AuthUserService";
-import { AuthContext } from "../../Context/AuthContext";
 import { useContext } from "react";
+import { AuthContext } from "../../Context/AuthContext";
 
 
 const Uselogin = () =>{
@@ -16,7 +16,7 @@ const Uselogin = () =>{
             
              if (response.status == 200){
                 const data  = await response.data;
-
+                
                 login(data);
                 
                 navigate('/Home')
