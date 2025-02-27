@@ -1,6 +1,8 @@
 package com.wallex.financial_platform.controller;
 
+import com.wallex.financial_platform.dtos.responses.CheckAccountResponseDTO;
 import com.wallex.financial_platform.dtos.responses.TransactionResponseDTO;
+import com.wallex.financial_platform.entities.Account;
 import com.wallex.financial_platform.entities.Transaction;
 import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.services.impl.TransactionService;
@@ -64,7 +66,6 @@ public class TransactionControllerTest {
         given(transactionService.getById(any(Long.class)))
                 .willReturn(transactionResponse);
 
-        System.out.println(String.format("/api/transactions/%s",transactionResponse.transactionId()));
         this.mockMvc.perform(get(String.format("/api/transactions/%s",transactionResponse.transactionId())).accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.transactionId").value(transactionResponse.transactionId()))
                 .andExpect(jsonPath("$.date").value(transactionResponse.date().toString()))
@@ -77,11 +78,22 @@ public class TransactionControllerTest {
     private TransactionResponseDTO mapToDTO(Transaction transaction) {
         return new TransactionResponseDTO(
                 transaction.getTransactionId(),
+                mapToDTO(transaction.getSourceAccount()),
+                mapToDTO(transaction.getDestinationAccount()),
                 transaction.getTransactionDateTime(),
                 transaction.getType(),
                 transaction.getStatus(),
                 transaction.getAmount(),
                 transaction.getReason()
+        );
+    }
+    private CheckAccountResponseDTO mapToDTO(Account account) {
+        return new CheckAccountResponseDTO(
+                account.getCbu(),
+                account.getAlias(),
+                account.getCurrency(),
+                account.getUser().getFullName(),
+                account.getUser().getDni()
         );
     }
 }

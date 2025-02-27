@@ -1,10 +1,12 @@
 package com.wallex.financial_platform.controllers;
 
-import java.util.List;
+import java.util.Date;
 
 import com.wallex.financial_platform.dtos.requests.TransactionRequestDTO;
 import com.wallex.financial_platform.dtos.responses.TransactionResponseDTO;
+import com.wallex.financial_platform.entities.enums.TransactionStatus;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.PastOrPresent;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,4 +30,5 @@ public class TransactionController {
         System.out.println(transaction);
         return ResponseEntity.ok(transactionService.save(transaction));
     }
+
 }

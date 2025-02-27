@@ -1,5 +1,6 @@
 package com.wallex.financial_platform.services.utils;
 
+import com.wallex.financial_platform.dtos.requests.CheckAccountRequestDto;
 import com.wallex.financial_platform.entities.Account;
 import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.entities.enums.CurrencyType;
@@ -23,13 +24,19 @@ public class AccountServiceHelper {
     private BCryptPasswordEncoder passwordEncoder;
     private UserRepository userRepository;
 
-    public Account createFakeAccount(Optional<String> cbu, Optional<String> alias) {
+    public Account createFakeAccount(CheckAccountRequestDto chkAcc) {
         Faker faker = new Faker();
         User savedUser = userRepository.save(this.generateFakeUser());
         Account account = Account.builder()
                 .accountId(null)
-                .cbu(cbu.orElse(faker.numerify("CBU000" + "0351" + "Ø" + "00000########" + "Ø")))
-                .alias(alias.orElse(faker.animal().name()+"."+new Faker().construction().materials()+"."+new Faker().commerce().material()))
+                .cbu(chkAcc.cbu().isBlank()
+                        ? faker.numerify("CBU000" + "0351" + "Ø" + "00000########" + "Ø")
+                        : chkAcc.cbu()
+                )
+                .alias(chkAcc.alias().isBlank()
+                        ? faker.animal().name()+"."+faker.construction().materials()+"."+ faker.commerce().material()
+                        : chkAcc.alias()
+                )
                 .availableBalance(new BigDecimal(0))
                 .reservedBalance(new BigDecimal(0))
                 .currency(CurrencyType.values()[(int) (Math.random() * 2)])
@@ -49,7 +56,7 @@ public class AccountServiceHelper {
         Faker faker = new Faker();
         return User.builder()
             .fullName(faker.name().fullName())
-            .dni(faker.numerify("########"))
+            .dni(faker.numerify("Ø#######"))
             .email(faker.internet().emailAddress())
             .phoneNumber(faker.numerify("+54##########"))
             .password(passwordEncoder.encode("qwertyui"))
