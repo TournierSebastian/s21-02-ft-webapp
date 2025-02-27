@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -30,16 +31,17 @@ public class CardDataLoader {
         User user4 = userRepository.findById(4L).orElseThrow();
         User user5 = userRepository.findById(5L).orElseThrow();
 
-        // Crear las tarjetas para el usuario 1
+        // Crear las tarjetas con saldo inicial usando BigDecimal
         Card card1 = new Card(
-                null,  // ID se genera automáticamente
-                user1, // Relación con el usuario 1
-                encryptionService.encrypt("1234567890123456"), // Número de tarjeta real (ejemplo)
-                CardType.DEBIT, // Tipo de tarjeta
-                "Banco Nación", // Banco emisor
-                "12/25", // Fecha de vencimiento
-                passwordEncoder.encode("123"), // CVV real (ejemplo)
-                LocalDateTime.now() // Fecha de registro
+                null,
+                user1,
+                encryptionService.encrypt("1234567890123456"),
+                CardType.DEBIT,
+                "Banco Nación",
+                "12/25",
+                passwordEncoder.encode("123"),
+                BigDecimal.valueOf(500000.00), // Saldo inicial
+                LocalDateTime.now()
         );
 
         Card card2 = new Card(
@@ -50,10 +52,10 @@ public class CardDataLoader {
                 "Banco Galicia",
                 "08/24",
                 passwordEncoder.encode("567"),
+                BigDecimal.valueOf(1000000.00), // Saldo inicial
                 LocalDateTime.now()
         );
 
-        // Crear las tarjetas para el usuario 2
         Card card3 = new Card(
                 null,
                 user3,
@@ -62,6 +64,7 @@ public class CardDataLoader {
                 "Banco Supervielle",
                 "05/23",
                 passwordEncoder.encode("987"),
+                BigDecimal.valueOf(750000.50), // Saldo inicial
                 LocalDateTime.now()
         );
 
@@ -73,10 +76,10 @@ public class CardDataLoader {
                 "Banco Ciudad",
                 "02/27",
                 passwordEncoder.encode("543"),
+                BigDecimal.valueOf(200000.75), // Saldo inicial
                 LocalDateTime.now()
         );
 
-        // Crear tarjetas adicionales
         Card card5 = new Card(
                 null,
                 user5,
@@ -85,21 +88,23 @@ public class CardDataLoader {
                 "Banco Santander",
                 "11/26",
                 passwordEncoder.encode("111"),
+                BigDecimal.valueOf(120000.25), // Saldo inicial
                 LocalDateTime.now()
         );
 
         Card card6 = new Card(
                 null,
                 user5,
-                encryptionService.encrypt( "9988776655443322"),
+                encryptionService.encrypt("9988776655443322"),
                 CardType.CREDIT,
                 "Banco Macro",
                 "03/28",
                 passwordEncoder.encode("222"),
+                BigDecimal.valueOf(250000.00), // Saldo inicial
                 LocalDateTime.now()
         );
 
         // Guardar las tarjetas en el repositorio
-        cardRepository.saveAll(List.of(card1, card2, card3, card4, card5,card6)); // Guardar las tarjetas
+        cardRepository.saveAll(List.of(card1, card2, card3, card4, card5, card6));
     }
 }
