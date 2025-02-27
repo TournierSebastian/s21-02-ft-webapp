@@ -30,6 +30,7 @@ public class CardService implements ICardService {
     private final PasswordEncoder passwordEncoder;
     private final UserContextService userContextService;
     private final EncryptionService encryptionService;
+    private final  NotificationService notificationService;
 
     @Override
     @Transactional
@@ -53,6 +54,11 @@ public class CardService implements ICardService {
         card.setUser(user);
 
         this.cardRepository.save(card);
+
+        // Enviar notificación por correo electrónico
+        notificationService.sendEmailNotification(user,
+                "Notificación de Cuenta",
+                "Se ha realizado un cambio en su cuenta.");
 
         return convertToDTO(card);
     }

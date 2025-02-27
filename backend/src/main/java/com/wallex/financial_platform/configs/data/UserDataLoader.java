@@ -26,7 +26,7 @@ public class UserDataLoader {
                 null, // ID generado automáticamente
                 "Juan Pérez", // Nombre completo
                 "12345678", // DNI
-                "juan.perez@dominio.com", // Email
+                "jindrg@gmail.com", // Email
                 "+541112345678", // Teléfono
                 passwordEncoder.encode("password123"), // Contraseña encriptada
                 LocalDateTime.now(), // Fecha de creación

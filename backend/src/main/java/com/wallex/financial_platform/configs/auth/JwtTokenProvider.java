@@ -2,6 +2,7 @@ package com.wallex.financial_platform.configs.auth;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -9,7 +10,9 @@ import java.util.Date;
 
 @Component
 public class JwtTokenProvider {
-    private final String SECRET_KEY = "SECRETOMUYSEGURODEMASDE256BITS...........";
+
+    @Value("${JWT_SECRET_KEY}")
+    private String SECRET_KEY;
 
     public String generateToken(String email) {
         return Jwts.builder()
