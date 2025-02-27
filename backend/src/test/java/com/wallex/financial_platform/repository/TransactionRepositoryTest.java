@@ -65,7 +65,7 @@ public class TransactionRepositoryTest {
                 foundUser = Optional.of(userRepository.save(account.getUser()));
             }
             account.setUser(foundUser.get());
-            Optional<Account> foundAccount = accountRepository.findByCbu(account.getCbu());
+            Optional<Account> foundAccount = accountRepository.findByCbuOrAlias(account.getCbu(), account.getAlias());
             if (!foundAccount.isPresent()) {
                 account.setAccountId(null);
                 account.setSourceTransactions(new ArrayList<>());

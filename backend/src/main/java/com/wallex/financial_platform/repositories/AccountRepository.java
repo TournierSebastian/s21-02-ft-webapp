@@ -15,7 +15,5 @@ import java.util.Set;
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
     List<Account> findByUserId(Long userId);
-    Optional<Account> findByCbu(String cbu);
-    Optional<Account> findByAlias(String alias);
-
+    Optional<Account> findByCbuOrAlias(String cbu, String alias);
 }
