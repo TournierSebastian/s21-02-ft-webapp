@@ -49,6 +49,7 @@ public class CardService implements ICardService {
         card.setIssuingBank(cardRequestDTO.issuingBank());
         card.setExpirationDate(cardRequestDTO.expirationDate());
         card.setEncryptedCvv(passwordEncoder.encode(cardRequestDTO.encryptedCvv()));
+        card.setBalance(cardRequestDTO.balance());
         card.setUser(user);
 
         this.cardRepository.save(card);
@@ -105,6 +106,7 @@ public class CardService implements ICardService {
                 card.getEncryptedNumber(),
                 card.getIssuingBank(),
                 card.getExpirationDate(),
+                card.getBalance(),
                 card.getRegistrationDate()
         );
     }

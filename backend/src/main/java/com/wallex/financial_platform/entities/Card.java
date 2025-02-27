@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -40,6 +41,9 @@ public class Card {
 
     @Column(nullable = false)
     private String encryptedCvv;
+
+    @Column(nullable = false)
+    private BigDecimal balance;
 
     @Column(nullable = false)
     private LocalDateTime registrationDate;
