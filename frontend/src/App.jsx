@@ -9,42 +9,45 @@ import TuDinero from './Pages/TuDinero/TuDinero.jsx'
 import Actividad from './Pages/Actividad/Actividad.jsx'
 import './Styles/Global.css'
 import { AuthProvider } from './Context/AuthContext.jsx'
+import RedirectIfAuthenticated from './RouteProtection/RedirectIfAuthenticated.jsx'
+import ProtectedUser from './RouteProtection/ProtectedUser.jsx'
+import TuTarjeta from './Pages/TuTarjeta/TuTarjeta.jsx'
 
 const  router = createBrowserRouter([
   {
     path: '/',
-    element: <Landingpage/>
-  },
-  {
-    path: '/home',
-    element: <Home/>
+    element: <RedirectIfAuthenticated><Landingpage/></RedirectIfAuthenticated>
   },
   {
     path: '/login',
-    element: <Login/>
+    element: <RedirectIfAuthenticated> <Login/> </RedirectIfAuthenticated>
   },
   {
     path: '/register',
-    element: <Register/>
+    element: <RedirectIfAuthenticated> <Register/> </RedirectIfAuthenticated>
+  },
+  {
+    path: '/home',
+    element: <ProtectedUser><Home/></ProtectedUser>
   },
   {
     path: '/tudinero',
-    element: <TuDinero/>
+    element: <ProtectedUser><TuDinero/></ProtectedUser>
   },  {
     path: '/actividad',
-    element: <Actividad/>
+    element: <ProtectedUser><Actividad/></ProtectedUser>
   },
   {
     path: '/transferir',
-    element: <Transferir/>
+    element: <ProtectedUser><Transferir/></ProtectedUser>
   },
   {
     path: '/tutarjeta',
-    element: <Register/>
+    element: <ProtectedUser><TuTarjeta/></ProtectedUser>
   },
   {
     path: '*',
-    element: <NotFound/>
+    element: <ProtectedUser><NotFound/></ProtectedUser>
   },
 
   

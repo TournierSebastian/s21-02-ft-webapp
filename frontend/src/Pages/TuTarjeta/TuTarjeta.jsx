@@ -1,5 +1,5 @@
 import React from 'react'
-import 'TuTarjeta.css'
+import './TuTarjeta.css'
 import Navbar from '../../components/navbar/userNavbar'
 const TuTarjeta = () => {
   return (
