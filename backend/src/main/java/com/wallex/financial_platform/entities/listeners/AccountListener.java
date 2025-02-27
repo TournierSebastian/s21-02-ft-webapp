@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.wallex.financial_platform.entities.Account;
-import com.wallex.financial_platform.entities.Transaction;
 import com.wallex.financial_platform.entities.enums.TransactionStatus;
 
 import com.wallex.financial_platform.entities.enums.TransactionType;
@@ -27,7 +26,6 @@ public class AccountListener {
         account.setUpdatedAt(LocalDateTime.now());
         account.setAvailableBalance(calculateAvailableBalance(balances));
     }
-
 
     private Map<TransactionType, Map<TransactionStatus, BigDecimal>> calculateBalance(Account account) {
         Map<TransactionType, Map<TransactionStatus, BigDecimal>> balances = generateMapping();

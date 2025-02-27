@@ -10,6 +10,6 @@ import java.util.List;
 public interface ICardService {
     CardResponseDTO createCard(RegisterCardRequestDTO cardRequestDTO);
     void deleteCard(Long id);
-    List<CardResponseDTO> getAllCards();
+    List<CardResponseDTO> getAllCardsByUserOnline();
     List<CardResponseDTO> getCardsByUserDni(DniRequestDTO dniRequestDTO);
 }

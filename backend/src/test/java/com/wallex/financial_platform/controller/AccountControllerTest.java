@@ -94,7 +94,8 @@ class AccountControllerTest {
                 account.getCbu(),
                 account.getAlias(),
                 account.getCurrency(),
-                account.getAvailableBalance()
+                account.getAvailableBalance(),
+                account.getTransactionTypeBalances()
         );
     }
 }

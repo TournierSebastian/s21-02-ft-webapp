@@ -1,13 +1,15 @@
 package com.wallex.financial_platform.controllers;
 
-import java.util.List;
+import java.util.Date;
 
+import com.wallex.financial_platform.dtos.requests.TransactionRequestDTO;
 import com.wallex.financial_platform.dtos.responses.TransactionResponseDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.wallex.financial_platform.entities.enums.TransactionStatus;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.PastOrPresent;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.wallex.financial_platform.entities.Transaction;
 import com.wallex.financial_platform.services.impl.TransactionService;
 
 import lombok.AllArgsConstructor;
@@ -22,4 +24,11 @@ public class TransactionController {
     public ResponseEntity<TransactionResponseDTO> getById(@PathVariable Long id) {
         return ResponseEntity.ok(transactionService.getById(id));
     }
+
+    @PostMapping
+    public ResponseEntity<TransactionResponseDTO> save(@RequestBody @Valid TransactionRequestDTO transaction) {
+        System.out.println(transaction);
+        return ResponseEntity.ok(transactionService.save(transaction));
+    }
+
 }

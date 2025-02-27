@@ -65,7 +65,7 @@ public class TransactionRepositoryTest {
                 foundUser = Optional.of(userRepository.save(account.getUser()));
             }
             account.setUser(foundUser.get());
-            Optional<Account> foundAccount = accountRepository.findByCbu(account.getCbu());
+            Optional<Account> foundAccount = accountRepository.findByCbuOrAlias(account.getCbu(), account.getAlias());
             if (!foundAccount.isPresent()) {
                 account.setAccountId(null);
                 account.setSourceTransactions(new ArrayList<>());
@@ -131,7 +131,6 @@ public class TransactionRepositoryTest {
         });
 
         Account updatedAccount = accountRepository.findById(savedAccount1.getAccountId()).orElse(null);
-        System.out.println(updatedAccount.toString());
 
         Map<TransactionType, Map<TransactionStatus, BigDecimal>> sampleBalance = calculateBalance(sampleAccount1);
 
