@@ -7,6 +7,7 @@ import com.wallex.financial_platform.dtos.requests.AccountRequestDTO;
 import com.wallex.financial_platform.dtos.requests.CheckAccountRequestDto;
 import com.wallex.financial_platform.dtos.responses.AccountResponseDTO;
 import com.wallex.financial_platform.dtos.responses.CheckAccountResponseDTO;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;

@@ -55,7 +55,7 @@ public class CardService implements ICardService {
 
         return convertToDTO(card);
     }
-
+    
     @Override
     public List<CardResponseDTO> getCardsByUserDni(DniRequestDTO dniRequestDTO) {
         User user = this.userRepository.findByDni(dniRequestDTO.dni())

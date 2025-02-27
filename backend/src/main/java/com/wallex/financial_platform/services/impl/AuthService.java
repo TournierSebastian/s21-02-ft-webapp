@@ -2,6 +2,7 @@ package com.wallex.financial_platform.services.impl;
 
 import com.wallex.financial_platform.dtos.requests.LoginRequestDTO;
 import com.wallex.financial_platform.dtos.requests.RegisterUserRequestDTO;
+import com.wallex.financial_platform.dtos.responses.AuthResponseDTO;
 import com.wallex.financial_platform.dtos.responses.UserResponseDTO;
 import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.exceptions.auth.InvalidCredentialsException;
@@ -11,7 +12,6 @@ import com.wallex.financial_platform.repositories.UserRepository;
 import com.wallex.financial_platform.services.IAuthService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -25,6 +25,7 @@ public class AuthService implements IAuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
+    private User user;
 
     @Override
     @Transactional
@@ -52,7 +53,7 @@ public class AuthService implements IAuthService {
     }
 
     @Override
-    public String login(LoginRequestDTO loginRequestDTO) {
+    public AuthResponseDTO login(LoginRequestDTO loginRequestDTO) {
         User user = this.userRepository.findByEmail(loginRequestDTO.email())
                 .orElseThrow(() -> new UserNotFoundException("Usuario no encontrado"));
 
@@ -60,7 +61,9 @@ public class AuthService implements IAuthService {
             throw new InvalidCredentialsException("Credenciales incorrectas");
         }
 
-        return jwtUtil.generateToken(user.getEmail());
+        String token = jwtUtil.generateToken(user.getEmail());
+
+        return new  AuthResponseDTO(token,user.getFullName(), user.getEmail());
     }
 
 

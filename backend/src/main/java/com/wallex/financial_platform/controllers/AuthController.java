@@ -2,6 +2,7 @@ package com.wallex.financial_platform.controllers;
 
 import com.wallex.financial_platform.dtos.requests.LoginRequestDTO;
 import com.wallex.financial_platform.dtos.requests.RegisterUserRequestDTO;
+import com.wallex.financial_platform.dtos.responses.AuthResponseDTO;
 import com.wallex.financial_platform.dtos.responses.UserResponseDTO;
 import com.wallex.financial_platform.services.impl.AuthService;
 import jakarta.validation.Valid;
@@ -24,8 +25,8 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody @Valid LoginRequestDTO loginRequestDTO) {
-        String login = authService.login(loginRequestDTO);
+    public ResponseEntity<AuthResponseDTO> login(@RequestBody @Valid LoginRequestDTO loginRequestDTO) {
+        AuthResponseDTO login = authService.login(loginRequestDTO);
         return ResponseEntity.ok(login);
     }
 
