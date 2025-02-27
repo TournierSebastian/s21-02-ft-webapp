@@ -8,6 +8,7 @@ import com.wallex.financial_platform.dtos.requests.AccountRequestDTO;
 import com.wallex.financial_platform.dtos.requests.CheckAccountRequestDto;
 import com.wallex.financial_platform.dtos.responses.AccountResponseDTO;
 import com.wallex.financial_platform.dtos.responses.CheckAccountResponseDTO;
+import jakarta.annotation.security.RolesAllowed;
 import com.wallex.financial_platform.dtos.responses.TransactionResumeResponseDTO;
 import com.wallex.financial_platform.entities.enums.TransactionStatus;
 import jakarta.validation.Valid;
