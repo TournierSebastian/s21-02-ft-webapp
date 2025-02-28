@@ -11,7 +11,6 @@ import com.wallex.financial_platform.dtos.responses.CheckAccountResponseDTO;
 import com.wallex.financial_platform.dtos.responses.TransactionResumeResponseDTO;
 import com.wallex.financial_platform.entities.Transaction;
 import com.wallex.financial_platform.entities.User;
-import com.wallex.financial_platform.entities.enums.TransactionStatus;
 import com.wallex.financial_platform.exceptions.AccountErrorException;
 import com.wallex.financial_platform.exceptions.AccountNotFoundException;
 import com.wallex.financial_platform.services.IAccountService;
@@ -75,7 +74,7 @@ public class AccountService implements IAccountService {
         Account newAccount = Account.builder()
                 .currency(accountReq.currency())
                 .cbu(faker.numerify("CBU000"+"0351"+"Ø"+"000000#######"+"Ø"))
-                .alias(faker.animal().name()+"."+faker.construction().materials()+"."+faker.commerce().material())
+                .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.commerce().material()).toLowerCase())
                 .user(user)
                 .sourceTransactions(new ArrayList<>())
                 .destinationTransactions(new ArrayList<>())
