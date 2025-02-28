@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import Toastify from "toastify-js"; 
 import { AuthUserService } from "../../Services/AuthUserService";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 
 
@@ -22,11 +22,17 @@ const Uselogin = () =>{
                 navigate('/Home')
             
                 return;
-
              }
+             
 
-        }catch{
+        }catch(error){
+            if(error.status == 404){
+                return 'Usuario o contraseña incorrectas';
+            }
 
+            if(error.status == 500){
+                return 'Error en el sisetma';
+            }
         }
 
     }

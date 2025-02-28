@@ -10,15 +10,18 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [Validations, SetValidations] = useState(false);
   const {UseloginUser} = Uselogin();
+  const [Login, SetLogin] = useState('')
+  const isValidEmail = (email) => /\S+@\S+\.\S+/.test(email);
 
   const hanlderlogin = (e) =>{
     e.preventDefault();
-    if(email === '' || password === ''){
+    
+    if (!email || !password || !isValidEmail(email)) {
       SetValidations(true)
       return
     }
 
-    UseloginUser(email, password)
+    SetLogin(UseloginUser(email, password));
 
   }
   return (
@@ -48,7 +51,7 @@ const Login = () => {
               <label className=' text-white text-lg'>Correo Electronico</label>
               <input type='text ' className="w-full bg-WhiteBlack text-Gray p-2 pr-10 rounded-md border focus:outline-none" placeholder='Ingrese correo electronico '  onChange={(e)=>(setEmail(e.target.value))}
               ></input>
-              {(Validations && email === '') && <p className=' text-red-500 text-sm font-bold mt-1'>Ingrese una contraseña</p> }
+                {(Validations && (!email || !isValidEmail(email))) && <p className='text-red-500 text-sm font-bold mt-1'>Ingrese un correo válido</p>}
 
               <label className=' text-white  text-lg'>Contraseña</label>
               <div className="relative w-full">
@@ -64,6 +67,7 @@ const Login = () => {
               </div>
               {(Validations && password === '') && <p className=' text-red-500 text-sm font-bold mt-1'>Ingrese una contraseña</p> }
               <button className='bg-LightGolden w-1/2 mx-auto my-10 p-2 rounded-3xl text-2xl  hover:bg-DarkGolden' onClick={hanlderlogin}>Ingresar</button>
+              {Login && <p className='text-red-500'>{Login}</p>}
             </div>
             </form>
           </div>

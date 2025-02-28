@@ -12,6 +12,7 @@ import { AuthProvider } from './Context/AuthContext.jsx'
 import RedirectIfAuthenticated from './RouteProtection/RedirectIfAuthenticated.jsx'
 import ProtectedUser from './RouteProtection/ProtectedUser.jsx'
 import TuTarjeta from './Pages/TuTarjeta/TuTarjeta.jsx'
+import TuReserva from './Pages/TuReserva/TuReserva.jsx'
 
 const  router = createBrowserRouter([
   {
@@ -44,6 +45,11 @@ const  router = createBrowserRouter([
   {
     path: '/tutarjeta',
     element: <ProtectedUser><TuTarjeta/></ProtectedUser>
+  },
+  ,
+  {
+    path: '/tureserva',
+    element: <ProtectedUser><TuReserva/></ProtectedUser>
   },
   {
     path: '*',
