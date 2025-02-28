@@ -5,7 +5,7 @@ import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.entities.enums.CurrencyType;
 import com.wallex.financial_platform.repositories.AccountRepository;
 import com.wallex.financial_platform.repositories.UserRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AccountDataLoader {
 
     private final AccountRepository accountRepository;
@@ -30,7 +30,7 @@ public class AccountDataLoader {
 
         // Crear las cuentas para el usuario 1
         Account account1 = Account.builder()
-                .accountId(null) // ID se genera automáticamente
+                .accountId(null) //
                 .cbu("CBU123456789012345678901234") // CBU único
                 .alias("Alias1") // Alias único
                 .availableBalance(new BigDecimal(1000)) // Saldo disponible

@@ -7,13 +7,14 @@ import com.wallex.financial_platform.entities.enums.NotificationType;
 import com.wallex.financial_platform.repositories.NotificationRepository;
 import com.wallex.financial_platform.repositories.UserRepository;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class NotificationDataLoader {
 
     private final NotificationRepository notificationRepository;
