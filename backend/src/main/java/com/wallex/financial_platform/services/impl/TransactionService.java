@@ -25,6 +25,7 @@ import com.wallex.financial_platform.entities.Transaction;
 import com.wallex.financial_platform.repositories.TransactionRepository;
 
 import lombok.AllArgsConstructor;
+
 @Slf4j
 @Service
 @AllArgsConstructor
@@ -32,6 +33,7 @@ public class TransactionService implements ITransactionService {
     private TransactionRepository transactionRepository;
     private AccountRepository accountRepository;
     private UserContextService userContextService;
+    private MovementService movementService;
 
     @Override
     @SneakyThrows
@@ -71,10 +73,12 @@ public class TransactionService implements ITransactionService {
         } else {
             transaction.setStatus(TransactionStatus.PENDING);
         }
-        return mapToDTO(transactionRepository.save(transaction));
+        Transaction newTransaction = transactionRepository.save(transaction);
+        movementService.save(newTransaction);
+        return mapToDTO(newTransaction);
     }
 
-    private TransactionResponseDTO mapToDTO(Transaction transaction) {
+    public TransactionResponseDTO mapToDTO(Transaction transaction) {
         return new TransactionResponseDTO(
                 transaction.getTransactionId(),
                 mapToDTO(transaction.getSourceAccount()),
