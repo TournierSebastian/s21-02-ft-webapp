@@ -3,6 +3,7 @@ package com.wallex.financial_platform.exceptions;
 import com.wallex.financial_platform.exceptions.auth.InvalidCredentialsException;
 import com.wallex.financial_platform.exceptions.auth.UserAlreadyExistsException;
 import com.wallex.financial_platform.exceptions.auth.UserNotFoundException;
+import com.wallex.financial_platform.exceptions.card.CardAlreadyExistsException;
 import com.wallex.financial_platform.exceptions.card.CardNotFoundException;
 import com.wallex.financial_platform.exceptions.card.UnauthorizedCardDeletionException;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,12 @@ public class GlobalExceptionHandler {
     // ⚠️ Manejo de tarjeta no encontrada
     @ExceptionHandler(CardNotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleCardNotFoundException(CardNotFoundException ex) {
+        return buildResponseEntity(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    // ⚠️ Manejo de duplicado de tarjeta
+    @ExceptionHandler(CardAlreadyExistsException.class)
+    public ResponseEntity<Map<String, Object>> handleCardAlreadyExistsException(CardAlreadyExistsException ex) {
         return buildResponseEntity(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 

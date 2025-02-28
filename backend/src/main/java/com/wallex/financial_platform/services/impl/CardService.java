@@ -35,7 +35,11 @@ public class CardService implements ICardService {
     @Override
     @Transactional
     public CardResponseDTO createCard(RegisterCardRequestDTO cardRequestDTO) {
-        if (this.cardRepository.existsByEncryptedNumber(cardRequestDTO.encryptedNumber())) {
+        // Encripta el número de tarjeta una sola vez
+        String encryptedNumber = encryptionService.encrypt(cardRequestDTO.encryptedNumber());
+
+        // Verifica si el número de tarjeta ya existe en el repositorio
+        if (this.cardRepository.existsByEncryptedNumber(encryptedNumber)) {
             throw new CardAlreadyExistsException("La tarjeta ya existe en el sistema");
         }
 
