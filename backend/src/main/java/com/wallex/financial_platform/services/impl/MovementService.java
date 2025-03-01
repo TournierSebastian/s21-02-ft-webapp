@@ -7,6 +7,8 @@ import com.wallex.financial_platform.entities.Account;
 import com.wallex.financial_platform.entities.Movement;
 import com.wallex.financial_platform.entities.Transaction;
 import com.wallex.financial_platform.entities.User;
+import com.wallex.financial_platform.exceptions.AccountNotFoundException;
+import com.wallex.financial_platform.exceptions.MovementNotFoundException;
 import com.wallex.financial_platform.repositories.MovementRepository;
 import com.wallex.financial_platform.services.IMovementService;
 import com.wallex.financial_platform.services.utils.UserContextService;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -31,14 +34,26 @@ public class MovementService implements IMovementService {
     }
 
     @Override
-    public List<MovementResponseDTO> getMovements(Long accountId) {
+    public MovementResponseDTO getMovementById(Long movementId) {
         User user = this.userContextService.getAuthenticatedUser();
-        Account srcAccount = user.getAccounts().stream()
-                .filter(acc -> Objects.equals(acc.getAccountId(), accountId))
-                .toList().getFirst();
+        List<Movement> movementList = user.getAccounts().stream()
+                .map(Account::getMovements).toList()
+                .stream()
+                .flatMap(List::stream)
+                .toList();
+        return mapToDto(movementList.stream()
+                .filter(mov -> Objects.equals(mov.getMovementId(), movementId))
+                .findFirst().orElseThrow(()-> new MovementNotFoundException("Movement not found")));
+    }
 
-        return srcAccount.getMovements().stream()
-                .map(this::mapToDto).toList();
+    @Override
+    public List<MovementResponseDTO> getUserAccountMovements(Long accountId) {
+        User user = this.userContextService.getAuthenticatedUser();
+        Account account = user.getAccounts().stream()
+                .filter(acc -> acc.getAccountId() == accountId)
+                .toList().stream().findAny()
+                .orElseThrow(()-> new AccountNotFoundException("Account not found"));
+        return account.getMovements().stream().map(this::mapToDto).toList();
     }
 
     private Movement mapToEntity(Transaction transaction){

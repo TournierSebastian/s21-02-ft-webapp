@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface IMovementService {
     MovementResponseDTO save(Transaction transaction);
-    List<MovementResponseDTO> getMovements(Long accountId);
+    MovementResponseDTO getMovementById(Long movementId);
+    List<MovementResponseDTO> getUserAccountMovements(Long accountId);
 }

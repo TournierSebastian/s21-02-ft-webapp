@@ -5,6 +5,7 @@ import com.wallex.financial_platform.exceptions.auth.UserAlreadyExistsException;
 import com.wallex.financial_platform.exceptions.auth.UserNotFoundException;
 import com.wallex.financial_platform.exceptions.card.CardNotFoundException;
 import com.wallex.financial_platform.exceptions.card.UnauthorizedCardDeletionException;
+import com.wallex.financial_platform.exceptions.transaction.InsufficientFundsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -45,6 +46,17 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(TransactionNotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleTransactionNotFoundException(TransactionNotFoundException ex) {
         return buildResponseEntity(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+    // ⚠️ Manejo de Movement no encontrado
+    @ExceptionHandler(MovementNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleMovementNotFoundException(MovementNotFoundException ex) {
+        return buildResponseEntity(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    // ⚠️ Manejo de validaciones cuando no hay saldo suficiente
+    @ExceptionHandler(InsufficientFundsException.class)
+    public ResponseEntity<Map<String, Object>> handleInsufficientFundException(InsufficientFundsException ex) {
+        return buildResponseEntity(HttpStatus.CONFLICT, ex.getMessage());
     }
 
     // ⚠️ Manejo de validaciones en Transaction Service

@@ -9,10 +9,11 @@ import java.util.Map;
 
 
 public record AccountResponseDTO(
+        Long accountId,
         String cbu,
         String alias,
         CurrencyType currency,
         BigDecimal balance,
-        Map<TransactionType, Map<TransactionStatus, BigDecimal>> details
+        BigDecimal reservedBalance
 ) {}
 
