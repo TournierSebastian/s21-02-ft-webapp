@@ -6,13 +6,13 @@ import java.util.stream.Stream;
 
 import com.wallex.financial_platform.dtos.requests.AccountRequestDTO;
 import com.wallex.financial_platform.dtos.requests.CheckAccountRequestDto;
-import com.wallex.financial_platform.dtos.responses.AccountResponseDTO;
-import com.wallex.financial_platform.dtos.responses.CheckAccountResponseDTO;
-import com.wallex.financial_platform.dtos.responses.TransactionResumeResponseDTO;
+import com.wallex.financial_platform.dtos.responses.*;
+import com.wallex.financial_platform.entities.Reservation;
 import com.wallex.financial_platform.entities.Transaction;
 import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.exceptions.AccountErrorException;
 import com.wallex.financial_platform.exceptions.AccountNotFoundException;
+import com.wallex.financial_platform.repositories.ReservationRepository;
 import com.wallex.financial_platform.services.IAccountService;
 import com.wallex.financial_platform.services.utils.AccountServiceHelper;
 import com.wallex.financial_platform.services.utils.UserContextService;
@@ -31,8 +31,10 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class AccountService implements IAccountService {
     private AccountRepository accountRepository;
+    private ReservationRepository reservationRepository;
     private UserContextService userContextService;
     private AccountServiceHelper accountServiceHelper;
+    private MovementService movementService;
 
     @SneakyThrows
     public AccountResponseDTO getAccountById(Long id) {
@@ -41,12 +43,9 @@ public class AccountService implements IAccountService {
     }
     @SneakyThrows
     public List<AccountResponseDTO> getByUser() {
-        User user = this.userContextService.getAuthenticatedUser();
-
-        List<Account> findUserAccounts = accountRepository.findByUserId(user.getId());
-        return findUserAccounts.stream().map(account ->
-            this.getAccountById(account.getAccountId())
-        ).toList();
+        User user = userContextService.getAuthenticatedUser();
+        List<Account> accountList = user.getAccounts();
+        return accountList.stream().map(this::mapToDTO).toList();
     }
 
     @Override
@@ -94,13 +93,22 @@ public class AccountService implements IAccountService {
         return transactions.stream().map(tran -> mapToDTO(tran, account)).toList();
     }
 
+    public List<ReservationResponseDto> getReservations(Long id) {
+        Account account = accountRepository.findById(id)
+                .orElseThrow(()-> new AccountNotFoundException("Account not found"));
+        List<Reservation> reservationList = account.getReservations();
+        return reservationList.stream().map(this::mapToDTO).toList();
+    }
+
+
     private AccountResponseDTO mapToDTO(Account account) {
         return new AccountResponseDTO(
+                account.getAccountId(),
                 account.getCbu(),
                 account.getAlias(),
                 account.getCurrency(),
                 account.getAvailableBalance(),
-                account.getTransactionTypeBalances()
+                account.getReservedBalance()
         );
     }
     private CheckAccountResponseDTO mapToCheckDTO(Account account) {
@@ -127,6 +135,16 @@ public class AccountService implements IAccountService {
                         : transaction.getAmount(),
                 transaction.getReason(),
                 String.format("/api/transactions/%s", transaction.getTransactionId())
+        );
+    }
+    private ReservationResponseDto mapToDTO(Reservation reserve) {
+        return new ReservationResponseDto(
+                reserve.getReservationId(),
+                reserve.getAccount().getAccountId(),
+                reserve.getReservedAmount(),
+                reserve.getCreationDate(),
+                reserve.getStatus(),
+                reserve.getDescription()
         );
     }
 }

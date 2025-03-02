@@ -145,14 +145,16 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
+					<environmentVariables>
+						<DB_HOST>jdbc:mysql://localhost:3306/wallex_db?createDatabaseIfNotExist=true&amp;serverTimezone=UTC</DB_HOST>
+						<DB_USER>root</DB_USER>
+						<DB_PASSWORD>admin</DB_PASSWORD>
+						<JWT_SECRET_KEY>SECRETOMUYSEGURODEMASDE256BITS...........</JWT_SECRET_KEY>
+						<MAIL_USERNAME>romero474747@gmail.com</MAIL_USERNAME>
+						<MAIL_PASSWORD>fqae urem gitx udre</MAIL_PASSWORD>
+					</environmentVariables>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>com.heroku.sdk</groupId>
-				<artifactId>heroku-maven-plugin</artifactId>
-				<version>3.0.3</version>
-			</plugin>
-
 		</plugins>
 	</build>
 
