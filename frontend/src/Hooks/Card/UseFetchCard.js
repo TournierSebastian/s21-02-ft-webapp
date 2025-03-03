@@ -3,7 +3,7 @@ import CardService from "../../Services/CardService";
 
 const UseFecthCard = () =>{
     const {FetchCardService} = CardService();
-    const FecthCarduser = async ()=>{
+    const FetchCarduser = async ()=>{
             const data = await FetchCardService();
 
             if(data.status == 200){
@@ -16,7 +16,7 @@ const UseFecthCard = () =>{
 
     };
 
-    return {FecthCarduser};
+    return {FetchCarduser};
 
 }
 export default UseFecthCard;

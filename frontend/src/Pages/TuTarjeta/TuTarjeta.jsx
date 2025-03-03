@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import './TuTarjeta.css';
 import Navbar from '../../components/navbar/userNavbar';
-import UseFecthCard from '../../Hooks/Card/UseFecthCard';
+import UseFetchCard from '../../Hooks/Card/UseFetchCard';
 import Mastercard from '../../assets/Icons/Mastercard.png';
 import logo from '../../assets/Icons/Logo.png';
 
 const TuTarjeta = () => {
-  const { FecthCarduser } = UseFecthCard();
+  const { FetchCarduser } = UseFetchCard();
   const [Card, SetCard] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await FecthCarduser();
+      const data = await FetchCarduser();
       SetCard(data);
     };
 

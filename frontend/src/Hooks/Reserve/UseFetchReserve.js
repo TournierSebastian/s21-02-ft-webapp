@@ -1,14 +1,14 @@
 import ReserveService from "../../Services/ReserveService";
 
 const UseFecthReserve = () =>{
-    const {FecthReserveService} = ReserveService();
-    const FecthReserve = async() =>{
+    const {FetchReserveService} = ReserveService();
+    const FetchReserve = async() =>{
 
-        const response = FecthReserveService();
+        const response = FetchReserveService();
 
         return response;
         
     }
-    return {FecthReserve}
+    return {FetchReserve}
 }
 export default UseFecthReserve;
