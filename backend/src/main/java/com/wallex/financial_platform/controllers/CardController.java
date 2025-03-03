@@ -40,4 +40,11 @@ public class CardController {
         cardService.deleteCard(cardId);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/types")
+    public ResponseEntity<List<String>> getCardTypes() {
+        List<String>cardTypes = this.cardService.getAllCardTypes();
+        return ResponseEntity.ok(cardTypes);
+    }
+
 }

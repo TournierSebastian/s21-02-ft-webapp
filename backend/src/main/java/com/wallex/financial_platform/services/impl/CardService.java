@@ -5,6 +5,7 @@ import com.wallex.financial_platform.dtos.requests.DniRequestDTO;
 import com.wallex.financial_platform.dtos.responses.CardResponseDTO;
 import com.wallex.financial_platform.entities.Card;
 import com.wallex.financial_platform.entities.User;
+import com.wallex.financial_platform.entities.enums.CardType;
 import com.wallex.financial_platform.exceptions.auth.UserNotFoundException;
 import com.wallex.financial_platform.exceptions.card.CardAlreadyExistsException;
 import com.wallex.financial_platform.exceptions.card.CardNotFoundException;
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -74,6 +76,13 @@ public class CardService implements ICardService {
             throw new CardNotFoundException("No se encontraron tarjetas asociadas a este usuario.");
         }
         return mapCardsToDTOs(cards);
+    }
+
+    @Override
+    public List<String> getAllCardTypes() {
+        return Arrays.stream(CardType.values())
+                .map(Enum::name)
+                .collect(Collectors.toList());
     }
 
     @Override
