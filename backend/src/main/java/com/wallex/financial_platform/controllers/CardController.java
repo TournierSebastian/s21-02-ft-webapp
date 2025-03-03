@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/card")
+@RequestMapping("/api/cards")
 @RequiredArgsConstructor
 public class CardController {
     private final CardService cardService;
 
-    @GetMapping("/by-user")
+    @GetMapping
     public ResponseEntity<List<CardResponseDTO>> getAllCardsByUserOnline() {
         List<CardResponseDTO> response = this.cardService.getAllCardsByUserOnline();
         return ResponseEntity.ok(response);

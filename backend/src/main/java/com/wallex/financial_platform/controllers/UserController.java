@@ -2,21 +2,17 @@ package com.wallex.financial_platform.controllers;
 
 import com.wallex.financial_platform.dtos.requests.DniRequestDTO;
 import com.wallex.financial_platform.dtos.requests.EmailRequestDTO;
-import com.wallex.financial_platform.dtos.responses.CardResponseDTO;
 import com.wallex.financial_platform.dtos.responses.UserResponseDTO;
-import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.services.impl.CardService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.wallex.financial_platform.services.impl.UserService;
 import lombok.AllArgsConstructor;
 import java.util.List;
-import java.util.Map;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/users")
 @AllArgsConstructor
 
 public class UserController {
@@ -24,8 +20,8 @@ public class UserController {
     private final CardService cardService;
 
     @GetMapping
-    public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
-        List<UserResponseDTO> response = userService.getAllUsers();
+    public ResponseEntity<List<UserResponseDTO>> getUserOnline() {
+        List<UserResponseDTO> response = userService.getUserOnline();
         return ResponseEntity.ok(response);
     }
 
