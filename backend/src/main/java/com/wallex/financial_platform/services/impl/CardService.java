@@ -58,9 +58,9 @@ public class CardService implements ICardService {
 
         this.cardRepository.save(card);
 
-        notificationService.sendEmailNotification(user,
-                "Notificación de Cuenta",
-                "Se ha realizado un cambio en su cuenta.");
+        notificationService.notifyUser(user,
+                "✨ Tarjeta registrada con éxito en tu cuenta",
+                "🎉 ¡Tu tarjeta ha sido agregada correctamente! Ahora puedes gestionar tus pagos y consultar tu saldo desde nuestra plataforma.\n\nSi necesitas asistencia, no dudes en contactarnos.");
 
         return convertToDTO(card);
     }
