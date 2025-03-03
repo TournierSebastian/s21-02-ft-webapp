@@ -6,6 +6,7 @@ import com.wallex.financial_platform.exceptions.auth.UserNotFoundException;
 import com.wallex.financial_platform.exceptions.card.CardAlreadyExistsException;
 import com.wallex.financial_platform.exceptions.card.CardNotFoundException;
 import com.wallex.financial_platform.exceptions.card.UnauthorizedCardDeletionException;
+import com.wallex.financial_platform.exceptions.notification.NotificationException;
 import com.wallex.financial_platform.exceptions.transaction.InsufficientFundsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -88,6 +89,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UnauthorizedCardDeletionException.class)
     public ResponseEntity<Map<String, Object>> handleUnauthorizedCardDeletionException(UnauthorizedCardDeletionException ex) {
         return buildResponseEntity(HttpStatus.FORBIDDEN, ex.getMessage());
+    }
+
+    // ⚠️ Manejo de intento de notificar al usuario
+    @ExceptionHandler(NotificationException.class)
+    public ResponseEntity<String> handleNotificationException(NotificationException ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al enviar notificación: " + ex.getMessage());
     }
 
     // ✅ Método reutilizable para errores de validación

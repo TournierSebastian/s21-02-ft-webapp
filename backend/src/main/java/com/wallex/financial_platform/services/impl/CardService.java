@@ -60,7 +60,7 @@ public class CardService implements ICardService {
 
         notificationService.notifyUser(user,
                 "✨ Tarjeta registrada con éxito en tu cuenta",
-                "🎉 ¡Tu tarjeta ha sido agregada correctamente! Ahora puedes gestionar tus pagos y consultar tu saldo desde nuestra plataforma.\n\nSi necesitas asistencia, no dudes en contactarnos.");
+                "🎉 ¡Tu tarjeta ha sido agregada correctamente! Ahora puedes gestionar tus pagos y consultar tu saldo desde nuestra plataforma.");
 
         return convertToDTO(card);
     }
