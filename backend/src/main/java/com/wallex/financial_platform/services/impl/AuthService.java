@@ -1,10 +1,12 @@
 package com.wallex.financial_platform.services.impl;
 
+import com.wallex.financial_platform.dtos.requests.AccountRequestDTO;
 import com.wallex.financial_platform.dtos.requests.LoginRequestDTO;
 import com.wallex.financial_platform.dtos.requests.RegisterUserRequestDTO;
 import com.wallex.financial_platform.dtos.responses.AuthResponseDTO;
 import com.wallex.financial_platform.dtos.responses.UserResponseDTO;
 import com.wallex.financial_platform.entities.User;
+import com.wallex.financial_platform.entities.enums.CurrencyType;
 import com.wallex.financial_platform.exceptions.auth.InvalidCredentialsException;
 import com.wallex.financial_platform.exceptions.auth.UserAlreadyExistsException;
 import com.wallex.financial_platform.exceptions.auth.UserNotFoundException;
@@ -22,6 +24,7 @@ import com.wallex.financial_platform.configs.auth.JwtUtil;
 @RequiredArgsConstructor
 public class AuthService implements IAuthService {
 
+    private final AccountService accountService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
@@ -45,6 +48,10 @@ public class AuthService implements IAuthService {
         user.setActive(true);
 
         this.userRepository.save(user);
+
+        // crea automaticamente una cuenta en pesos ARG despues del registro
+        AccountRequestDTO newAccount = new AccountRequestDTO(CurrencyType.ARS, null,null);
+        accountService.createAccount(newAccount);
 
         return new UserResponseDTO(
                 user.getId(), user.getFullName(), user.getDni(), user.getEmail(),

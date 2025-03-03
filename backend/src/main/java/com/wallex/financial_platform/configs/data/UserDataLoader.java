@@ -3,6 +3,7 @@ package com.wallex.financial_platform.configs.data;
 import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import net.datafaker.Faker;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,8 @@ public class UserDataLoader {
     private final BCryptPasswordEncoder passwordEncoder;
 
     public void load() {
+        Faker faker = new Faker();
+
         // Crear usuarios con contraseñas encriptadas
         User user1 = new User(
                 null, // ID generado automáticamente
@@ -93,8 +96,38 @@ public class UserDataLoader {
                 null
         );
 
+        User user6 = new User(
+                null,
+                "MERCADO PAGO SERVICIOS DE PROCESAMIENTO S.R.L",
+                "71699949",
+                "support@mercadopago.com",
+                faker.numerify("+54##########"),
+                passwordEncoder.encode("password345"), // Contraseña encriptada
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                false,
+                null,
+                null,
+                null
+        );
+
+        User user7 = new User(
+                null,
+                "Tesoreria Wallex",
+                "71221356",
+                "tesoreria@wallex.com",
+                faker.numerify("+54##########"),
+                passwordEncoder.encode("qwertyui"), // Contraseña encriptada
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                false,
+                null,
+                null,
+                null
+        );
+
         // Guardar los usuarios en la base de datos
-        userRepository.saveAll(List.of(user1, user2, user3, user4, user5));
+        userRepository.saveAll(List.of(user1, user2, user3, user4, user5, user6, user7));
     }
 
 }

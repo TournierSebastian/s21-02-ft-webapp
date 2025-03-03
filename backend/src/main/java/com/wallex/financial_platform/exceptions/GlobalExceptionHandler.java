@@ -1,5 +1,6 @@
 package com.wallex.financial_platform.exceptions;
 
+import com.mercadopago.exceptions.MPException;
 import com.wallex.financial_platform.exceptions.auth.InvalidCredentialsException;
 import com.wallex.financial_platform.exceptions.auth.UserAlreadyExistsException;
 import com.wallex.financial_platform.exceptions.auth.UserNotFoundException;
@@ -68,6 +69,12 @@ public class GlobalExceptionHandler {
     // ⚠️ Manejo de usuario ya existente
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<Map<String, Object>> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
+        return buildResponseEntity(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
+    // ⚠️ Manejo de usuario ya existente
+    @ExceptionHandler(MPException.class)
+    public ResponseEntity<Map<String, Object>> handleUserAlreadyExistsException(MPException ex) {
         return buildResponseEntity(HttpStatus.CONFLICT, ex.getMessage());
     }
 

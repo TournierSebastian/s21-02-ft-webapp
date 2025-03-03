@@ -11,7 +11,7 @@ public record AccountRequestDTO(
         CurrencyType currency,
 
         @JsonProperty(required = false)
-        @Size(min =22, message="El alias debe tener al menos 22 caracteres")
+        @Size(min =22, message="El Cbu debe tener al menos 22 caracteres")
         String cbu,
 
         @JsonProperty(required = false)
