@@ -5,16 +5,16 @@ import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.entities.enums.CurrencyType;
 import com.wallex.financial_platform.repositories.AccountRepository;
 import com.wallex.financial_platform.repositories.UserRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import net.datafaker.Faker;
 import org.springframework.stereotype.Component;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AccountDataLoader {
 
     private final AccountRepository accountRepository;
@@ -22,118 +22,150 @@ public class AccountDataLoader {
 
     public void load() {
         // Obtener algunos usuarios para asociar con las cuentas
-        User user1 = userRepository.findById(1L).orElseThrow();
-        User user2 = userRepository.findById(2L).orElseThrow();
-        User user3 = userRepository.findById(3L).orElseThrow();
-        User user4 = userRepository.findById(4L).orElseThrow();
-        User user5 = userRepository.findById(5L).orElseThrow();
+
+        List<User> userList = userRepository.findAll();
+
+        Faker faker = new Faker();
+
+        List<Account> accountList = new ArrayList<>();
 
         // Crear las cuentas para el usuario 1
-        Account account1 = Account.builder()
-                .accountId(null) // ID se genera automáticamente
-                .cbu("CBU123456789012345678901234") // CBU único
-                .alias("Alias1") // Alias único
+        accountList.add(
+                Account.builder()
+                .accountId(null)
+                .cbu(faker.numerify("CBU000000"+"0351"+"1"+
+                        "000000000000".substring(0, 12-String.valueOf(accountList.size()+1).length())+(accountList.size()+1)+
+                        "1")
+                ) // CBU único
+                .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.commerce().material()).toLowerCase()) // Alias único
                 .availableBalance(new BigDecimal(1000)) // Saldo disponible
                 .reservedBalance(new BigDecimal(200)) // Saldo reservado
                 .currency(CurrencyType.ARS) // Moneda
                 .active(true)  // Activa
                 .createdAt(LocalDateTime.now()) // Fecha de creación
                 .updatedAt(LocalDateTime.now()) // Fecha de actualización
-                .user(user1) // Relación con el usuario 1
+                .user(userList.get(0)) // Relación con el usuario 1
                 // Puedes omitir o asignar null a los campos opcionales:
-                .reservations(null) // Reservas (vacío si no tienes datos)
-                .movements(null)   // Movimientos (vacío si no tienes datos)
+                .reservations(new ArrayList<>()) // Reservas (vacío si no tienes datos)
+                .movements(new ArrayList<>())   // Movimientos (vacío si no tienes datos)
                 .sourceTransactions(new ArrayList<>()) // Transacciones origen
                 .destinationTransactions(new ArrayList<>()) // Transacciones destino
-                .build();
+                .build()
+        );
 
-        Account account3 = Account.builder()
+
+        accountList.add(
+            Account.builder()
                 .accountId(null)
-                .cbu("CBU111111111111111111111111")
-                .alias("Alias3")
+                .cbu(faker.numerify("CBU000000"+"0351"+"1"+
+                        "000000000000".substring(0, 12-String.valueOf(accountList.size()+1).length())+(accountList.size()+1)+
+                        "1")
+                ) // CBU único
+                .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.commerce().material()).toLowerCase())
                 .availableBalance(new BigDecimal(2500))
                 .reservedBalance(new BigDecimal(500))
                 .currency(CurrencyType.ARS)
                 .active(true)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
-                .user(user2)
-                .reservations(null)
-                .movements(null)
+                .user(userList.get(1))
+                .reservations(new ArrayList<>())
+                .movements(new ArrayList<>())
                 .sourceTransactions(new ArrayList<>())
                 .destinationTransactions(new ArrayList<>())
-                .build();
+                .build()
+        );
 
-        Account account4 = Account.builder()
+        accountList.add(
+            Account.builder()
                 .accountId(null)
-                .cbu("CBU222222222222222222222222")
-                .alias("Alias4")
+                .cbu(faker.numerify("CBU000000"+"0351"+"Ø"+
+                        "000000000000".substring(0, 12-String.valueOf(accountList.size()+1).length())+(accountList.size()+1)+
+                        "Ø")
+                ) // CBU único
+                .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.commerce().material()).toLowerCase())
                 .availableBalance(new BigDecimal(1500))
                 .reservedBalance(new BigDecimal(300))
                 .currency(CurrencyType.ARS)
                 .active(true)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
-                .user(user3)
-                .reservations(null)
-                .movements(null)
+                .user(userList.get(2))
+                .reservations(new ArrayList<>())
+                .movements(new ArrayList<>())
                 .sourceTransactions(new ArrayList<>())
                 .destinationTransactions(new ArrayList<>())
-                .build();
+                .build()
+        );
 
-        Account account2 = Account.builder()
+        accountList.add(
+            Account.builder()
                 .accountId(null)
-                .cbu("CBU987654321098765432109876")
-                .alias("Alias2")
+                .cbu(faker.numerify("CBU000000"+"0351"+"Ø"+
+                        "000000000000".substring(0, 12-String.valueOf(accountList.size()+1).length())+(accountList.size()+1)+
+                        "Ø")
+                ) // CBU único
+                .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.commerce().material()).toLowerCase())
                 .availableBalance(new BigDecimal(5000))
                 .reservedBalance(new BigDecimal(1000))
                 .currency(CurrencyType.ARS)
                 .active(true)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
-                .user(user4)
-                .reservations(null)
-                .movements(null)
+                .user(userList.get(3))
+                .reservations(new ArrayList<>())
+                .movements(new ArrayList<>())
                 .sourceTransactions(new ArrayList<>())
                 .destinationTransactions(new ArrayList<>())
-                .build();
+                .build()
+        );
 
-        Account account5 = Account.builder()
+        accountList.add(
+            Account.builder()
                 .accountId(null)
-                .cbu("CBU333333333333333333333333")
-                .alias("Alias5")
+                .cbu(faker.numerify("CBU000000"+"0351"+"Ø"+
+                        "000000000000".substring(0, 12-String.valueOf(accountList.size()+1).length())+(accountList.size()+1)+
+                        "Ø")
+                ) // CBU único
+                .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.commerce().material()).toLowerCase())
                 .availableBalance(new BigDecimal(3500))
                 .reservedBalance(new BigDecimal(700))
                 .currency(CurrencyType.ARS)
                 .active(true)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
-                .user(user5)
-                .reservations(null)
-                .movements(null)
+                .user(userList.get(4))
+                .reservations(new ArrayList<>())
+                .movements(new ArrayList<>())
                 .sourceTransactions(new ArrayList<>())
                 .destinationTransactions(new ArrayList<>())
-                .build();
+                .build()
+        );
 
-        Account account6 = Account.builder()
+        accountList.add(
+            Account.builder()
                 .accountId(null)
-                .cbu("CBU444444444444444444444444")
-                .alias("Alias6")
+                .cbu(faker.numerify("CBU000000"+"0351"+"Ø"+
+                        "000000000000".substring(0, 12-String.valueOf(accountList.size()+1).length())+(accountList.size()+1)+
+                        "Ø")
+                ) // CBU único
+                .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.commerce().material()).toLowerCase())
                 .availableBalance(new BigDecimal(4500))
                 .reservedBalance(new BigDecimal(900))
                 .currency(CurrencyType.USD)
                 .active(true)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
-                .user(user5)
-                .reservations(null)
-                .movements(null)
+                .user(userList.get(0))
+                .reservations(new ArrayList<>())
+                .movements(new ArrayList<>())
                 .sourceTransactions(new ArrayList<>())
                 .destinationTransactions(new ArrayList<>())
-                .build();
+                .build()
+        );
 
 
         // Guardar las cuentas en el repositorio
-        accountRepository.saveAll(List.of(account1, account2, account3, account4, account5, account6)); // Guardar las cuentas
+        accountRepository.saveAll(accountList); // Guardar las cuentas
     }
 }

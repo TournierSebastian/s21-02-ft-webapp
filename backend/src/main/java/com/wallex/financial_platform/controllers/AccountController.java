@@ -2,15 +2,13 @@ package com.wallex.financial_platform.controllers;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
+
 
 import com.wallex.financial_platform.dtos.requests.AccountRequestDTO;
 import com.wallex.financial_platform.dtos.requests.CheckAccountRequestDto;
-import com.wallex.financial_platform.dtos.responses.AccountResponseDTO;
-import com.wallex.financial_platform.dtos.responses.CheckAccountResponseDTO;
-import jakarta.annotation.security.RolesAllowed;
-import com.wallex.financial_platform.dtos.responses.TransactionResumeResponseDTO;
+import com.wallex.financial_platform.dtos.responses.*;
 import com.wallex.financial_platform.entities.enums.TransactionStatus;
+import com.wallex.financial_platform.services.impl.MovementService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.PastOrPresent;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +23,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class AccountController {
     private AccountService accountService;
+    private MovementService movementService;
 
     @GetMapping
     public ResponseEntity<List<AccountResponseDTO>> getAccounts() {
@@ -56,4 +55,15 @@ public class AccountController {
         return ResponseEntity.ok(accountService.getTransactions(accountId));
     }
 
+    @GetMapping("/{id}/reservations")
+    public ResponseEntity<List<ReservationResponseDto>> getReservations(
+            @PathVariable("id") Long accountId
+            ) {
+        return ResponseEntity.ok(accountService.getReservations(accountId));
+    }
+
+    @GetMapping("/{id}/movements")
+    public ResponseEntity<List<MovementResponseDTO>> getMovementsByAccount(@PathVariable("id") Long accountId){
+        return ResponseEntity.ok(movementService.getUserAccountMovements(accountId));
+    }
 }

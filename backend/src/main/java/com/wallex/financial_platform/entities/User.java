@@ -50,7 +50,7 @@ public class User {
     private Boolean active ;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    //@JsonManagedReference
     private List<Account> accounts;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

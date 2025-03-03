@@ -21,10 +21,10 @@ public class DataLoader {
         return args -> {
             userDataLoader.load();
             accountDataLoader.load();
-           notificationDataLoader.load();
+            notificationDataLoader.load();
             cardDataLoader.load();
-            reservationDataLoader.load();
             transactionDataLoader.load();
+            reservationDataLoader.load();
             movementDataLoader.load();
         };
     }

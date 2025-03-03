@@ -91,11 +91,12 @@ class AccountControllerTest {
 
     private AccountResponseDTO mapToDTO(Account account) {
         return new AccountResponseDTO(
+                account.getAccountId(),
                 account.getCbu(),
                 account.getAlias(),
                 account.getCurrency(),
                 account.getAvailableBalance(),
-                account.getTransactionTypeBalances()
+                account.getReservedBalance()
         );
     }
 }

@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+import java.math.BigDecimal;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -28,10 +29,14 @@ public record RegisterCardRequestDTO(
 
         @NotBlank(message = "El CVV no puede estar vacío")
         @Pattern(regexp = "^\\d{3,4}$", message = "El CVV debe tener 3 o 4 dígitos")
-        String encryptedCvv
+        String encryptedCvv,
+
+        @NotNull(message = "El balance no puede estar vacío")
+        BigDecimal balance
 ) {
     public RegisterCardRequestDTO {
         validateExpirationDate(expirationDate);
+        validateBalance(balance);
     }
 
     private static void validateExpirationDate(String expirationDate) {
@@ -43,6 +48,12 @@ public record RegisterCardRequestDTO(
             }
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("Formato de fecha de expiración inválido");
+        }
+    }
+
+    private static void validateBalance(BigDecimal balance) {
+        if (balance != null && balance.compareTo(BigDecimal.ZERO) < 0) {
+            throw new IllegalArgumentException("El balance no puede ser negativo");
         }
     }
 }

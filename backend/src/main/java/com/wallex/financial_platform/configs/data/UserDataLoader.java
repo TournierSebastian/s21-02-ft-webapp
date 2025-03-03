@@ -2,6 +2,7 @@ package com.wallex.financial_platform.configs.data;
 
 import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -9,16 +10,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class UserDataLoader {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
-
-    // Constructor manual
-    public UserDataLoader(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     public void load() {
         // Crear usuarios con contraseñas encriptadas
@@ -26,7 +22,7 @@ public class UserDataLoader {
                 null, // ID generado automáticamente
                 "Juan Pérez", // Nombre completo
                 "12345678", // DNI
-                "juan.perez@dominio.com", // Email
+                "jindrg@gmail.com", // Email
                 "+541112345678", // Teléfono
                 passwordEncoder.encode("password123"), // Contraseña encriptada
                 LocalDateTime.now(), // Fecha de creación

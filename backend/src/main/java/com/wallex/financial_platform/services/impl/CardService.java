@@ -30,6 +30,7 @@ public class CardService implements ICardService {
     private final PasswordEncoder passwordEncoder;
     private final UserContextService userContextService;
     private final EncryptionService encryptionService;
+    private final  NotificationService notificationService;
 
     @Override
     @Transactional
@@ -49,9 +50,15 @@ public class CardService implements ICardService {
         card.setIssuingBank(cardRequestDTO.issuingBank());
         card.setExpirationDate(cardRequestDTO.expirationDate());
         card.setEncryptedCvv(passwordEncoder.encode(cardRequestDTO.encryptedCvv()));
+        card.setBalance(cardRequestDTO.balance());
         card.setUser(user);
 
         this.cardRepository.save(card);
+
+        // Enviar notificación por correo electrónico
+        notificationService.sendEmailNotification(user,
+                "Notificación de Cuenta",
+                "Se ha realizado un cambio en su cuenta.");
 
         return convertToDTO(card);
     }
@@ -105,6 +112,7 @@ public class CardService implements ICardService {
                 card.getEncryptedNumber(),
                 card.getIssuingBank(),
                 card.getExpirationDate(),
+                card.getBalance(),
                 card.getRegistrationDate()
         );
     }
