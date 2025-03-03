@@ -2,19 +2,14 @@ package com.wallex.financial_platform.controllers;
 
 import com.wallex.financial_platform.dtos.requests.DniRequestDTO;
 import com.wallex.financial_platform.dtos.requests.EmailRequestDTO;
-import com.wallex.financial_platform.dtos.responses.CardResponseDTO;
-import com.wallex.financial_platform.dtos.responses.UserAccountsResponseDTO;
 import com.wallex.financial_platform.dtos.responses.UserResponseDTO;
-import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.services.impl.CardService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.wallex.financial_platform.services.impl.UserService;
 import lombok.AllArgsConstructor;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -24,27 +19,27 @@ public class UserController {
     private final UserService userService;
     private final CardService cardService;
 
-    @GetMapping("/accounts")
-    public ResponseEntity<List<UserAccountsResponseDTO>> getUserOnline() {
-        List<UserAccountsResponseDTO> response = userService.getUserOnline();
+    @GetMapping
+    public ResponseEntity<List<UserResponseDTO>> getUserOnline() {
+        List<UserResponseDTO> response = userService.getUserOnline();
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserAccountsResponseDTO> getUserById(@PathVariable Long id) {
-        UserAccountsResponseDTO response = userService.getUserById(id);
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
+        UserResponseDTO response = userService.getUserById(id);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/by-dni")
-    public ResponseEntity<UserAccountsResponseDTO> getUserByDni(@RequestBody DniRequestDTO dniRequestDTO) {
-        UserAccountsResponseDTO response = userService.getUserByDni(dniRequestDTO.dni());
+    public ResponseEntity<UserResponseDTO> getUserByDni(@RequestBody DniRequestDTO dniRequestDTO) {
+        UserResponseDTO response = userService.getUserByDni(dniRequestDTO.dni());
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/by-email")
-    public ResponseEntity<UserAccountsResponseDTO> getUserByEmail(@RequestBody EmailRequestDTO emailRequestDTO) {
-        UserAccountsResponseDTO response = userService.getUserByEmail(emailRequestDTO.email());
+    public ResponseEntity<UserResponseDTO> getUserByEmail(@RequestBody EmailRequestDTO emailRequestDTO) {
+        UserResponseDTO response = userService.getUserByEmail(emailRequestDTO.email());
         return ResponseEntity.ok(response);
     }
 }

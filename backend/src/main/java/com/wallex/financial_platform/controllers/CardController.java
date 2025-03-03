@@ -17,7 +17,7 @@ import java.util.List;
 public class CardController {
     private final CardService cardService;
 
-    @GetMapping("/by-user")
+    @GetMapping
     public ResponseEntity<List<CardResponseDTO>> getAllCardsByUserOnline() {
         List<CardResponseDTO> response = this.cardService.getAllCardsByUserOnline();
         return ResponseEntity.ok(response);
