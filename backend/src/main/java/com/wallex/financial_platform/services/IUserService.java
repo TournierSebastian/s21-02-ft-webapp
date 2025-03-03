@@ -9,7 +9,7 @@ public interface IUserService {
     UserAccountsResponseDTO getUserByEmail(String email);
     UserAccountsResponseDTO getUserById(Long id);
     UserAccountsResponseDTO getUserByDni(String username);
-    List<UserAccountsResponseDTO> getAllUsers();
+    List<UserAccountsResponseDTO> getUserOnline();
     boolean existsByEmail(String email);
     boolean existsByDni(String dni);
 }

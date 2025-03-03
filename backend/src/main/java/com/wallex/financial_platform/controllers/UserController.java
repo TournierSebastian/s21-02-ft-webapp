@@ -17,16 +17,16 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/users")
 @AllArgsConstructor
 
 public class UserController {
     private final UserService userService;
     private final CardService cardService;
 
-    @GetMapping
-    public ResponseEntity<List<UserAccountsResponseDTO>> getAllUsers() {
-        List<UserAccountsResponseDTO> response = userService.getAllUsers();
+    @GetMapping("/accounts")
+    public ResponseEntity<List<UserAccountsResponseDTO>> getUserOnline() {
+        List<UserAccountsResponseDTO> response = userService.getUserOnline();
         return ResponseEntity.ok(response);
     }
 
