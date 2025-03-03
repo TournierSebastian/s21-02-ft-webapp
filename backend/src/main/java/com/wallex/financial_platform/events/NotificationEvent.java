@@ -1,19 +1,16 @@
 package com.wallex.financial_platform.events;
 
+import com.wallex.financial_platform.entities.Notification;
 import com.wallex.financial_platform.entities.User;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
 @Getter
 public class NotificationEvent extends ApplicationEvent {
-private final User user;
-private final String subject;
-private final String message;
+    private final Notification notification;
 
-    public NotificationEvent(Object source, User user, String subject, String message) {
+    public NotificationEvent(Object source, Notification notification) {
         super(source);
-        this.user = user;
-        this.subject = subject;
-        this.message = message;
+        this.notification = notification;
     }
 }
