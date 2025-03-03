@@ -1,9 +1,13 @@
 package com.wallex.financial_platform.services.impl;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.wallex.financial_platform.dtos.responses.AccountResponseDTO;
+import com.wallex.financial_platform.dtos.responses.UserAccountsResponseDTO;
 import com.wallex.financial_platform.dtos.responses.UserResponseDTO;
+import com.wallex.financial_platform.entities.Account;
 import com.wallex.financial_platform.exceptions.auth.UserNotFoundException;
 import com.wallex.financial_platform.services.IUserService;
 import org.springframework.stereotype.Service;
@@ -19,22 +23,22 @@ public class UserService implements IUserService {
     private final UserRepository userRepository;
 
     @Override
-    public UserResponseDTO getUserByEmail(String email) {
+    public UserAccountsResponseDTO getUserByEmail(String email) {
         return this.userRepository.findByEmail(email).map(this::convertToDTO).orElseThrow(()->new UserNotFoundException("Usuario  con email " + email + " no encontrado"));
     }
 
     @Override
-    public UserResponseDTO getUserById(Long id) {
+    public UserAccountsResponseDTO getUserById(Long id) {
         return this.userRepository.findById(id).map(this::convertToDTO).orElseThrow(()->new UserNotFoundException("Usuario  con id " + id + " no encontrado"));
     }
 
     @Override
-    public UserResponseDTO getUserByDni(String dni) {
+    public UserAccountsResponseDTO getUserByDni(String dni) {
         return this.userRepository.findByDni(dni).map(this::convertToDTO).orElseThrow(()->new UserNotFoundException("Usuario  con dni " + dni + " no encontrado"));
     }
 
     @Override
-    public List<UserResponseDTO> getAllUsers() {
+    public List<UserAccountsResponseDTO> getAllUsers() {
         List<User> users = this.userRepository.findAll();
         if(users.isEmpty()) {
             throw new UserNotFoundException("No hay usuarios registrados");
@@ -52,8 +56,14 @@ public class UserService implements IUserService {
         return this.userRepository.existsByDni(dni);
     }
 
-    private UserResponseDTO convertToDTO(User user) {
-        return new UserResponseDTO(
+    private UserAccountsResponseDTO convertToDTO(User user) {
+        List<AccountResponseDTO> accounts = user.getAccounts() != null
+                ? user.getAccounts().stream()
+                .map(this::convertToAccountResponseDTO)
+                .collect(Collectors.toList())
+                : Collections.emptyList();
+
+        return new UserAccountsResponseDTO(
                 user.getId(),
                 user.getFullName(),
                 user.getDni(),
@@ -61,7 +71,20 @@ public class UserService implements IUserService {
                 user.getPhoneNumber(),
                 user.getCreatedAt(),
                 user.getUpdatedAt(),
-                user.getActive()
+                user.getActive(),
+                accounts // Agregamos la lista de cuentas al DTO
         );
     }
+
+    private AccountResponseDTO convertToAccountResponseDTO(Account account) {
+        return new AccountResponseDTO(
+                account.getAccountId(),
+                account.getCbu(),
+                account.getAlias(),
+                account.getCurrency(),
+                account.getAvailableBalance(),
+                account.getReservedBalance()
+        );
+    }
+
 }

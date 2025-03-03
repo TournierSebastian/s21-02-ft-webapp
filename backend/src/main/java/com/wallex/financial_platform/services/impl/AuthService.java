@@ -1,10 +1,12 @@
 package com.wallex.financial_platform.services.impl;
 
+import com.wallex.financial_platform.dtos.requests.AccountRequestDTO;
 import com.wallex.financial_platform.dtos.requests.LoginRequestDTO;
 import com.wallex.financial_platform.dtos.requests.RegisterUserRequestDTO;
 import com.wallex.financial_platform.dtos.responses.AuthResponseDTO;
 import com.wallex.financial_platform.dtos.responses.UserResponseDTO;
 import com.wallex.financial_platform.entities.User;
+import com.wallex.financial_platform.entities.enums.CurrencyType;
 import com.wallex.financial_platform.exceptions.auth.InvalidCredentialsException;
 import com.wallex.financial_platform.exceptions.auth.UserAlreadyExistsException;
 import com.wallex.financial_platform.exceptions.auth.UserNotFoundException;
@@ -25,7 +27,8 @@ public class AuthService implements IAuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
-    private User user;
+    private final AccountService accountService;
+
 
     @Override
     @Transactional
@@ -65,7 +68,5 @@ public class AuthService implements IAuthService {
 
         return new  AuthResponseDTO(token,user.getFullName(), user.getEmail());
     }
-
-
 }
 

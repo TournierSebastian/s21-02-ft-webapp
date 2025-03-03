@@ -3,7 +3,7 @@ package com.wallex.financial_platform.dtos.responses;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record UserResponseDTO(
+public record UserAccountsResponseDTO(
         Long id,
         String fullName,
         String dni,
@@ -11,5 +11,6 @@ public record UserResponseDTO(
         String phoneNumber,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
-        Boolean active
+        Boolean active,
+        List<AccountResponseDTO> accounts
 ) {}
