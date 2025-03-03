@@ -16,4 +16,5 @@ public interface IAccountService {
     AccountResponseDTO createAccount(AccountRequestDTO accountReq);
     List<TransactionResumeResponseDTO> getTransactions(Long accountId);
     List<ReservationResponseDto> getReservations(Long accountId);
+    List<String> getCurrencies();
 }
