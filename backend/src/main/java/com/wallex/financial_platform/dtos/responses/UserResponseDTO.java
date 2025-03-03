@@ -1,6 +1,7 @@
 package com.wallex.financial_platform.dtos.responses;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public record UserResponseDTO(
         Long id,

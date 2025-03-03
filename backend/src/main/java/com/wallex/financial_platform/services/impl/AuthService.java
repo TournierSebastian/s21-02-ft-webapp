@@ -28,7 +28,8 @@ public class AuthService implements IAuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
-    private User user;
+    private final AccountService accountService;
+
 
     @Override
     @Transactional
@@ -72,7 +73,5 @@ public class AuthService implements IAuthService {
 
         return new  AuthResponseDTO(token,user.getFullName(), user.getEmail());
     }
-
-
 }
 

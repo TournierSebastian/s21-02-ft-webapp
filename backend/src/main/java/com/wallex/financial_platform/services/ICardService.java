@@ -12,4 +12,5 @@ public interface ICardService {
     void deleteCard(Long id);
     List<CardResponseDTO> getAllCardsByUserOnline();
     List<CardResponseDTO> getCardsByUserDni(DniRequestDTO dniRequestDTO);
+    List<String> getAllCardTypes();
 }

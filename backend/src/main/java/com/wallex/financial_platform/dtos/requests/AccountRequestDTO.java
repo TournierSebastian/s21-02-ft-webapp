@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public record AccountRequestDTO(
-        @NotNull
+        @NotNull(message = "El tipo de tarjeta no puede estar vacío")
         CurrencyType currency,
 
         @JsonProperty(required = false)
