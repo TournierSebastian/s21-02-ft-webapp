@@ -39,12 +39,12 @@ public class CardDataLoader {
         }
 
         List<Card> cards = List.of(
-                createCard(users.get(0), "1234567890123456", CardType.DEBIT, "Banco Nación", "12/25", PASSWORD_DEBIT, 500000.00),
-                createCard(users.get(1), "9876543210987654", CardType.DEBIT, "Banco Galicia", "08/24", PASSWORD_DEBIT, 1000000.00),
-                createCard(users.get(2), "8765432109876543", CardType.DEBIT, "Banco Supervielle", "05/23", PASSWORD_DEBIT, 750000.50),
-                createCard(users.get(3), "5432109876543210", CardType.DEBIT, "Banco Ciudad", "02/27", PASSWORD_DEBIT, 200000.75),
-                createCard(users.get(4), "1122334455667788", CardType.DEBIT, "Banco Santander", "11/26", PASSWORD_DEBIT, 120000.25),
-                createCard(users.get(4), "9988776655443322", CardType.CREDIT, "Banco Macro", "03/28", PASSWORD_CREDIT, 250000.00)
+                createCard(users.get(0), "5031755734530604", CardType.CREDIT, "Mastercard", "11/30", PASSWORD_CREDIT, 500000.00),
+                createCard(users.get(1), "4509953566233704", CardType.CREDIT, "Visa", "11/30", PASSWORD_CREDIT, 1000000.00),
+                createCard(users.get(2), "371180303257522", CardType.CREDIT, "American Express", "11/30", PASSWORD_CREDIT, 750000.50),
+                createCard(users.get(3), "5287338310253304", CardType.DEBIT, "Mastercard Debito", "11/30", PASSWORD_DEBIT, 200000.75),
+                createCard(users.get(4), "4002768694395619", CardType.DEBIT, "Visa Debito", "11/30", PASSWORD_DEBIT, 120000.25),
+                createCard(users.get(4), "9988776655443322", CardType.CREDIT, "Banco Macro", "11/30", PASSWORD_CREDIT, 250000.00)
         );
 
         cardRepository.saveAll(cards);

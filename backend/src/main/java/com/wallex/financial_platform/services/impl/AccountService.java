@@ -92,7 +92,10 @@ public class AccountService implements IAccountService {
                 account.getDestinationTransactions(),
                 account.getSourceTransactions())
                 .flatMap(List::stream).toList();
-        return transactions.stream().map(tran -> mapToDTO(tran, account)).toList();
+        return transactions.stream().map(tran -> mapToDTO(tran, account))
+                    .sorted(Comparator.comparing(TransactionResumeResponseDTO::date)
+                    .thenComparing(TransactionResumeResponseDTO::transactionId))
+                    .toList();
     }
 
     public List<ReservationResponseDto> getReservations(Long id) {

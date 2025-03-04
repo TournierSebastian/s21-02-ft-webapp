@@ -34,7 +34,7 @@ public class AccountServiceHelper {
                         : chkAcc.cbu()
                 )
                 .alias(chkAcc.alias().isBlank()
-                        ? faker.animal().name()+"."+faker.construction().materials()+"."+ faker.commerce().material()
+                        ? (faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase().replace(" ","")
                         : chkAcc.alias()
                 )
                 .availableBalance(new BigDecimal(0))

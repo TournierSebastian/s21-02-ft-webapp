@@ -37,7 +37,7 @@ public class AccountDataLoader {
                         "000000000000".substring(0, 12-String.valueOf(accountList.size()+1).length())+(accountList.size()+1)+
                         "1")
                 ) // CBU único
-                .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase()) // Alias único
+                .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase().replace(" ","")) // Alias único
                 .availableBalance(new BigDecimal(1000)) // Saldo disponible
                 .reservedBalance(new BigDecimal(200)) // Saldo reservado
                 .currency(CurrencyType.ARS) // Moneda
@@ -61,7 +61,7 @@ public class AccountDataLoader {
                         "000000000000".substring(0, 12-String.valueOf(accountList.size()+1).length())+(accountList.size()+1)+
                         "1")
                 ) // CBU único
-                .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase())
+                .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase().replace(" ",""))
                 .availableBalance(new BigDecimal(2500))
                 .reservedBalance(new BigDecimal(500))
                 .currency(CurrencyType.ARS)
@@ -83,7 +83,7 @@ public class AccountDataLoader {
                         "000000000000".substring(0, 12-String.valueOf(accountList.size()+1).length())+(accountList.size()+1)+
                         "Ø")
                 ) // CBU único
-                .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase())
+                .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase().replace(" ",""))
                 .availableBalance(new BigDecimal(1500))
                 .reservedBalance(new BigDecimal(300))
                 .currency(CurrencyType.ARS)
@@ -105,7 +105,7 @@ public class AccountDataLoader {
                         "000000000000".substring(0, 12-String.valueOf(accountList.size()+1).length())+(accountList.size()+1)+
                         "Ø")
                 ) // CBU único
-                .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase())
+                .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase().replace(" ",""))
                 .availableBalance(new BigDecimal(5000))
                 .reservedBalance(new BigDecimal(1000))
                 .currency(CurrencyType.ARS)
@@ -127,7 +127,7 @@ public class AccountDataLoader {
                         "000000000000".substring(0, 12-String.valueOf(accountList.size()+1).length())+(accountList.size()+1)+
                         "Ø")
                 ) // CBU único
-                .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase())
+                .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase().replace(" ",""))
                 .availableBalance(new BigDecimal(3500))
                 .reservedBalance(new BigDecimal(700))
                 .currency(CurrencyType.ARS)
@@ -149,7 +149,7 @@ public class AccountDataLoader {
                         "000000000000".substring(0, 12-String.valueOf(accountList.size()+1).length())+(accountList.size()+1)+
                         "Ø")
                 ) // CBU único
-                .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase())
+                .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase().replace(" ",""))
                 .availableBalance(new BigDecimal(4500))
                 .reservedBalance(new BigDecimal(900))
                 .currency(CurrencyType.USD)
@@ -168,7 +168,7 @@ public class AccountDataLoader {
                 Account.builder()
                         .accountId(null)
                         .cbu("CBU007000035119000000099922") // CBU único MELI ARS
-                        .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase())
+                        .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase().replace(" ",""))
                         .availableBalance(BigDecimal.ZERO)
                         .reservedBalance(BigDecimal.ZERO)
                         .currency(CurrencyType.ARS)
@@ -186,7 +186,7 @@ public class AccountDataLoader {
                 Account.builder()
                         .accountId(null)
                         .cbu("CBU007000035119000000099921") // CBU único MELI USD
-                        .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase())
+                        .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase().replace(" ",""))
                         .availableBalance(BigDecimal.ZERO)
                         .reservedBalance(BigDecimal.ZERO)
                         .currency(CurrencyType.USD)
@@ -204,7 +204,7 @@ public class AccountDataLoader {
                 Account.builder()
                         .accountId(null)
                         .cbu("CBU000000035119000000000021") // CBU único WALLEX tesoreria ARS
-                        .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase())
+                        .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase().replace(" ",""))
                         .availableBalance(BigDecimal.ZERO)
                         .reservedBalance(BigDecimal.ZERO)
                         .currency(CurrencyType.ARS)
@@ -222,7 +222,7 @@ public class AccountDataLoader {
                 Account.builder()
                         .accountId(null)
                         .cbu("CBU000000035119900000000021") // CBU único WALLEX tesoreria USD
-                        .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase())
+                        .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase().replace(" ",""))
                         .availableBalance(BigDecimal.ZERO)
                         .reservedBalance(BigDecimal.ZERO)
                         .currency(CurrencyType.USD)
