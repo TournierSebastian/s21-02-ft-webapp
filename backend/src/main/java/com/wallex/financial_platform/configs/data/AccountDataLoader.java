@@ -237,6 +237,128 @@ public class AccountDataLoader {
                         .build()
         );
 
+        accountList.add(
+                Account.builder()
+                        .accountId(null)
+                        .cbu(faker.numerify("CBU0000012"+"0351"+"Ø"+
+                                "000000000000".substring(0, 12-String.valueOf(accountList.size()+1).length())+(accountList.size()+1)+
+                                "Ø")) // CBU usuario proveedor de tarjetas
+                        .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase().replace(" ",""))
+                        .availableBalance(BigDecimal.ZERO)
+                        .reservedBalance(BigDecimal.ZERO)
+                        .currency(CurrencyType.USD)
+                        .active(true)
+                        .createdAt(LocalDateTime.now())
+                        .updatedAt(LocalDateTime.now())
+                        .user(userList.get(7))
+                        .reservations(new ArrayList<>())
+                        .movements(new ArrayList<>())
+                        .sourceTransactions(new ArrayList<>())
+                        .destinationTransactions(new ArrayList<>())
+                        .build()
+        );
+        accountList.add(
+                Account.builder()
+                        .accountId(null)
+                        .cbu(faker.numerify("CBU0000012"+"0351"+"Ø"+
+                                "000000000000".substring(0, 12-String.valueOf(accountList.size()+1).length())+(accountList.size()+1)+
+                                "Ø")) // CBU usuario proveedor de tarjetas
+                        .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase().replace(" ",""))
+                        .availableBalance(BigDecimal.ZERO)
+                        .reservedBalance(BigDecimal.ZERO)
+                        .currency(CurrencyType.ARS)
+                        .active(true)
+                        .createdAt(LocalDateTime.now())
+                        .updatedAt(LocalDateTime.now())
+                        .user(userList.get(7))
+                        .reservations(new ArrayList<>())
+                        .movements(new ArrayList<>())
+                        .sourceTransactions(new ArrayList<>())
+                        .destinationTransactions(new ArrayList<>())
+                        .build()
+        );
+        accountList.add(
+                Account.builder()
+                        .accountId(null)
+                        .cbu(faker.numerify("CBU0000012"+"0351"+"Ø"+
+                                "000000000000".substring(0, 12-String.valueOf(accountList.size()+1).length())+(accountList.size()+1)+
+                                "Ø")) // CBU usuario proveedor de tarjetas
+                        .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase().replace(" ",""))
+                        .availableBalance(BigDecimal.ZERO)
+                        .reservedBalance(BigDecimal.ZERO)
+                        .currency(CurrencyType.ARS)
+                        .active(true)
+                        .createdAt(LocalDateTime.now())
+                        .updatedAt(LocalDateTime.now())
+                        .user(userList.get(8))
+                        .reservations(new ArrayList<>())
+                        .movements(new ArrayList<>())
+                        .sourceTransactions(new ArrayList<>())
+                        .destinationTransactions(new ArrayList<>())
+                        .build()
+        );
+        accountList.add(
+                Account.builder()
+                        .accountId(null)
+                        .cbu(faker.numerify("CBU0000012"+"0351"+"Ø"+
+                                "000000000000".substring(0, 12-String.valueOf(accountList.size()+1).length())+(accountList.size()+1)+
+                                "Ø")) // CBU usuario proveedor de tarjetas
+                        .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase().replace(" ",""))
+                        .availableBalance(BigDecimal.ZERO)
+                        .reservedBalance(BigDecimal.ZERO)
+                        .currency(CurrencyType.USD)
+                        .active(true)
+                        .createdAt(LocalDateTime.now())
+                        .updatedAt(LocalDateTime.now())
+                        .user(userList.get(8))
+                        .reservations(new ArrayList<>())
+                        .movements(new ArrayList<>())
+                        .sourceTransactions(new ArrayList<>())
+                        .destinationTransactions(new ArrayList<>())
+                        .build()
+        );
+
+        accountList.add(
+                Account.builder()
+                        .accountId(null)
+                        .cbu(faker.numerify("CBU0000012"+"0351"+"Ø"+
+                                "000000000000".substring(0, 12-String.valueOf(accountList.size()+1).length())+(accountList.size()+1)+
+                                "Ø")) // CBU usuario proveedor de tarjetas
+                        .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase().replace(" ",""))
+                        .availableBalance(BigDecimal.ZERO)
+                        .reservedBalance(BigDecimal.ZERO)
+                        .currency(CurrencyType.ARS)
+                        .active(true)
+                        .createdAt(LocalDateTime.now())
+                        .updatedAt(LocalDateTime.now())
+                        .user(userList.get(9))
+                        .reservations(new ArrayList<>())
+                        .movements(new ArrayList<>())
+                        .sourceTransactions(new ArrayList<>())
+                        .destinationTransactions(new ArrayList<>())
+                        .build()
+        );
+        accountList.add(
+                Account.builder()
+                        .accountId(null)
+                        .cbu(faker.numerify("CBU0000012"+"0351"+"Ø"+
+                                "000000000000".substring(0, 12-String.valueOf(accountList.size()+1).length())+(accountList.size()+1)+
+                                "Ø")) // CBU usuario proveedor de tarjetas
+                        .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase().replace(" ",""))
+                        .availableBalance(BigDecimal.ZERO)
+                        .reservedBalance(BigDecimal.ZERO)
+                        .currency(CurrencyType.USD)
+                        .active(true)
+                        .createdAt(LocalDateTime.now())
+                        .updatedAt(LocalDateTime.now())
+                        .user(userList.get(9))
+                        .reservations(new ArrayList<>())
+                        .movements(new ArrayList<>())
+                        .sourceTransactions(new ArrayList<>())
+                        .destinationTransactions(new ArrayList<>())
+                        .build()
+        );
+
 
         // Guardar las cuentas en el repositorio
         accountRepository.saveAll(accountList); // Guardar las cuentas

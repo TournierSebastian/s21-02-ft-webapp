@@ -2,6 +2,7 @@ package com.wallex.financial_platform.controllers;
 
 import java.util.Date;
 
+import com.wallex.financial_platform.dtos.requests.CardTransactionRequestDTO;
 import com.wallex.financial_platform.dtos.requests.TransactionRequestDTO;
 import com.wallex.financial_platform.dtos.responses.TransactionResponseDTO;
 import com.wallex.financial_platform.entities.enums.TransactionStatus;
@@ -27,6 +28,11 @@ public class TransactionController {
 
     @PostMapping
     public ResponseEntity<TransactionResponseDTO> save(@RequestBody @Valid TransactionRequestDTO transaction) {
+        return ResponseEntity.ok(transactionService.save(transaction));
+    }
+
+    @PostMapping
+    public ResponseEntity<TransactionResponseDTO> save(@RequestBody @Valid CardTransactionRequestDTO transaction) {
         return ResponseEntity.ok(transactionService.save(transaction));
     }
 
