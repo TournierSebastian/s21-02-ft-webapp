@@ -61,7 +61,7 @@ const Accounts = () => {
                                         </option>
                                     ))
                                 ) : (
-                                    <option>Cargando...</option>
+                                    <option>No hay opciones</option>
                                 )}
                             </select>
                         </div>
