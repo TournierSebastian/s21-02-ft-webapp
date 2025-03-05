@@ -68,9 +68,14 @@ public class MovementService implements IMovementService {
     private MovementResponseDTO mapToDto(Movement movement) {
         return new MovementResponseDTO(
                 movement.getMovementId(),
-                String.format("/api/transactions/%s", movement.getTransaction().getTransactionId()),
-                mapToDTO(movement.getUser()),
+                movement.getTransaction().getTransactionId(),
+                mapToDTO(movement.getTransaction().getSourceAccount()),
+                mapToDTO(movement.getTransaction().getDestinationAccount()),
+                movement.getMovementDate(),
                 movement.getDescription(),
+                movement.getTransaction().getType(),
+                movement.getTransaction().getStatus(),
+                movement.getTransaction().getSourceAccount().getCurrency(),
                 movement.getAmount()
         );
     }
@@ -84,6 +89,15 @@ public class MovementService implements IMovementService {
                 user.getCreatedAt(),
                 user.getUpdatedAt(),
                 user.getActive()
+        );
+    }
+    private CheckAccountResponseDTO mapToDTO(Account account) {
+        return new CheckAccountResponseDTO(
+                account.getCbu(),
+                account.getAlias(),
+                account.getCurrency(),
+                account.getUser().getFullName(),
+                account.getUser().getDni()
         );
     }
 }

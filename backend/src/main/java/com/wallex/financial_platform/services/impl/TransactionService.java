@@ -16,6 +16,7 @@ import com.wallex.financial_platform.exceptions.TransactionNotFoundException;
 import com.wallex.financial_platform.exceptions.card.CardNotFoundException;
 import com.wallex.financial_platform.repositories.AccountRepository;
 import com.wallex.financial_platform.services.ITransactionService;
+import com.wallex.financial_platform.services.utils.EncryptionService;
 import com.wallex.financial_platform.services.utils.UserContextService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,7 @@ public class TransactionService implements ITransactionService {
     private AccountRepository accountRepository;
     private UserContextService userContextService;
     private MovementService movementService;
+    private EncryptionService encryptionService;
 
     @Override
     @SneakyThrows
@@ -73,7 +75,8 @@ public class TransactionService implements ITransactionService {
 
     public TransactionResponseDTO save(CardTransactionRequestDTO transactionReq) {
         User user = this.userContextService.getAuthenticatedUser();
-        Card originCard = user.getCards().stream().filter(card -> Objects.equals(card.getEncryptedNumber(), transactionReq.CardNumber()))
+        Card originCard = user.getCards().stream()
+                .filter(card -> Objects.equals(encryptionService.decrypt(card.getEncryptedNumber()), transactionReq.cardNumber()))
                 .findAny().orElseThrow(()-> new CardNotFoundException("Card not found"));
         Account destinationAccount =  accountRepository.findByCbuOrAlias(transactionReq.destinationCbu(), transactionReq.destinationCbu())
                 .orElseThrow(()-> new AccountNotFoundException("Destination Account not found"));
@@ -89,7 +92,9 @@ public class TransactionService implements ITransactionService {
                 .build());
         movementService.save(Movement.builder()
                 .transaction(cardTransaction)
-                .description("Card transaction")
+                .description("Pago con tarjeta "
+                        +originCard.getProvider().getFullName()
+                        +" **** **** **** "+transactionReq.cardNumber().substring(12))
                 .amount(transactionReq.amount())
                 .user(user)
                 .build());
