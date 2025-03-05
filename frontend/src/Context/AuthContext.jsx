@@ -40,6 +40,8 @@ export const AuthProvider = ({ children }) => {
       
       const logout = () => {
         localStorage.removeItem("Token");
+        localStorage.removeItem("Name");
+        localStorage.removeItem("Account");
         SetToken(null)
         SetName('')
         window.location.href = '/'

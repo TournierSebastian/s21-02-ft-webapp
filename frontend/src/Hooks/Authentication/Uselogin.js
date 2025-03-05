@@ -19,7 +19,7 @@ const Uselogin = () =>{
                 
                 login(data);
                 
-                navigate('/Home')
+                navigate('/account')
             
                 return;
              }

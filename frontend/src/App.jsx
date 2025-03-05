@@ -13,6 +13,8 @@ import RedirectIfAuthenticated from './RouteProtection/RedirectIfAuthenticated.j
 import ProtectedUser from './RouteProtection/ProtectedUser.jsx'
 import TuTarjeta from './Pages/TuTarjeta/TuTarjeta.jsx'
 import TuReserva from './Pages/TuReserva/TuReserva.jsx'
+import Accounts from './Pages/Accounts/Accounts.jsx'
+import ProtectedAccount from './RouteProtection/ProtectedAccount.jsx'
 
 const  router = createBrowserRouter([
   {
@@ -26,34 +28,38 @@ const  router = createBrowserRouter([
   {
     path: '/register',
     element: <RedirectIfAuthenticated> <Register/> </RedirectIfAuthenticated>
+  }, 
+  {
+    path: '/account',
+    element: <ProtectedUser><Accounts/></ProtectedUser>
   },
   {
     path: '/home',
-    element: <ProtectedUser><Home/></ProtectedUser>
+    element: <ProtectedUser><ProtectedAccount><Home/></ProtectedAccount></ProtectedUser>
   },
   {
     path: '/tudinero',
-    element: <ProtectedUser><TuDinero/></ProtectedUser>
+    element: <ProtectedUser><ProtectedAccount><TuDinero/></ProtectedAccount></ProtectedUser>
   },  {
     path: '/actividad',
-    element: <ProtectedUser><Actividad/></ProtectedUser>
+    element: <ProtectedUser><ProtectedAccount><Actividad/></ProtectedAccount></ProtectedUser>
   },
   {
     path: '/transferir',
-    element: <ProtectedUser><Transferir/></ProtectedUser>
+    element: <ProtectedUser><ProtectedAccount><Transferir/></ProtectedAccount></ProtectedUser>
   },
   {
     path: '/tutarjeta',
-    element: <ProtectedUser><TuTarjeta/></ProtectedUser>
+    element: <ProtectedUser><ProtectedAccount><TuTarjeta/></ProtectedAccount></ProtectedUser>
   },
   ,
   {
     path: '/tureserva',
-    element: <ProtectedUser><TuReserva/></ProtectedUser>
+    element: <ProtectedUser><ProtectedAccount><TuReserva/></ProtectedAccount></ProtectedUser>
   },
   {
     path: '*',
-    element: <ProtectedUser><NotFound/></ProtectedUser>
+    element: <NotFound/>
   },
 
   
