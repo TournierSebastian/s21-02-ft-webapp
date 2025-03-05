@@ -44,7 +44,6 @@ public class AccountServiceHelper {
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .user(savedUser)
-                .movements(null)
                 .reservations(null)
                 .sourceTransactions(new ArrayList<>())
                 .destinationTransactions(new ArrayList<>())

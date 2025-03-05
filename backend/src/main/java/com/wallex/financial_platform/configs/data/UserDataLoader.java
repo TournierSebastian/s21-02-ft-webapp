@@ -33,7 +33,8 @@ public class UserDataLoader {
                 true, // Estado activo
                 null, // Listado de cuentas
                 null, // Listado de notificaciones
-                null  // Listado de tarjetas
+                null,  // Listado de tarjetas
+                null // Listado de movimientos
         );
 
         User user2 = new User(
@@ -48,7 +49,9 @@ public class UserDataLoader {
                 true,
                 null,
                 null,
-                null
+                null,
+                null // Listado de movimientos
+
         );
 
         User user3 = new User(
@@ -61,6 +64,7 @@ public class UserDataLoader {
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 true,
+                null,
                 null,
                 null,
                 null
@@ -78,6 +82,7 @@ public class UserDataLoader {
                 true,
                 null,
                 null,
+                null,
                 null
         );
 
@@ -91,6 +96,7 @@ public class UserDataLoader {
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 true,
+                null,
                 null,
                 null,
                 null
@@ -108,6 +114,7 @@ public class UserDataLoader {
                 false,
                 null,
                 null,
+                null,
                 null
         );
 
@@ -121,6 +128,7 @@ public class UserDataLoader {
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 false,
+                null,
                 null,
                 null,
                 null
@@ -139,6 +147,7 @@ public class UserDataLoader {
                 false,
                 null,
                 null,
+                null,
                 null
         );
 
@@ -154,6 +163,7 @@ public class UserDataLoader {
                 false,
                 null,
                 null,
+                null,
                 null
         );
 
@@ -167,6 +177,7 @@ public class UserDataLoader {
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 false,
+                null,
                 null,
                 null,
                 null

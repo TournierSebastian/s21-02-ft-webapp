@@ -46,6 +46,7 @@ public class AuthService implements IAuthService {
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
         user.setActive(true);
+        user.setMovements(null);
 
         this.userRepository.save(user);
 

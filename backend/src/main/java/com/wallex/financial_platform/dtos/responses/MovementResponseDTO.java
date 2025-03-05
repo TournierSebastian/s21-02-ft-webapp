@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public record MovementResponseDTO(
         Long movementId,
         String transactionUrl,
-        CheckAccountResponseDTO accountOwner,
+        UserResponseDTO user,
         String description,
         BigDecimal amount
 ) {

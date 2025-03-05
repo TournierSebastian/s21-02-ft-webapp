@@ -3,6 +3,7 @@ package com.wallex.financial_platform.services.impl;
 import com.wallex.financial_platform.dtos.responses.CheckAccountResponseDTO;
 import com.wallex.financial_platform.dtos.responses.MovementResponseDTO;
 import com.wallex.financial_platform.dtos.responses.TransactionResponseDTO;
+import com.wallex.financial_platform.dtos.responses.UserResponseDTO;
 import com.wallex.financial_platform.entities.Account;
 import com.wallex.financial_platform.entities.Movement;
 import com.wallex.financial_platform.entities.Transaction;
@@ -34,32 +35,31 @@ public class MovementService implements IMovementService {
     }
 
     @Override
-    public MovementResponseDTO getMovementById(Long movementId) {
-        User user = this.userContextService.getAuthenticatedUser();
-        List<Movement> movementList = user.getAccounts().stream()
-                .map(Account::getMovements).toList()
-                .stream()
-                .flatMap(List::stream)
-                .toList();
-        return mapToDto(movementList.stream()
-                .filter(mov -> Objects.equals(mov.getMovementId(), movementId))
-                .findFirst().orElseThrow(()-> new MovementNotFoundException("Movement not found")));
+    public MovementResponseDTO save(Movement movement) {
+        return mapToDto(movementRepository.save(movement));
     }
 
     @Override
-    public List<MovementResponseDTO> getUserAccountMovements(Long accountId) {
+    public MovementResponseDTO getMovementById(Long movementId) {
         User user = this.userContextService.getAuthenticatedUser();
-        Account account = user.getAccounts().stream()
-                .filter(acc -> acc.getAccountId() == accountId)
-                .toList().stream().findAny()
-                .orElseThrow(()-> new AccountNotFoundException("Account not found"));
-        return account.getMovements().stream().map(this::mapToDto).toList();
+        Movement movement = user.getMovements().stream()
+                .filter(mov -> Objects.equals(mov.getMovementId(), movementId))
+                .findAny().orElseThrow(()-> new MovementNotFoundException("Movement not found"));
+        return mapToDto(movement);
+    }
+
+    @Override
+    public List<MovementResponseDTO> getUserMovements() {
+        User user = this.userContextService.getAuthenticatedUser();
+        return user.getMovements().stream()
+                .map(this::mapToDto)
+                .toList();
     }
 
     private Movement mapToEntity(Transaction transaction){
         return Movement.builder()
                 .movementId(null)
-                .account(transaction.getSourceAccount())
+                .user(transaction.getSourceAccount().getUser())
                 .transaction(transaction)
                 .amount(transaction.getAmount())
                 .description(transaction.getReason())
@@ -69,18 +69,21 @@ public class MovementService implements IMovementService {
         return new MovementResponseDTO(
                 movement.getMovementId(),
                 String.format("/api/transactions/%s", movement.getTransaction().getTransactionId()),
-                mapToDTO(movement.getAccount()),
+                mapToDTO(movement.getUser()),
                 movement.getDescription(),
                 movement.getAmount()
         );
     }
-    private CheckAccountResponseDTO mapToDTO(Account account) {
-        return new CheckAccountResponseDTO(
-                account.getCbu(),
-                account.getAlias(),
-                account.getCurrency(),
-                account.getUser().getFullName(),
-                account.getUser().getDni()
+    private UserResponseDTO mapToDTO(User user) {
+        return new UserResponseDTO(
+            user.getId(),
+                user.getFullName(),
+                user.getDni(),
+                user.getEmail(),
+                user.getPhoneNumber(),
+                user.getCreatedAt(),
+                user.getUpdatedAt(),
+                user.getActive()
         );
     }
 }

@@ -79,21 +79,21 @@ public class TransactionService implements ITransactionService {
                 .orElseThrow(()-> new AccountNotFoundException("Destination Account not found"));
         Account providerAccount = originCard.getProvider().getAccounts().stream().filter(acc -> acc.getCurrency() == destinationAccount.getCurrency())
                 .findAny().orElseThrow(()-> new AccountNotFoundException("Card provider doesn't have any account with the same destination account currency"));
-        Transaction cardTransaction = Transaction.builder()
+        Transaction cardTransaction = transactionRepository.save(Transaction.builder()
                 .sourceAccount(providerAccount)
                 .destinationAccount(destinationAccount)
                 .amount(transactionReq.amount())
                 .type(TransactionType.TRANSFER)
                 .status(TransactionStatus.COMPLETED)
                 .reason(transactionReq.reason())
-                .build();
-        Movement movement = Movement.builder()
+                .build());
+        movementService.save(Movement.builder()
                 .transaction(cardTransaction)
                 .description("Card transaction")
                 .amount(transactionReq.amount())
-                .account()
-                .build();
-
+                .user(user)
+                .build());
+        return mapToDTO(cardTransaction);
     }
 
     public TransactionResponseDTO mapToDTO(Transaction transaction) {

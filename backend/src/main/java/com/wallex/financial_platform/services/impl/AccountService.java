@@ -79,7 +79,6 @@ public class AccountService implements IAccountService {
                 .user(user)
                 .sourceTransactions(new ArrayList<>())
                 .destinationTransactions(new ArrayList<>())
-                .movements(new ArrayList<>())
                 .reservations(new ArrayList<>())
                 .build();
         return mapToDTO(accountRepository.save(newAccount));

@@ -20,9 +20,9 @@ public class Movement {
     private Long movementId;
 
     @ManyToOne
-    @JoinColumn(name = "account_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     @JsonBackReference
-    private Account account;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "transaction_id", nullable = false)

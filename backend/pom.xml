@@ -146,7 +146,17 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<environmentVariables>
+<!--						<JWT_SECRET_KEY>testing............</JWT_SECRET_KEY>-->
+<!--						<MAIL_USERNAME>${poner_credenciales_aqui_o_los_tests_fallaran}</MAIL_USERNAME>-->
+<!--						<MAIL_PASSWORD>${put_credentials_here_or_the_tests_will_fail}</MAIL_PASSWORD>-->
+					</environmentVariables>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

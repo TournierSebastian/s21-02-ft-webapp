@@ -1,6 +1,9 @@
 package com.wallex.financial_platform.dtos.requests;
 
 import com.wallex.financial_platform.entities.enums.TransactionType;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 

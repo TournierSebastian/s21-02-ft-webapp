@@ -65,10 +65,6 @@ public class Account {
     private List<Reservation> reservations;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Movement> movements;
-
-    @JsonManagedReference
     @OneToMany(mappedBy = "sourceAccount", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Transaction> sourceTransactions;
 

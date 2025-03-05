@@ -47,11 +47,13 @@ public class CardService implements ICardService {
         if (user == null) {
             throw new UserNotFoundException("Usuario autenticado no encontrado.");
         }
+        User provider = userRepository.findByFullNameContaining(cardRequestDTO.issuingBank())
+                .orElseThrow(()-> new UserNotFoundException("Card provider not found"));
 
         Card card = new Card();
         card.setEncryptedNumber(encryptionService.encrypt(cardRequestDTO.encryptedNumber()));
         card.setType(cardRequestDTO.type());
-        card.setIssuingBank(cardRequestDTO.issuingBank());
+        card.setProvider(provider);
         card.setExpirationDate(cardRequestDTO.expirationDate());
         card.setEncryptedCvv(passwordEncoder.encode(cardRequestDTO.encryptedCvv()));
         card.setBalance(cardRequestDTO.balance());
@@ -124,7 +126,7 @@ public class CardService implements ICardService {
         return new CardResponseDTO(
                 card.getType(),
                 card.getEncryptedNumber(),
-                card.getIssuingBank(),
+                card.getProvider().getFullName(),
                 card.getExpirationDate(),
                 card.getBalance(),
                 card.getRegistrationDate()

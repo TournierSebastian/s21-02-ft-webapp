@@ -31,8 +31,8 @@ public class TransactionController {
         return ResponseEntity.ok(transactionService.save(transaction));
     }
 
-    @PostMapping
-    public ResponseEntity<TransactionResponseDTO> save(@RequestBody @Valid CardTransactionRequestDTO transaction) {
+    @PostMapping("/card")
+    public ResponseEntity<TransactionResponseDTO> saveCard(@RequestBody @Valid CardTransactionRequestDTO transaction) {
         return ResponseEntity.ok(transactionService.save(transaction));
     }
 
