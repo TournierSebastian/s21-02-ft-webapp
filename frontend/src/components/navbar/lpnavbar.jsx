@@ -1,4 +1,7 @@
-const  navbar = () => {
+import logo from '../../assets/Icons/Logo.png'
+
+
+const  Lpnavbar = () => {
   return (
     <nav className="w-full bg-gray-800">
       <div className="w-full px-6 py-4">
@@ -80,4 +83,4 @@ const  navbar = () => {
   );
 }
 
-export default navbar;
+export default Lpnavbar;

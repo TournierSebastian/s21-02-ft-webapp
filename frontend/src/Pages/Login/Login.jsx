@@ -4,6 +4,8 @@ import logo from '../../assets/Icons/Logo.png'
 import Navbar from '../../components/navbar/userNavbar'
 import { ChevronRight, Eye, EyeClosed, ShieldAlert } from 'lucide-react'
 import Uselogin from '../../Hooks/Authentication/Uselogin'
+import Lpnavbar from '../../components/navbar/lpnavbar'
+
 const Login = () => {
   const [Typeinput, SetTypeinput] = useState('password')
   const [email, setEmail] = useState('');
@@ -26,7 +28,7 @@ const Login = () => {
   }
   return (
     <div className='Contenido'>
-      <nav><Navbar /></nav>
+      <nav><Lpnavbar/></nav>
       <main>
       <div className='flex sm:flex-row flex-col container mt-10 mx-auto items-stretch container'>
       <div className="w-full sm:w-1/2 p-6 flex flex-col justify-between min-h-full">

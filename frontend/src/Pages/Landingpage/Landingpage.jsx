@@ -1,16 +1,16 @@
 import React from 'react'
 import './Landingpage.css'
-import Navbar from '../../components/navbar/userNavbar'
 import '../../Styles/Global.css'
 import image1 from '../../assets/General/Image1_landingpage.png'
 import image2 from '../../assets/General/Image2_landingpage.png'
+import Lpnavbar from '../../components/navbar/lpnavbar'
 const Landingpage = () => {
 
 
   return (
     <div className='Contenido'>
 
-      <nav><Navbar /></nav>
+      <nav><Lpnavbar /></nav>
 
       <main >
         <div className='container mx-auto'>

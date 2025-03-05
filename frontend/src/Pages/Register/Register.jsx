@@ -3,6 +3,7 @@ import './Register.css'
 import Navbar from '../../components/navbar/userNavbar'
 import logo from '../../assets/Icons/Logo.png'
 import UseRegister from '../../Hooks/Authentication/UseRegister'
+import Lpnavbar from '../../components/navbar/lpnavbar'
 
 const Register = () => {
   const [Email, SetEmail] = useState('');
@@ -18,15 +19,6 @@ const Register = () => {
   const { UseRegisterUser } = UseRegister();
   const HandlerRegistar = (e) => {
     e.preventDefault();
-
-    //Dni  = 8
-    //Email formato valido
-    //Telephone debe tener el formato +54xxxxxxxxxx 10 numeros
-    //Password minimo 8 caracteres
-    // if (Email == '' || FullName == '' || Telephone == '' || Password === '' || ConfirmPassword != Password || Dni == null) {
-    //   SetValidate(true)
-    //   return;
-    // }
 
     if (
       !emailRegex.test(Email) ||
@@ -45,7 +37,7 @@ const Register = () => {
   }
   return (
     <div className='Contenido'>
-      <nav><Navbar /></nav>
+      <nav><Lpnavbar /></nav>
 
       <main>
         <div className='flex justify-center items-center mt-10'>
