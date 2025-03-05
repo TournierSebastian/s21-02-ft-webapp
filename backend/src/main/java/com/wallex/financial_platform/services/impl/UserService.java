@@ -1,11 +1,13 @@
 package com.wallex.financial_platform.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.wallex.financial_platform.dtos.responses.UserResponseDTO;
 import com.wallex.financial_platform.exceptions.auth.UserNotFoundException;
 import com.wallex.financial_platform.services.IUserService;
+import com.wallex.financial_platform.services.utils.UserContextService;
 import org.springframework.stereotype.Service;
 
 import com.wallex.financial_platform.entities.User;
@@ -17,6 +19,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserService implements IUserService {
     private final UserRepository userRepository;
+    private final UserContextService userContextService;
 
     @Override
     public UserResponseDTO getUserByEmail(String email) {
@@ -34,8 +37,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public List<UserResponseDTO> getAllUsers() {
-        List<User> users = this.userRepository.findAll();
+    public List<UserResponseDTO> getUserOnline() {
+        Optional<User> users = this.userRepository.findById(this.userContextService.getAuthenticatedUser().getId());
         if(users.isEmpty()) {
             throw new UserNotFoundException("No hay usuarios registrados");
         }
@@ -53,6 +56,7 @@ public class UserService implements IUserService {
     }
 
     private UserResponseDTO convertToDTO(User user) {
+
         return new UserResponseDTO(
                 user.getId(),
                 user.getFullName(),
@@ -64,4 +68,5 @@ public class UserService implements IUserService {
                 user.getActive()
         );
     }
+
 }

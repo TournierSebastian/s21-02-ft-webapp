@@ -2,6 +2,7 @@ package com.wallex.financial_platform.services.impl;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.wallex.financial_platform.dtos.requests.AccountRequestDTO;
@@ -10,6 +11,7 @@ import com.wallex.financial_platform.dtos.responses.*;
 import com.wallex.financial_platform.entities.Reservation;
 import com.wallex.financial_platform.entities.Transaction;
 import com.wallex.financial_platform.entities.User;
+import com.wallex.financial_platform.entities.enums.CurrencyType;
 import com.wallex.financial_platform.exceptions.AccountErrorException;
 import com.wallex.financial_platform.exceptions.AccountNotFoundException;
 import com.wallex.financial_platform.repositories.ReservationRepository;
@@ -90,7 +92,10 @@ public class AccountService implements IAccountService {
                 account.getDestinationTransactions(),
                 account.getSourceTransactions())
                 .flatMap(List::stream).toList();
-        return transactions.stream().map(tran -> mapToDTO(tran, account)).toList();
+        return transactions.stream().map(tran -> mapToDTO(tran, account))
+                    .sorted(Comparator.comparing(TransactionResumeResponseDTO::date)
+                    .thenComparing(TransactionResumeResponseDTO::transactionId))
+                    .toList();
     }
 
     public List<ReservationResponseDto> getReservations(Long id) {
@@ -98,6 +103,13 @@ public class AccountService implements IAccountService {
                 .orElseThrow(()-> new AccountNotFoundException("Account not found"));
         List<Reservation> reservationList = account.getReservations();
         return reservationList.stream().map(this::mapToDTO).toList();
+    }
+
+    @Override
+    public List<String> getCurrencies() {
+        return Arrays.stream(CurrencyType.values())
+                .map(Enum::name)
+                .collect(Collectors.toList());
     }
 
 

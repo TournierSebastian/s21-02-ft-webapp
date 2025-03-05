@@ -8,7 +8,7 @@ public interface IUserService {
     UserResponseDTO getUserByEmail(String email);
     UserResponseDTO getUserById(Long id);
     UserResponseDTO getUserByDni(String username);
-    List<UserResponseDTO> getAllUsers();
+    List<UserResponseDTO> getUserOnline();
     boolean existsByEmail(String email);
     boolean existsByDni(String dni);
 }

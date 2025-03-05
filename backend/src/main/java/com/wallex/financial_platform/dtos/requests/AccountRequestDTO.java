@@ -7,11 +7,11 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public record AccountRequestDTO(
-        @NotNull
+        @NotNull(message = "El tipo de tarjeta no puede estar vacío")
         CurrencyType currency,
 
         @JsonProperty(required = false)
-        @Size(min =22, message="El alias debe tener al menos 22 caracteres")
+        @Size(min =22, message="El Cbu debe tener al menos 22 caracteres")
         String cbu,
 
         @JsonProperty(required = false)

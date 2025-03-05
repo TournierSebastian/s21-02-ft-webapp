@@ -1,10 +1,13 @@
 package com.wallex.financial_platform.exceptions;
 
+import com.mercadopago.exceptions.MPException;
 import com.wallex.financial_platform.exceptions.auth.InvalidCredentialsException;
 import com.wallex.financial_platform.exceptions.auth.UserAlreadyExistsException;
 import com.wallex.financial_platform.exceptions.auth.UserNotFoundException;
+import com.wallex.financial_platform.exceptions.card.CardAlreadyExistsException;
 import com.wallex.financial_platform.exceptions.card.CardNotFoundException;
 import com.wallex.financial_platform.exceptions.card.UnauthorizedCardDeletionException;
+import com.wallex.financial_platform.exceptions.notification.NotificationException;
 import com.wallex.financial_platform.exceptions.transaction.InsufficientFundsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +37,12 @@ public class GlobalExceptionHandler {
     // ⚠️ Manejo de tarjeta no encontrada
     @ExceptionHandler(CardNotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleCardNotFoundException(CardNotFoundException ex) {
+        return buildResponseEntity(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    // ⚠️ Manejo de duplicado de tarjeta
+    @ExceptionHandler(CardAlreadyExistsException.class)
+    public ResponseEntity<Map<String, Object>> handleCardAlreadyExistsException(CardAlreadyExistsException ex) {
         return buildResponseEntity(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
@@ -71,6 +80,12 @@ public class GlobalExceptionHandler {
         return buildResponseEntity(HttpStatus.CONFLICT, ex.getMessage());
     }
 
+    // ⚠️ Manejo de usuario ya existente
+    @ExceptionHandler(MPException.class)
+    public ResponseEntity<Map<String, Object>> handleUserAlreadyExistsException(MPException ex) {
+        return buildResponseEntity(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
     // ⚠️ Manejo de excepciones genéricas (cualquier otro error no manejado)
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGlobalException(Exception ex) {
@@ -81,6 +96,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UnauthorizedCardDeletionException.class)
     public ResponseEntity<Map<String, Object>> handleUnauthorizedCardDeletionException(UnauthorizedCardDeletionException ex) {
         return buildResponseEntity(HttpStatus.FORBIDDEN, ex.getMessage());
+    }
+
+    // ⚠️ Manejo de intento de notificar al usuario
+    @ExceptionHandler(NotificationException.class)
+    public ResponseEntity<String> handleNotificationException(NotificationException ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al enviar notificación: " + ex.getMessage());
     }
 
     // ✅ Método reutilizable para errores de validación

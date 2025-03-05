@@ -5,6 +5,7 @@ import com.wallex.financial_platform.dtos.requests.DniRequestDTO;
 import com.wallex.financial_platform.dtos.responses.CardResponseDTO;
 import com.wallex.financial_platform.entities.Card;
 import com.wallex.financial_platform.entities.User;
+import com.wallex.financial_platform.entities.enums.CardType;
 import com.wallex.financial_platform.exceptions.auth.UserNotFoundException;
 import com.wallex.financial_platform.exceptions.card.CardAlreadyExistsException;
 import com.wallex.financial_platform.exceptions.card.CardNotFoundException;
@@ -19,8 +20,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class CardService implements ICardService {
@@ -30,16 +33,17 @@ public class CardService implements ICardService {
     private final PasswordEncoder passwordEncoder;
     private final UserContextService userContextService;
     private final EncryptionService encryptionService;
-    private final  NotificationService notificationService;
+    private final NotificationService notificationService;
 
     @Override
     @Transactional
     public CardResponseDTO createCard(RegisterCardRequestDTO cardRequestDTO) {
-        if (this.cardRepository.existsByEncryptedNumber(cardRequestDTO.encryptedNumber())) {
+        String encryptedNumber = encryptionService.encrypt(cardRequestDTO.encryptedNumber());
+        if (cardRepository.existsByEncryptedNumber(encryptedNumber)) {
             throw new CardAlreadyExistsException("La tarjeta ya existe en el sistema");
         }
 
-        User user = this.userContextService.getAuthenticatedUser();
+        User user = userContextService.getAuthenticatedUser();
         if (user == null) {
             throw new UserNotFoundException("Usuario autenticado no encontrado.");
         }
@@ -53,55 +57,65 @@ public class CardService implements ICardService {
         card.setBalance(cardRequestDTO.balance());
         card.setUser(user);
 
-        this.cardRepository.save(card);
+        cardRepository.save(card);
 
-        // Enviar notificación por correo electrónico
-        notificationService.sendEmailNotification(user,
-                "Notificación de Cuenta",
-                "Se ha realizado un cambio en su cuenta.");
+        notificationService.notifyUser(user,
+                "✨ Tarjeta registrada con éxito en tu cuenta",
+                "🎉 ¡Tu tarjeta ha sido agregada correctamente! Ahora puedes gestionar tus pagos y consultar tu saldo desde nuestra plataforma.");
 
         return convertToDTO(card);
     }
-    
+
     @Override
     public List<CardResponseDTO> getCardsByUserDni(DniRequestDTO dniRequestDTO) {
-        User user = this.userRepository.findByDni(dniRequestDTO.dni())
+        User user = userRepository.findByDni(dniRequestDTO.dni())
                 .orElseThrow(() -> new UserNotFoundException("No existe usuario asociado al DNI: " + dniRequestDTO.dni()));
 
-        List<Card> cards = this.cardRepository.findByUserId(user.getId());
+        List<Card> cards = cardRepository.findByUserId(user.getId());
         if (cards.isEmpty()) {
             throw new CardNotFoundException("No se encontraron tarjetas asociadas a este usuario.");
         }
+        return mapCardsToDTOs(cards);
+    }
 
-        return cards.stream()
-                .map(card -> {
-                    if (userContextService.getAuthenticatedUser().getId().equals(card.getUser().getId())) {
-                        card.setEncryptedNumber(encryptionService.decrypt(card.getEncryptedNumber()));
-                    }
-                    return convertToDTO(card);
-                })
+    @Override
+    public List<String> getAllCardTypes() {
+        return Arrays.stream(CardType.values())
+                .map(Enum::name)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CardResponseDTO> getAllCardsByUserOnline() {
+        List<Card> cards = cardRepository.findByUserId(userContextService.getAuthenticatedUser().getId());
+        if (cards.isEmpty()) {
+            throw new CardNotFoundException("No hay tarjetas asociadas a este usuario.");
+        }
+        return mapCardsToDTOs(cards);
     }
 
     @Override
     @Transactional
     public void deleteCard(Long cardId) {
-        Card card = this.cardRepository.findById(cardId)
+        Card card = cardRepository.findById(cardId)
                 .orElseThrow(() -> new CardNotFoundException("Tarjeta con ID " + cardId + " no encontrada."));
-        if(!userContextService.getAuthenticatedUser().getId().equals(card.getUser().getId())) {
+        if (!userContextService.getAuthenticatedUser().getId().equals(card.getUser().getId())) {
             throw new UnauthorizedCardDeletionException("No está autorizado para eliminar esta tarjeta.");
         }
-        this.cardRepository.delete(card);
+        cardRepository.delete(card);
     }
 
-    @Override
-    public List<CardResponseDTO> getAllCardsByUserOnline() {
-        List<Card> cards = this.cardRepository.findByUserId(userContextService.getAuthenticatedUser().getId());
-        if (cards.isEmpty()) {
-            throw new CardNotFoundException("No hay tarjetas asociadas a este usuario.");
+    private Card prepareCardForDTO(Card card) {
+        User authenticatedUser = userContextService.getAuthenticatedUser();
+        if (authenticatedUser != null && authenticatedUser.getId().equals(card.getUser().getId())) {
+            card.setEncryptedNumber(encryptionService.decrypt(card.getEncryptedNumber()));
         }
+        return card;
+    }
 
+    private List<CardResponseDTO> mapCardsToDTOs(List<Card> cards) {
         return cards.stream()
+                .map(this::prepareCardForDTO)
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
@@ -116,6 +130,4 @@ public class CardService implements ICardService {
                 card.getRegistrationDate()
         );
     }
-
-
 }
