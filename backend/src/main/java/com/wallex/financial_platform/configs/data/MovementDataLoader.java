@@ -4,17 +4,12 @@ import com.wallex.financial_platform.entities.Account;
 import com.wallex.financial_platform.entities.Movement;
 import com.wallex.financial_platform.entities.Transaction;
 import com.wallex.financial_platform.entities.User;
-import com.wallex.financial_platform.exceptions.AccountNotFoundException;
-import com.wallex.financial_platform.exceptions.auth.UserNotFoundException;
 import com.wallex.financial_platform.repositories.AccountRepository;
 import com.wallex.financial_platform.repositories.MovementRepository;
 import com.wallex.financial_platform.repositories.TransactionRepository;
-import com.wallex.financial_platform.repositories.UserRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 

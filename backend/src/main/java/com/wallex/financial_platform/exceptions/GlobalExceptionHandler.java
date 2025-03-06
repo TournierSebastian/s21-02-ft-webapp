@@ -1,14 +1,19 @@
 package com.wallex.financial_platform.exceptions;
 
 import com.mercadopago.exceptions.MPException;
+import com.wallex.financial_platform.exceptions.account.AccountErrorException;
+import com.wallex.financial_platform.exceptions.account.AccountNotFoundException;
 import com.wallex.financial_platform.exceptions.auth.InvalidCredentialsException;
 import com.wallex.financial_platform.exceptions.auth.UserAlreadyExistsException;
 import com.wallex.financial_platform.exceptions.auth.UserNotFoundException;
 import com.wallex.financial_platform.exceptions.card.CardAlreadyExistsException;
 import com.wallex.financial_platform.exceptions.card.CardNotFoundException;
 import com.wallex.financial_platform.exceptions.card.UnauthorizedCardDeletionException;
+import com.wallex.financial_platform.exceptions.movement.MovementNotFoundException;
 import com.wallex.financial_platform.exceptions.notification.NotificationException;
 import com.wallex.financial_platform.exceptions.transaction.InsufficientFundsException;
+import com.wallex.financial_platform.exceptions.transaction.TransactionErrorException;
+import com.wallex.financial_platform.exceptions.transaction.TransactionNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -51,6 +56,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleAccountNotFoundException(AccountNotFoundException ex) {
         return buildResponseEntity(HttpStatus.NOT_FOUND, ex.getMessage());
     }
+    // ⚠️ Manejo de Account no encontrado
+    @ExceptionHandler(AccountErrorException.class)
+    public ResponseEntity<Map<String, Object>> handleAccountErrorException(AccountErrorException ex) {
+        return buildResponseEntity(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
     // ⚠️ Manejo de Transaccion no encontrado
     @ExceptionHandler(TransactionNotFoundException.class)
     public ResponseEntity<Map<String, Object>> handleTransactionNotFoundException(TransactionNotFoundException ex) {

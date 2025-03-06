@@ -12,8 +12,8 @@ import com.wallex.financial_platform.entities.Reservation;
 import com.wallex.financial_platform.entities.Transaction;
 import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.entities.enums.CurrencyType;
-import com.wallex.financial_platform.exceptions.AccountErrorException;
-import com.wallex.financial_platform.exceptions.AccountNotFoundException;
+import com.wallex.financial_platform.exceptions.account.AccountErrorException;
+import com.wallex.financial_platform.exceptions.account.AccountNotFoundException;
 import com.wallex.financial_platform.repositories.ReservationRepository;
 import com.wallex.financial_platform.services.IAccountService;
 import com.wallex.financial_platform.services.utils.AccountServiceHelper;
@@ -70,7 +70,7 @@ public class AccountService implements IAccountService {
         List<Account> userAccount = user.getAccounts().stream()
                 .filter(account -> account.getCurrency() == accountReq.currency()).toList();
         if (!userAccount.isEmpty()) {
-            throw new AccountErrorException("User already has an account with this currency");
+            throw new AccountErrorException("El usuario ya tiene una cuenta con esta moneda");
         }
         Account newAccount = Account.builder()
                 .currency(accountReq.currency())

@@ -30,7 +30,7 @@ public class AccountDataLoader {
         List<Account> accountList = new ArrayList<>();
 
         // Crear las cuentas para el usuario 1
-        accountList.add(
+       /* accountList.add(
                 Account.builder()
                 .accountId(null)
                 .cbu(faker.numerify("CBU000000"+"0351"+"1"+
@@ -48,7 +48,7 @@ public class AccountDataLoader {
                 .sourceTransactions(new ArrayList<>()) // Transacciones origen
                 .destinationTransactions(new ArrayList<>()) // Transacciones destino
                 .build()
-        );
+        );*/
 
 
         accountList.add(
