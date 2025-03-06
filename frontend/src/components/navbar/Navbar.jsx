@@ -81,7 +81,10 @@ const Navbar = () => {
 
                   </div>
                   <div className='text-lg'>
-                    <h3 className='text-LightGolden'>{Name}</h3>
+                    <h3 className='text-LightGolden'> 
+
+                    {Name ? (Name.length > 10 ? Name.slice(0, 10) + ".." : Name) : "Cargando..."}
+                    </h3>
                     <a className='flex items-center mt-1' >
                       <h4 className='text-LightGolden'>Tu Perfil</h4>
                       <ChevronRight size={20} color="#F5E7BE" strokeWidth={2} />

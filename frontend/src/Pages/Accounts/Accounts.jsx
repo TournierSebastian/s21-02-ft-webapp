@@ -10,7 +10,7 @@ const Accounts = () => {
 
     const [Currencies, SetCurrencies] = useState([]);
     const [Accounts, SetAccounts] = useState([]);
-    const [selectedCurrency, setSelectedCurrency] = useState("ARG");
+    const [selectedCurrency, setSelectedCurrency] = useState("ARS");
     const [Error, Seterror] = useState()
     const navigate = useNavigate();
     const fetchData = async () => {

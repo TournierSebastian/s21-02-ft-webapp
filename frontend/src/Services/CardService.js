@@ -3,7 +3,8 @@ import api from "./api";
 const CardService = () => {
   const FetchCardService = async () => {
     try {
-      const response = await api.get('card/by-user');
+      const response = await api.get('/api/cards');
+
       return response;
     } catch (error) {
         
@@ -11,7 +12,18 @@ const CardService = () => {
     }
   };
 
-  return { FetchCardService };
+
+  const CreateCardService = async (currency) => {
+    try {
+        await api.post('/api/cards/register', {currency});
+     
+        return '';
+    } catch (error) {
+       
+        return error
+    }
+};
+  return {FetchCardService, CreateCardService };
 };
 
 export default CardService;

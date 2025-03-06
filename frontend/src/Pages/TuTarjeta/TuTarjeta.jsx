@@ -18,12 +18,12 @@ const TuTarjeta = () => {
     fetchData();
   }, []);
 
-  // Verifica si 'Card' tiene los datos correctos
+
   const isCardValid = Card && Card.type !== '' && Card.encryptedNumber && Card.expirationDate;
 
   const cardNumber = isCardValid ? Card.encryptedNumber : '---- ---- ---- ----';
   const expirationDate = isCardValid ? Card.expirationDate : '--/--';
-  const cvv = isCardValid ? '---' : '---';  // Puedes cambiar este valor si tienes un campo de CVV en la respuesta
+  const cvv = isCardValid ? '---' : '---'; 
 
   return (
     <div className='Contenido'>

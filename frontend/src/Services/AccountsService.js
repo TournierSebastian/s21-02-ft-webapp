@@ -15,16 +15,17 @@ const AccountsService = () => {
 
 
     const CreateAccountsService = async (currency) => {
-        
+
         try {
             const response = await api.post('/api/accounts', {currency});
          
             return '';
         } catch (error) {
-            if(error.state = 404){ 
+            alert(error.status)
+            if(error.status === 404){ 
                 return 'Ya existe cuenta en esa moneda'
             }
-            return error
+            return 'Fallo el sistema'
         }
     };
 
