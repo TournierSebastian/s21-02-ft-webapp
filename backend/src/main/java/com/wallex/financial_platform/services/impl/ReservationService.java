@@ -6,7 +6,7 @@ import com.wallex.financial_platform.entities.Account;
 import com.wallex.financial_platform.entities.Reservation;
 import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.entities.enums.ReservationStatus;
-import com.wallex.financial_platform.exceptions.AccountNotFoundException;
+import com.wallex.financial_platform.exceptions.account.AccountNotFoundException;
 import com.wallex.financial_platform.exceptions.transaction.InsufficientFundsException;
 import com.wallex.financial_platform.repositories.ReservationRepository;
 import com.wallex.financial_platform.services.IReservationService;
@@ -14,7 +14,6 @@ import com.wallex.financial_platform.services.utils.UserContextService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 

@@ -33,7 +33,8 @@ public class UserDataLoader {
                 true, // Estado activo
                 null, // Listado de cuentas
                 null, // Listado de notificaciones
-                null  // Listado de tarjetas
+                null,  // Listado de tarjetas
+                null // Listado de movimientos
         );
 
         User user2 = new User(
@@ -48,7 +49,9 @@ public class UserDataLoader {
                 true,
                 null,
                 null,
-                null
+                null,
+                null // Listado de movimientos
+
         );
 
         User user3 = new User(
@@ -61,6 +64,7 @@ public class UserDataLoader {
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 true,
+                null,
                 null,
                 null,
                 null
@@ -78,6 +82,7 @@ public class UserDataLoader {
                 true,
                 null,
                 null,
+                null,
                 null
         );
 
@@ -91,6 +96,7 @@ public class UserDataLoader {
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 true,
+                null,
                 null,
                 null,
                 null
@@ -108,6 +114,7 @@ public class UserDataLoader {
                 false,
                 null,
                 null,
+                null,
                 null
         );
 
@@ -123,11 +130,61 @@ public class UserDataLoader {
                 false,
                 null,
                 null,
+                null,
+                null
+        );
+
+
+        User user8 = new User(
+                null,
+                "Visa",
+                "71135628",
+                "visa@testing.com",
+                faker.numerify("+54##########"),
+                passwordEncoder.encode("qwertyui"), // Contraseña encriptada
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                false,
+                null,
+                null,
+                null,
+                null
+        );
+
+        User user9 = new User(
+                null,
+                "MasterCard",
+                "71003569",
+                "mastercard@testing.com",
+                faker.numerify("+54##########"),
+                passwordEncoder.encode("qwertyui"), // Contraseña encriptada
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                false,
+                null,
+                null,
+                null,
+                null
+        );
+
+        User user10 = new User(
+                null,
+                "American Express",
+                "73100620",
+                "amex@testing.com",
+                faker.numerify("+54##########"),
+                passwordEncoder.encode("qwertyui"), // Contraseña encriptada
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                false,
+                null,
+                null,
+                null,
                 null
         );
 
         // Guardar los usuarios en la base de datos
-        userRepository.saveAll(List.of(user1, user2, user3, user4, user5, user6, user7));
+        userRepository.saveAll(List.of(user1, user2, user3, user4, user5, user6, user7, user8, user9, user10));
     }
 
 }

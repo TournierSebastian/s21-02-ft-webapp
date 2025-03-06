@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/movements")
 @AllArgsConstructor
@@ -20,5 +22,10 @@ public class MovementController {
             @PathVariable("movement_id") Long movementId
     ){
         return ResponseEntity.ok(movementService.getMovementById(movementId));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<MovementResponseDTO>> getMovementsByAccount(){
+        return ResponseEntity.ok(movementService.getUserMovements());
     }
 }

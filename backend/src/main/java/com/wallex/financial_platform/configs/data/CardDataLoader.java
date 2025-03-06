@@ -39,18 +39,18 @@ public class CardDataLoader {
         }
 
         List<Card> cards = List.of(
-                createCard(users.get(0), "5031755734530604", CardType.CREDIT, "Mastercard", "11/30", PASSWORD_CREDIT, 500000.00),
-                createCard(users.get(1), "4509953566233704", CardType.CREDIT, "Visa", "11/30", PASSWORD_CREDIT, 1000000.00),
-                createCard(users.get(2), "371180303257522", CardType.CREDIT, "American Express", "11/30", PASSWORD_CREDIT, 750000.50),
-                createCard(users.get(3), "5287338310253304", CardType.DEBIT, "Mastercard Debito", "11/30", PASSWORD_DEBIT, 200000.75),
-                createCard(users.get(4), "4002768694395619", CardType.DEBIT, "Visa Debito", "11/30", PASSWORD_DEBIT, 120000.25),
-                createCard(users.get(4), "9988776655443322", CardType.CREDIT, "Banco Macro", "11/30", PASSWORD_CREDIT, 250000.00)
+                createCard(users.get(0), "5031755734530604", CardType.CREDIT, users.get(8), "11/30", PASSWORD_CREDIT, 500000.00),
+                createCard(users.get(1), "4509953566233704", CardType.CREDIT, users.get(7), "11/30", PASSWORD_CREDIT, 1000000.00),
+                createCard(users.get(2), "371180303257522", CardType.CREDIT, users.get(9), "11/30", PASSWORD_CREDIT, 750000.50),
+                createCard(users.get(3), "5287338310253304", CardType.DEBIT, users.get(8), "11/30", PASSWORD_DEBIT, 200000.75),
+                createCard(users.get(4), "4002768694395619", CardType.DEBIT, users.get(7), "11/30", PASSWORD_DEBIT, 120000.25),
+                createCard(users.get(4), "9988776655443322", CardType.CREDIT, users.get(9), "11/30", PASSWORD_CREDIT, 250000.00)
         );
 
         cardRepository.saveAll(cards);
     }
 
-    private Card createCard(User user, String cardNumber, CardType cardType, String bankName, String expiryDate,
+    private Card createCard(User user, String cardNumber, CardType cardType, User bankName, String expiryDate,
                             String password, double initialBalance) {
         return new Card(
                 null,

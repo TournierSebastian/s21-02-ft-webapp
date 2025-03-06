@@ -3,25 +3,25 @@ package com.wallex.financial_platform.services.impl;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import com.wallex.financial_platform.dtos.requests.CardTransactionRequestDTO;
 import com.wallex.financial_platform.dtos.requests.TransactionRequestDTO;
 import com.wallex.financial_platform.dtos.responses.CheckAccountResponseDTO;
 import com.wallex.financial_platform.dtos.responses.TransactionResponseDTO;
-import com.wallex.financial_platform.entities.Account;
-import com.wallex.financial_platform.entities.User;
+import com.wallex.financial_platform.entities.*;
 import com.wallex.financial_platform.entities.enums.TransactionStatus;
 import com.wallex.financial_platform.entities.enums.TransactionType;
-import com.wallex.financial_platform.exceptions.AccountNotFoundException;
-import com.wallex.financial_platform.exceptions.TransactionErrorException;
-import com.wallex.financial_platform.exceptions.TransactionNotFoundException;
+import com.wallex.financial_platform.exceptions.account.AccountNotFoundException;
+import com.wallex.financial_platform.exceptions.transaction.TransactionErrorException;
+import com.wallex.financial_platform.exceptions.transaction.TransactionNotFoundException;
+import com.wallex.financial_platform.exceptions.card.CardNotFoundException;
 import com.wallex.financial_platform.repositories.AccountRepository;
 import com.wallex.financial_platform.services.ITransactionService;
+import com.wallex.financial_platform.services.utils.EncryptionService;
 import com.wallex.financial_platform.services.utils.UserContextService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.wallex.financial_platform.entities.Transaction;
 import com.wallex.financial_platform.repositories.TransactionRepository;
 
 import lombok.AllArgsConstructor;
@@ -34,6 +34,7 @@ public class TransactionService implements ITransactionService {
     private AccountRepository accountRepository;
     private UserContextService userContextService;
     private MovementService movementService;
+    private EncryptionService encryptionService;
 
     @Override
     @SneakyThrows
@@ -47,21 +48,14 @@ public class TransactionService implements ITransactionService {
     @Override
     @SneakyThrows
     public TransactionResponseDTO save(TransactionRequestDTO transactionReq) {
-        var auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.isAuthenticated() && auth.getPrincipal() == "anonymousUser") {
-            throw new TransactionErrorException("User not authenticated");
-        }
-        Account sourceAccount = accountRepository.findByCbuOrAlias(transactionReq.sourceCbu(), transactionReq.sourceCbu())
-                .orElseThrow(()-> new AccountNotFoundException("Source Account not found"));
-        if (!Objects.equals(sourceAccount.getUser().getEmail(), auth.getPrincipal().toString())) {
-            throw new TransactionErrorException("User not authorized to perform this transaction");
-        }
+        User user = this.userContextService.getAuthenticatedUser();
+        Account sourceAccount = user.getAccounts().stream().filter(acc -> Objects.equals(acc.getCbu(), transactionReq.sourceCbu()))
+                .findAny().orElseThrow(()-> new AccountNotFoundException("Source Account not found"));
         Account destinationAccount = accountRepository.findByCbuOrAlias(transactionReq.destinationCbu(), transactionReq.destinationCbu())
                 .orElseThrow(()-> new AccountNotFoundException("Destination Account not found"));
         if (sourceAccount.getCurrency() != destinationAccount.getCurrency()) {
             throw new TransactionErrorException("Currency mismatch");
         }
-
         if (sourceAccount.getAvailableBalance().compareTo(transactionReq.amount()) < 0) {
             throw new TransactionErrorException("Insufficient funds");
         }
@@ -76,6 +70,34 @@ public class TransactionService implements ITransactionService {
         Transaction newTransaction = transactionRepository.save(transaction);
         movementService.save(newTransaction);
         return mapToDTO(newTransaction);
+    }
+
+    public TransactionResponseDTO save(CardTransactionRequestDTO transactionReq) {
+        User user = this.userContextService.getAuthenticatedUser();
+        Card originCard = user.getCards().stream()
+                .filter(card -> Objects.equals(encryptionService.decrypt(card.getEncryptedNumber()), transactionReq.cardNumber()))
+                .findAny().orElseThrow(()-> new CardNotFoundException("Card not found"));
+        Account destinationAccount =  accountRepository.findByCbuOrAlias(transactionReq.destinationCbu(), transactionReq.destinationCbu())
+                .orElseThrow(()-> new AccountNotFoundException("Destination Account not found"));
+        Account providerAccount = originCard.getProvider().getAccounts().stream().filter(acc -> acc.getCurrency() == destinationAccount.getCurrency())
+                .findAny().orElseThrow(()-> new AccountNotFoundException("Card provider doesn't have any account with the same destination account currency"));
+        Transaction cardTransaction = transactionRepository.save(Transaction.builder()
+                .sourceAccount(providerAccount)
+                .destinationAccount(destinationAccount)
+                .amount(transactionReq.amount())
+                .type(TransactionType.TRANSFER)
+                .status(TransactionStatus.COMPLETED)
+                .reason(transactionReq.reason())
+                .build());
+        movementService.save(Movement.builder()
+                .transaction(cardTransaction)
+                .description("Pago con tarjeta "
+                        +originCard.getProvider().getFullName()
+                        +" **** **** **** "+transactionReq.cardNumber().substring(12))
+                .amount(transactionReq.amount())
+                .user(user)
+                .build());
+        return mapToDTO(cardTransaction);
     }
 
     public TransactionResponseDTO mapToDTO(Transaction transaction) {

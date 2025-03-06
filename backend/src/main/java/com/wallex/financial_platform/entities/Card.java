@@ -33,8 +33,9 @@ public class Card {
     @Column(nullable = false)
     private CardType type;
 
-    @Column(nullable = false)
-    private String issuingBank;
+    @ManyToOne
+    @JoinColumn(name="user_provider_id", nullable = false)
+    private User provider;
 
     @Column(nullable = false)
     private String expirationDate;

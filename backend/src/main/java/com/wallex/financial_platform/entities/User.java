@@ -61,6 +61,10 @@ public class User {
     @JsonManagedReference
     private List<Card> cards;
 
+    @JsonManagedReference
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Movement> movements;
+
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();

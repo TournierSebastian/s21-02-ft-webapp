@@ -62,11 +62,6 @@ public class AccountController {
         return ResponseEntity.ok(accountService.getReservations(accountId));
     }
 
-    @GetMapping("/{id}/movements")
-    public ResponseEntity<List<MovementResponseDTO>> getMovementsByAccount(@PathVariable("id") Long accountId){
-        return ResponseEntity.ok(movementService.getUserAccountMovements(accountId));
-    }
-
     @GetMapping("/currencies")
     public ResponseEntity<List<String>> getCurrencies() {
         List<String> currencies = this.accountService.getCurrencies();
