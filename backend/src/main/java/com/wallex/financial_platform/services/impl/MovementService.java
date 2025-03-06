@@ -2,14 +2,12 @@ package com.wallex.financial_platform.services.impl;
 
 import com.wallex.financial_platform.dtos.responses.CheckAccountResponseDTO;
 import com.wallex.financial_platform.dtos.responses.MovementResponseDTO;
-import com.wallex.financial_platform.dtos.responses.TransactionResponseDTO;
 import com.wallex.financial_platform.dtos.responses.UserResponseDTO;
 import com.wallex.financial_platform.entities.Account;
 import com.wallex.financial_platform.entities.Movement;
 import com.wallex.financial_platform.entities.Transaction;
 import com.wallex.financial_platform.entities.User;
-import com.wallex.financial_platform.exceptions.AccountNotFoundException;
-import com.wallex.financial_platform.exceptions.MovementNotFoundException;
+import com.wallex.financial_platform.exceptions.movement.MovementNotFoundException;
 import com.wallex.financial_platform.repositories.MovementRepository;
 import com.wallex.financial_platform.services.IMovementService;
 import com.wallex.financial_platform.services.utils.UserContextService;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @Slf4j
 @Service

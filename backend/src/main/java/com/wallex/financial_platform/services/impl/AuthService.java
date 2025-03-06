@@ -50,10 +50,6 @@ public class AuthService implements IAuthService {
 
         this.userRepository.save(user);
 
-        // crea automaticamente una cuenta en pesos ARG despues del registro
-        AccountRequestDTO newAccount = new AccountRequestDTO(CurrencyType.ARS, null,null);
-        accountService.createAccount(newAccount);
-
         return new UserResponseDTO(
                 user.getId(), user.getFullName(), user.getDni(), user.getEmail(),
                 user.getPhoneNumber(), user.getCreatedAt(), user.getUpdatedAt(), user.getActive()

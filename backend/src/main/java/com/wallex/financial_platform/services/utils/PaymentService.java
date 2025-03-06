@@ -19,7 +19,7 @@ import com.wallex.financial_platform.entities.Transaction;
 import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.entities.enums.TransactionStatus;
 import com.wallex.financial_platform.entities.enums.TransactionType;
-import com.wallex.financial_platform.exceptions.AccountNotFoundException;
+import com.wallex.financial_platform.exceptions.account.AccountNotFoundException;
 import com.wallex.financial_platform.repositories.TransactionRepository;
 import com.wallex.financial_platform.repositories.UserRepository;
 import lombok.AllArgsConstructor;
