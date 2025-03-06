@@ -13,7 +13,19 @@ const AccountsService = () => {
         }
     };
 
-    return { FetchAccountsService };
+
+    const CreateAccountsService = async (currency) => {
+        try {
+            const response = await api.post('/api/accounts', currency);
+         
+            return response.data;
+        } catch (error) {
+
+            return error
+        }
+    };
+
+    return { FetchAccountsService, CreateAccountsService };
 
 
 }

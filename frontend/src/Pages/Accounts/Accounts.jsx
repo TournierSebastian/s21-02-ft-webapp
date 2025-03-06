@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Accounts = () => {
     const { FetchCurrenciesService } = CurrenciesService();
-    const { FetchAccountsService } = AccountsService();
+    const { FetchAccountsService, CreateAccountsService } = AccountsService();
 
     const [Currencies, SetCurrencies] = useState([]);
     const [Accounts, SetAccounts] = useState([]);
@@ -66,7 +66,7 @@ const Accounts = () => {
                             </select>
                         </div>
 
-                        <button className='bg-LightGolden hover:bg-DarkGolden rounded-2xl px-2 py-1'>
+                        <button className='bg-LightGolden hover:bg-DarkGolden rounded-2xl px-2 py-1' onClick={()=>(CreateAccountsService(Currencies))}>
                             Abrir cuenta
                         </button>
                     </div>
