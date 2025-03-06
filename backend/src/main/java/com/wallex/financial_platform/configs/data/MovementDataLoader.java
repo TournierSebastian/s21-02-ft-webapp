@@ -7,6 +7,7 @@ import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.repositories.AccountRepository;
 import com.wallex.financial_platform.repositories.MovementRepository;
 import com.wallex.financial_platform.repositories.TransactionRepository;
+import com.wallex.financial_platform.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
