@@ -10,28 +10,37 @@ const Accounts = () => {
 
     const [Currencies, SetCurrencies] = useState([]);
     const [Accounts, SetAccounts] = useState([]);
+    const [selectedCurrency, setSelectedCurrency] = useState("ARG");
+    const [Error, Seterror] = useState()
     const navigate = useNavigate();
-    
+    const fetchData = async () => {
+        try {
+            const data = await FetchCurrenciesService();
+            const dataAccounts = await FetchAccountsService();
+            SetAccounts(dataAccounts || [])
+            SetCurrencies(data || []);
+        } catch (error) {
+            SetCurrencies([]);
+        }
+    };
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const data = await FetchCurrenciesService();
-                const dataAccounts = await FetchAccountsService();
-                SetAccounts(dataAccounts || [])
-                SetCurrencies(data || []);
-            } catch (error) {
-                SetCurrencies([]);
-            }
-        };
 
         fetchData();
     }, [])
 
-    const HandlerSelectAccount = (accountId) =>{
+    const HandlerSelectAccount = (accountId) => {
         localStorage.setItem("Account", accountId);
         navigate('/home')
+    }
 
+    const HandleCreateAccount = async () => {
+        try {
+            const data = await CreateAccountsService(selectedCurrency);
+            Seterror(data)
+            fetchData();
+        } catch {
 
+        }
     }
     return (
         <div className='Contenido'>
@@ -53,7 +62,9 @@ const Accounts = () => {
                         <h1 className='text-LightGolden text-4xl'>Abre tu Cuenta</h1>
                         <div>
                             <h4 className='text-white text-2xl'>Seleciona tu moneda</h4>
-                            <select className='bg-WhiteBlack w-full rounded-2xl py-1 m-2'>
+                            <select className='bg-WhiteBlack w-full rounded-2xl py-1 m-2'
+                                value={selectedCurrency}
+                                onChange={(e) => (setSelectedCurrency(e.target.value))}>
                                 {Currencies.length > 0 ? (
                                     Currencies.map((currency, index) => (
                                         <option key={index} value={currency}>
@@ -66,28 +77,30 @@ const Accounts = () => {
                             </select>
                         </div>
 
-                        <button className='bg-LightGolden hover:bg-DarkGolden rounded-2xl px-2 py-1' onClick={()=>(CreateAccountsService(Currencies))}>
+                        <button className='bg-LightGolden hover:bg-DarkGolden rounded-2xl px-2 py-1' onClick={() => (HandleCreateAccount())}>
                             Abrir cuenta
                         </button>
+                        {Error != '' && <p className=' text-red-500 '>{Error}</p>}
                     </div>
 
-                        {Accounts.length > 0 ? (
-                            Accounts.map((account, index) => (
-                                <div key={index} className='bg-BlackBlue p-4 rounded-xl mt-4 w-full  sm:w-3/4 flex flex-col sm:flex-row justify-between items-center'>
+                    {Accounts.length > 0 ? (
+                        Accounts.map((account, index) => (
+                            <div key={index} className='bg-BlackBlue p-4 rounded-xl mt-4 w-full  sm:w-3/4 flex flex-col sm:flex-row justify-between items-center'>
                                 <h3 className='text-LightGolden text-2xl text-center sm:text-left'>{account.alias}</h3>
+                                <p className='text-white'>Moneda:{account.currency}</p>
                                 <p className='text-white text-xl text-center sm:text-left'>Saldo: {account.balance}</p>
                                 <button
-                                  className='bg-LightGolden hover:bg-DarkGolden rounded-2xl px-4 py-2 mt-2 sm:mt-0'
-                                  onClick={() => {HandlerSelectAccount(account.accountId)}}
+                                    className='bg-LightGolden hover:bg-DarkGolden rounded-2xl px-4 py-2 mt-2 sm:mt-0'
+                                    onClick={() => { HandlerSelectAccount(account.accountId) }}
                                 >
-                                  Entrar
+                                    Entrar
                                 </button>
-                              </div>
-                              
-                            ))
-                        ) : (
-                            <p className='text-white text-xl'>No tienes cuentas aún.</p>
-                        )}
+                            </div>
+
+                        ))
+                    ) : (
+                        <p className='text-white text-xl'>No tienes cuentas aún.</p>
+                    )}
                 </div>
             </main>
 
