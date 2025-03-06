@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -25,6 +26,7 @@ public class MovementDataLoader {
     private final MovementRepository movementRepository;
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
+    private final UserRepository userRepository;
 
 
     public void load() {
@@ -46,6 +48,7 @@ public class MovementDataLoader {
         }).toList();
 
         // Guardar los movimientos en el repositorio
-        movementRepository.saveAll(movements);
+        List<Movement> movementsList = movementRepository.saveAll(movements);
+
     }
 }

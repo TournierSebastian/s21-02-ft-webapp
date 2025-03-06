@@ -1,10 +1,14 @@
 package com.wallex.financial_platform.services.impl;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.wallex.financial_platform.dtos.requests.CheckAccountRequestDto;
+import com.wallex.financial_platform.dtos.responses.CheckAccountResponseDTO;
 import com.wallex.financial_platform.dtos.responses.UserResponseDTO;
+import com.wallex.financial_platform.entities.Account;
 import com.wallex.financial_platform.exceptions.auth.UserNotFoundException;
 import com.wallex.financial_platform.services.IUserService;
 import com.wallex.financial_platform.services.utils.UserContextService;
@@ -55,6 +59,18 @@ public class UserService implements IUserService {
         return this.userRepository.existsByDni(dni);
     }
 
+    @Override
+    public List<CheckAccountResponseDTO> getDestinationAccounts() {
+        User user = userContextService.getAuthenticatedUser();
+        return user.getDestinationAccounts().stream().map(this::mapToCheckDTO).toList();
+    }
+
+    @Override
+    public List<CheckAccountResponseDTO> addDestinationAccount(CheckAccountRequestDto account) {
+
+        return null;
+    }
+
     private UserResponseDTO convertToDTO(User user) {
 
         return new UserResponseDTO(
@@ -66,6 +82,16 @@ public class UserService implements IUserService {
                 user.getCreatedAt(),
                 user.getUpdatedAt(),
                 user.getActive()
+        );
+    }
+
+    private CheckAccountResponseDTO mapToCheckDTO(Account account) {
+        return new CheckAccountResponseDTO(
+                account.getCbu(),
+                account.getAlias(),
+                account.getCurrency(),
+                account.getUser().getFullName(),
+                account.getUser().getDni()
         );
     }
 

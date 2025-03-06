@@ -74,7 +74,7 @@ public class AccountService implements IAccountService {
         }
         Account newAccount = Account.builder()
                 .currency(accountReq.currency())
-                .cbu(faker.numerify("CBU000"+"0351"+"Ø"+"000000#######"+"Ø"))
+                .cbu(faker.numerify("CBU00000"+"0351"+"Ø"+"000000#######"+"Ø"))
                 .alias((faker.animal().name()+"."+faker.construction().materials()+"."+faker.commerce().material()).toLowerCase())
                 .user(user)
                 .sourceTransactions(new ArrayList<>())

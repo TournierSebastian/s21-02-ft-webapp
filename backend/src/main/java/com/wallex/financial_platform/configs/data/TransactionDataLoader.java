@@ -2,10 +2,12 @@ package com.wallex.financial_platform.configs.data;
 
 import com.wallex.financial_platform.entities.Account;
 import com.wallex.financial_platform.entities.Transaction;
+import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.entities.enums.TransactionStatus;
 import com.wallex.financial_platform.entities.enums.TransactionType;
 import com.wallex.financial_platform.repositories.AccountRepository;
 import com.wallex.financial_platform.repositories.TransactionRepository;
+import com.wallex.financial_platform.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -20,6 +22,7 @@ public class TransactionDataLoader {
 
     private final TransactionRepository transactionRepository;
     private final AccountRepository accountRepository;
+    private final UserRepository userRepository;
 
     public void load() {
         // Obtener algunas cuentas para asociar con las transacciones

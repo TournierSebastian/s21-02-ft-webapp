@@ -1,8 +1,11 @@
 package com.wallex.financial_platform.services;
 
+import com.wallex.financial_platform.dtos.requests.CheckAccountRequestDto;
+import com.wallex.financial_platform.dtos.responses.CheckAccountResponseDTO;
 import com.wallex.financial_platform.dtos.responses.UserResponseDTO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IUserService {
     UserResponseDTO getUserByEmail(String email);
@@ -11,4 +14,6 @@ public interface IUserService {
     List<UserResponseDTO> getUserOnline();
     boolean existsByEmail(String email);
     boolean existsByDni(String dni);
+    List<CheckAccountResponseDTO> getDestinationAccounts();
+    List<CheckAccountResponseDTO> addDestinationAccount(CheckAccountRequestDto account);
 }

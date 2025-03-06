@@ -15,7 +15,8 @@ public class DataLoader {
                                       CardDataLoader cardDataLoader,
                                       ReservationDataLoader reservationDataLoader,
                                      TransactionDataLoader transactionDataLoader,
-                                     MovementDataLoader movementDataLoader
+                                     MovementDataLoader movementDataLoader,
+                                      UserDestinationAccountDataLoader userDestinationAccountDataLoader
                                       ) {
 
         return args -> {
@@ -26,6 +27,7 @@ public class DataLoader {
             transactionDataLoader.load();
             reservationDataLoader.load();
             movementDataLoader.load();
+            userDestinationAccountDataLoader.load();
         };
     }
 }

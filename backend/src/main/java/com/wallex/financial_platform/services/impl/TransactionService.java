@@ -70,6 +70,7 @@ public class TransactionService implements ITransactionService {
         }
         Transaction newTransaction = transactionRepository.save(transaction);
         movementService.save(newTransaction);
+        //if (user.getRecipients().stream().filter())
         return mapToDTO(newTransaction);
     }
 
