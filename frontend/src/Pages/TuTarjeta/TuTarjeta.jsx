@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './TuTarjeta.css';
-import Navbar from '../../components/navbar/userNavbar';
 import UseFetchCard from '../../Hooks/Card/UseFetchCard';
 import Mastercard from '../../assets/Icons/Mastercard.png';
 import logo from '../../assets/Icons/Logo.png';
+import Navbar from '../../components/navbar/Navbar';
 
 const TuTarjeta = () => {
   const { FetchCarduser } = UseFetchCard();

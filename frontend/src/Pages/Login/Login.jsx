@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import './Login.css'
 import logo from '../../assets/Icons/Logo.png'
-import Navbar from '../../components/navbar/userNavbar'
 import { ChevronRight, Eye, EyeClosed, ShieldAlert } from 'lucide-react'
 import Uselogin from '../../Hooks/Authentication/Uselogin'
-import Lpnavbar from '../../components/navbar/lpnavbar'
+import Navbar from '../../components/navbar/Navbar'
 
 const Login = () => {
   const [Typeinput, SetTypeinput] = useState('password')
@@ -28,7 +27,7 @@ const Login = () => {
   }
   return (
     <div className='Contenido'>
-      <nav><Lpnavbar/></nav>
+      <nav><Navbar/></nav>
       <main>
       <div className='flex sm:flex-row flex-col container mt-10 mx-auto items-stretch container'>
       <div className="w-full sm:w-1/2 p-6 flex flex-col justify-between min-h-full">
@@ -43,10 +42,10 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="w-full sm:w-1/2 px-13 py-6 bg-BlackBlue rounded-4xl min-h-full" >
+          <div className="w-full sm:w-1/2 px-13 py-6 max-[450px]:px-4 bg-BlackBlue rounded-4xl min-h-full">
           <div className=' flex justify-center items-center mb-3'>
-              <img src={logo} className='w-25 mx-3'></img>
-              <h3 className='text-LightGolden text-5xl'>Inicia Sesión</h3>
+          <img src={logo} className="w-20 max-[360px]:w-16 mx-3" alt="Logo" />
+          <h3 className="text-LightGolden text-5xl max-[360px]:text-3xl">Inicia Sesión</h3>
             </div>
             <form onSubmit={hanlderlogin}>
             <div className='flex flex-col '>

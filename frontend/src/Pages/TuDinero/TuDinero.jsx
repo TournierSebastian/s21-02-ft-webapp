@@ -1,6 +1,6 @@
 import React from 'react'
 import './TuDinero.css'
-import Navbar from '../../components/navbar/userNavbar'
+import Navbar from '../../components/navbar/Navbar'
 const TuDinero = () => {
   return (
     <div className='Contenido'>

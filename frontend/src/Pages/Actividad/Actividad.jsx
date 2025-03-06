@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import Navbar from '../../components/navbar/userNavbar'
+import Navbar from '../../components/navbar/Navbar'
 
 function ActivityItem({ date, username, reason, amount, time, icon }) {
   return (

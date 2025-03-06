@@ -1,6 +1,6 @@
 import React from 'react'
 import './Transferir'
-import Navbar from '../../components/navbar/userNavbar'
+import Navbar from '../../components/navbar/Navbar'
 const Transferir = () => {
   return (
     <div className='Contenido'>

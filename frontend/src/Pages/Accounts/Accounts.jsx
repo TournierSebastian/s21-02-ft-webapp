@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Navbar from '../../components/navbar/userNavbar'
+import Navbar from '../../components/navbar/Navbar'
 import CurrenciesService from '../../Services/CurrenciesService'
 import AccountsService from '../../Services/AccountsService';
 import { useNavigate } from 'react-router-dom';
@@ -73,13 +73,17 @@ const Accounts = () => {
 
                         {Accounts.length > 0 ? (
                             Accounts.map((account, index) => (
-                                <div key={index} className='bg-BlackBlue p-4 rounded-xl mt-4 w-3/4 flex justify-between items-center'>
-                                    <h3 className='text-LightGolden text-2xl'>{account.alias}</h3>
-                                    <p className='text-white text-xl'>Saldo: {account.balance}</p>
-                                    <button className='bg-LightGolden hover:bg-DarkGolden rounded-2xl px-4 py-2 mt-2'     onClick={() => {HandlerSelectAccount(account.accountId)}}>
-                                        Entrar
-                                    </button>
-                                </div>
+                                <div key={index} className='bg-BlackBlue p-4 rounded-xl mt-4 w-full  sm:w-3/4 flex flex-col sm:flex-row justify-between items-center'>
+                                <h3 className='text-LightGolden text-2xl text-center sm:text-left'>{account.alias}</h3>
+                                <p className='text-white text-xl text-center sm:text-left'>Saldo: {account.balance}</p>
+                                <button
+                                  className='bg-LightGolden hover:bg-DarkGolden rounded-2xl px-4 py-2 mt-2 sm:mt-0'
+                                  onClick={() => {HandlerSelectAccount(account.accountId)}}
+                                >
+                                  Entrar
+                                </button>
+                              </div>
+                              
                             ))
                         ) : (
                             <p className='text-white text-xl'>No tienes cuentas aún.</p>

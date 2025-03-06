@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../../components/navbar/userNavbar";
+import Navbar from "../../components/navbar/Navbar";
 import UseFetchReserve from "../../Hooks/Reserve/UseFetchReserve";
 import iconchancho from '../../assets/General/chancho.png';
 import ReserveService from "../../Services/ReserveService";

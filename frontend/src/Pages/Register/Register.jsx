@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import './Register.css'
-import Navbar from '../../components/navbar/userNavbar'
 import logo from '../../assets/Icons/Logo.png'
 import UseRegister from '../../Hooks/Authentication/UseRegister'
-import Lpnavbar from '../../components/navbar/lpnavbar'
+import Navbar from '../../components/navbar/Navbar'
 
 const Register = () => {
   const [Email, SetEmail] = useState('');
@@ -37,7 +36,7 @@ const Register = () => {
   }
   return (
     <div className='Contenido'>
-      <nav><Lpnavbar /></nav>
+      <nav><Navbar /></nav>
 
       <main>
         <div className='flex justify-center items-center mt-10'>

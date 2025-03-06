@@ -3,14 +3,14 @@ import './Landingpage.css'
 import '../../Styles/Global.css'
 import image1 from '../../assets/General/Image1_landingpage.png'
 import image2 from '../../assets/General/Image2_landingpage.png'
-import Lpnavbar from '../../components/navbar/lpnavbar'
+import Navbar from '../../components/navbar/Navbar'
 const Landingpage = () => {
 
 
   return (
     <div className='Contenido'>
 
-      <nav><Lpnavbar /></nav>
+      <nav><Navbar /></nav>
 
       <main >
         <div className='container mx-auto'>
