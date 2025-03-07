@@ -9,14 +9,13 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 public class WebClientConfig {
 
-    @Value(value="${api.terceros.currency}")
+    @Value(value="${api.official.bank}")
     private String baseUrl;
 
-    @Bean(name="cotizaciones")
-    public WebClient cotizaciones(CurrencyType currency){
+    @Bean(name="officialBankApi")
+    public WebClient cotizaciones(){
         return WebClient.builder()
-                .baseUrl(baseUrl+"/estadisticascambiarias/v1.0/cotizaciones/"+currency)
+                .baseUrl(baseUrl)
                 .build();
     }
-
 }

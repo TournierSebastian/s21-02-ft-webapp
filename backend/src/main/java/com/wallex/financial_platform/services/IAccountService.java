@@ -1,5 +1,6 @@
 package com.wallex.financial_platform.services;
 
+import com.wallex.financial_platform.dtos.officialBank.CurrencyExchangeRate;
 import com.wallex.financial_platform.dtos.requests.AccountRequestDTO;
 import com.wallex.financial_platform.dtos.requests.CheckAccountRequestDto;
 import com.wallex.financial_platform.dtos.responses.*;
@@ -17,4 +18,5 @@ public interface IAccountService {
     List<TransactionResumeResponseDTO> getTransactions(Long accountId);
     List<ReservationResponseDto> getReservations(Long accountId);
     List<String> getCurrencies();
+    List<CurrencyExchangeRate> getAllCurrenciesExhange();
 }

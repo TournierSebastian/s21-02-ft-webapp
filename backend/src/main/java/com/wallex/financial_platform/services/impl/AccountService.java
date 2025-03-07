@@ -5,6 +5,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.wallex.financial_platform.dtos.officialBank.CurrencyExchangeRate;
+import com.wallex.financial_platform.dtos.officialBank.CurrencyExchangeResponseDto;
 import com.wallex.financial_platform.dtos.requests.AccountRequestDTO;
 import com.wallex.financial_platform.dtos.requests.CheckAccountRequestDto;
 import com.wallex.financial_platform.dtos.responses.*;
@@ -17,10 +19,13 @@ import com.wallex.financial_platform.exceptions.account.AccountNotFoundException
 import com.wallex.financial_platform.repositories.ReservationRepository;
 import com.wallex.financial_platform.services.IAccountService;
 import com.wallex.financial_platform.services.utils.AccountServiceHelper;
+import com.wallex.financial_platform.services.utils.OfficialBankConectorHelper;
 import com.wallex.financial_platform.services.utils.UserContextService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.datafaker.Faker;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 
 import com.wallex.financial_platform.entities.Account;
@@ -33,10 +38,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class AccountService implements IAccountService {
     private AccountRepository accountRepository;
-    private ReservationRepository reservationRepository;
     private UserContextService userContextService;
     private AccountServiceHelper accountServiceHelper;
-    private MovementService movementService;
+    private OfficialBankConectorHelper officialBankConectorHelper;
 
     @SneakyThrows
     public AccountResponseDTO getAccountById(Long id) {
@@ -114,6 +118,17 @@ public class AccountService implements IAccountService {
     public List<String> getCurrencies() {
         return Arrays.stream(CurrencyType.values())
                 .map(Enum::name)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CurrencyExchangeRate> getAllCurrenciesExhange() {
+        CurrencyExchangeResponseDto response = this.officialBankConectorHelper.getAllExchangeRates();
+        List<CurrencyExchangeRate> exchangesList = response.getResults().detalle;
+        return Arrays.stream(CurrencyType.values())
+                .map(currency -> exchangesList.stream()
+                        .filter(exRate -> Objects.equals(exRate.getCodigoMoneda(), currency.name()))
+                        .findAny().orElseThrow())
                 .collect(Collectors.toList());
     }
 

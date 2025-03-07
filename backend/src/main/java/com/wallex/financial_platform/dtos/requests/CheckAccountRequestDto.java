@@ -11,7 +11,7 @@ public record CheckAccountRequestDto(
         @Pattern(regexp = "^[a-zA-Z]+\\.[a-zA-Z]+\\.[a-zA-Z]+$", message = "alias not valid")
         @JsonProperty(required = false)
         String alias,
-        @Size(min =22, message="El Cbu debe tener al menos 22 caracteres")
+        @Size(min =27, message="El Cbu debe tener al menos 27 caracteres")
         @JsonProperty(required = false)
         String cbu
 ) { }
