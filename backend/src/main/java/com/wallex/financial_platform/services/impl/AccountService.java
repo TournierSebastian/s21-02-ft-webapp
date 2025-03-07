@@ -52,7 +52,13 @@ public class AccountService implements IAccountService {
 
     @Override
     public CheckAccountResponseDTO checkAccount(CheckAccountRequestDto chkAcc) {
-        Optional<Account> account = accountRepository.findByCbuOrAlias(chkAcc.cbu(), chkAcc.alias());
+        Optional<Account> account = accountRepository.findByCbuOrAlias(
+                chkAcc.cbu() != null
+                        ? chkAcc.cbu()
+                        : null,
+                chkAcc.alias() != null
+                        ? chkAcc.alias()
+                        : null);
         if (account.isPresent()) {
             return mapToCheckDTO(account.get());
         } else {
