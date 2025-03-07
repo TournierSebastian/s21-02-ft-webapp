@@ -29,11 +29,11 @@ public class AccountServiceHelper {
         User savedUser = userRepository.save(this.generateFakeUser());
         Account account = Account.builder()
                 .accountId(null)
-                .cbu(chkAcc.cbu().isBlank()
+                .cbu(chkAcc.cbu() == null || chkAcc.cbu().isBlank()
                         ? faker.numerify("CBU000" + "0351" + "Ø" + "00000########" + "Ø")
                         : chkAcc.cbu()
                 )
-                .alias(chkAcc.alias().isBlank()
+                .alias(chkAcc.alias() == null || chkAcc.alias().isBlank()
                         ? (faker.animal().name()+"."+faker.construction().materials()+"."+faker.house().furniture()).toLowerCase().replace(" ","")
                         : chkAcc.alias()
                 )
@@ -47,6 +47,7 @@ public class AccountServiceHelper {
                 .reservations(null)
                 .sourceTransactions(new ArrayList<>())
                 .destinationTransactions(new ArrayList<>())
+                .reservations(new ArrayList<>())
                 .build();
         return account;
     }
