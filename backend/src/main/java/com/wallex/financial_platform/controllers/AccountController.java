@@ -39,9 +39,6 @@ public class AccountController {
 
     @PostMapping("/check")
     public ResponseEntity<CheckAccountResponseDTO> createDestinationAccount(@RequestBody @Valid CheckAccountRequestDto accountData) {
-        if (accountData.alias().isBlank() && accountData.cbu().isBlank()) {
-            throw new IllegalArgumentException("Alias or cbu is required");
-        }
         return ResponseEntity.ok(accountService.checkAccount(accountData));
     }
 
