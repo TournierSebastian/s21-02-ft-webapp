@@ -81,6 +81,9 @@ public class User {
         active = true;
     }
 
+    @Column(name="is_card_provider")
+    private boolean isCardProvider;
+
     @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();

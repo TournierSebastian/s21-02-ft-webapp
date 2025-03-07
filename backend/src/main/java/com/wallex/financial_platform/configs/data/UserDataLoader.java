@@ -35,7 +35,8 @@ public class UserDataLoader {
                 null, // Listado de notificaciones
                 null,  // Listado de tarjetas
                 null, // Listado de movimientos
-                null
+                null,
+                false
         );
 
         User user2 = new User(
@@ -52,7 +53,8 @@ public class UserDataLoader {
                 null,
                 null,
                 null,
-        null
+                null,
+                false
         );
 
         User user3 = new User(
@@ -69,7 +71,8 @@ public class UserDataLoader {
                 null,
                 null,
                 null,
-                null
+                null,
+                false
         );
 
         User user4 = new User(
@@ -86,7 +89,8 @@ public class UserDataLoader {
                 null,
                 null,
                 null,
-                null
+                null,
+                false
         );
 
         User user5 = new User(
@@ -103,7 +107,8 @@ public class UserDataLoader {
                 null,
                 null,
                 null,
-                null
+                null,
+                false
         );
 
         User user6 = new User(
@@ -120,7 +125,8 @@ public class UserDataLoader {
                 null,
                 null,
                 null,
-                null
+                null,
+                false
         );
 
         User user7 = new User(
@@ -137,7 +143,8 @@ public class UserDataLoader {
                 null,
                 null,
                 null,
-                null
+                null,
+                false
         );
 
 
@@ -155,7 +162,8 @@ public class UserDataLoader {
                 null,
                 null,
                 null,
-                null
+                null,
+                true
         );
 
         User user9 = new User(
@@ -172,7 +180,8 @@ public class UserDataLoader {
                 null,
                 null,
                 null,
-                null
+                null,
+                true
         );
 
         User user10 = new User(
@@ -189,7 +198,8 @@ public class UserDataLoader {
                 null,
                 null,
                 null,
-                null
+                null,
+                true
         );
 
         // Guardar los usuarios en la base de datos

@@ -13,4 +13,5 @@ public interface ICardService {
     List<CardResponseDTO> getAllCardsByUserOnline();
     List<CardResponseDTO> getCardsByUserDni(DniRequestDTO dniRequestDTO);
     List<String> getAllCardTypes();
+    List<String> getAllProviders();
 }
