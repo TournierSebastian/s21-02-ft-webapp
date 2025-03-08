@@ -5,6 +5,8 @@ import java.util.List;
 
 
 import com.wallex.financial_platform.dtos.officialBank.CurrencyExchangeRate;
+import com.wallex.financial_platform.dtos.officialBank.StadisticResponseDto;
+import com.wallex.financial_platform.dtos.officialBank.StadisticVariableResponseDto;
 import com.wallex.financial_platform.dtos.requests.AccountRequestDTO;
 import com.wallex.financial_platform.dtos.requests.CheckAccountRequestDto;
 import com.wallex.financial_platform.dtos.responses.*;
@@ -68,5 +70,9 @@ public class AccountController {
     @GetMapping("/currencies/exchange")
     public ResponseEntity<List<CurrencyExchangeRate>> getCurrenciesExchanges() {
         return ResponseEntity.ok(this.accountService.getAllCurrenciesExhange());
+    }
+    @GetMapping("/investment-rate")
+    public ResponseEntity<StadisticVariableResponseDto> getInvestmentRates() {
+        return ResponseEntity.ok(this.accountService.getInvestmentRates());
     }
 }

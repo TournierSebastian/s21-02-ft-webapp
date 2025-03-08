@@ -1,6 +1,7 @@
 package com.wallex.financial_platform.services.utils;
 
 import com.wallex.financial_platform.dtos.officialBank.CurrencyExchangeResponseDto;
+import com.wallex.financial_platform.dtos.officialBank.StadisticResponseDto;
 import com.wallex.financial_platform.entities.enums.CurrencyType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,6 +39,17 @@ public class OfficialBankConectorHelper {
                                 .build())
                 .retrieve()
                 .bodyToMono(CurrencyExchangeResponseDto.class)
+                .block();
+    }
+
+    public StadisticResponseDto getLastMonetaryStatisticById(Integer idVariable) {
+        return this.officialBankWebClient.get()
+                .uri(uri ->
+                        uri.path("/estadisticas/v3.0/monetarias/"+idVariable)
+                                .queryParam("limit",1)
+                                .build())
+                .retrieve()
+                .bodyToMono(StadisticResponseDto.class)
                 .block();
     }
 }

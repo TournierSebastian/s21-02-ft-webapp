@@ -7,6 +7,8 @@ import java.util.stream.Stream;
 
 import com.wallex.financial_platform.dtos.officialBank.CurrencyExchangeRate;
 import com.wallex.financial_platform.dtos.officialBank.CurrencyExchangeResponseDto;
+import com.wallex.financial_platform.dtos.officialBank.StadisticResponseDto;
+import com.wallex.financial_platform.dtos.officialBank.StadisticVariableResponseDto;
 import com.wallex.financial_platform.dtos.requests.AccountRequestDTO;
 import com.wallex.financial_platform.dtos.requests.CheckAccountRequestDto;
 import com.wallex.financial_platform.dtos.responses.*;
@@ -130,6 +132,13 @@ public class AccountService implements IAccountService {
                         .filter(exRate -> Objects.equals(exRate.getCodigoMoneda(), currency.name()))
                         .findAny().orElseThrow())
                 .collect(Collectors.toList());
+    }
+
+    public StadisticVariableResponseDto getInvestmentRates(){
+        StadisticVariableResponseDto response = this.officialBankConectorHelper.getLastMonetaryStatisticById(29).getResults().getFirst();
+        response.setDescripcion("Inflación esperada - REM próximos 12 meses - MEDIANA (variación en % i.a)");
+        response.setCategoria("principales variables");
+        return response;
     }
 
 
