@@ -21,7 +21,6 @@ const AccountsService = () => {
          
             return '';
         } catch (error) {
-            alert(error.status)
             if(error.status === 404){ 
                 return 'Ya existe cuenta en esa moneda'
             }

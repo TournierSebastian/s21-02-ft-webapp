@@ -75,7 +75,7 @@ const Navbar = () => {
           <div className='bg-BlackBlue flex justify-between items-center'>
             <div className='flex items-center'>
               <button className='flex justify-between border-r-2 w-55 max-[405px]:w-37  border-[#B6B2B2]' onClick={() => { SetOpenProfile(!OpenProfile) }}>
-                <button className='flex  items-center mx-2 max-[405px]:mx-0 '>
+                <div className='flex  items-center mx-2 max-[405px]:mx-0 '>
                   <div className='mr-2'>
                     <img src={profile} className='w-20 max-[405px]:w-10'></img>
 
@@ -90,7 +90,7 @@ const Navbar = () => {
                       <ChevronRight size={20} color="#F5E7BE" strokeWidth={2} />
                     </a>
                   </div>
-                </button>
+                </div>
               </button>
 
 
@@ -103,6 +103,7 @@ const Navbar = () => {
                   {Route === '/tureserva' && 'Reservas'}
                   {Route === '/tutarjeta' && 'Tu tarjeta'}
                   {Route === '/account' && 'Cuentas'}
+                  {Route === '/CVU' && 'Consultar CVU y Alias'}
                 </p>
               </section>
             </div>

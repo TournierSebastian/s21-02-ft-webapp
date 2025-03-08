@@ -15,6 +15,7 @@ import TuTarjeta from './Pages/TuTarjeta/TuTarjeta.jsx'
 import TuReserva from './Pages/TuReserva/TuReserva.jsx'
 import Accounts from './Pages/Accounts/Accounts.jsx'
 import ProtectedAccount from './RouteProtection/ProtectedAccount.jsx'
+import CvuAlias from './Pages/CvuAlias/CvuAlias.jsx'
 
 const  router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ const  router = createBrowserRouter([
   {
     path: '/tureserva',
     element: <ProtectedUser><ProtectedAccount><TuReserva/></ProtectedAccount></ProtectedUser>
+  },
+  {
+    path: '/CVU',
+    element: <ProtectedUser><ProtectedAccount><CvuAlias/></ProtectedAccount></ProtectedUser>
   },
   {
     path: '*',
