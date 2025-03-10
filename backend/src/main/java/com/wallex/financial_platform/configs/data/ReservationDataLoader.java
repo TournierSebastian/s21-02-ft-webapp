@@ -28,43 +28,32 @@ public class ReservationDataLoader {
 
         // Crear las reservas para la cuenta 1
         Reservation reservation1 = new Reservation(
-                null, // ID se genera automáticamente
-                account1, // Relación con la cuenta 1
-                new BigDecimal("500.00"), // Monto reservado
-                LocalDateTime.now(), // Fecha de creación
-                ReservationStatus.ACTIVE, // Estado de la reserva,
+                null,
+                account1,
+                new BigDecimal("10000.00"),
+                LocalDateTime.now(),
+                ReservationStatus.ACTIVE,
                 "para Abono celular"
         );
 
         Reservation reservation2 = new Reservation(
                 null,
-                account3,
-                new BigDecimal("100.00"),
+                account1,
+                new BigDecimal("70000.00"),
                 LocalDateTime.now(),
                 ReservationStatus.ACTIVE,
                 "para facultad"
         );
 
-//        // Crear las reservas para la cuenta 2
-//        Reservation reservation3 = new Reservation(
-//                null,
-//                account2,
-//                new BigDecimal("300.00"),
-//                LocalDateTime.now(),
-//                ReservationStatus.ACTIVE,
-//                "para la facultad"
-//        );
+        Reservation reservation3 = new Reservation(
+               null,
+               account3,
+                new BigDecimal("30000.00"),
+                LocalDateTime.now(),
+               ReservationStatus.ACTIVE,
+               "para salud"
+       );
 
-//        Reservation reservation4 = new Reservation(
-//                null,
-//                account2,
-//                new BigDecimal("2000.00"),
-//                LocalDateTime.now(),
-//                ReservationStatus.CANCELED,
-//                "para las expensas"
-//        );
-
-        // Guardar las reservas en el repositorio
-        reservationRepository.saveAll(List.of(reservation1, reservation2/*, reservation3, reservation4*/)); // Guardar las reservas
+        reservationRepository.saveAll(List.of(reservation1, reservation2, reservation3));
     }
 }

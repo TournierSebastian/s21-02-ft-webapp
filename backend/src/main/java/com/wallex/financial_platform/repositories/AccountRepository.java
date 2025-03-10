@@ -14,8 +14,6 @@ import java.util.Set;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
-
-    Account findByUserId(Long userId);
     Optional<Account> findByCbuOrAlias(String cbu, String alias);
     List<Account> findByCurrency(CurrencyType currencyType);
 }

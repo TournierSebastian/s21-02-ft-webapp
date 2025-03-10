@@ -26,10 +26,8 @@ public class MovementDataLoader {
 
 
     public void load() {
-        // Obtener las transacciones registradas
         List<Transaction> transactions = transactionRepository.findAll();
 
-        // Crear movimientos basados en las transacciones
         List<Movement> movements = transactions.stream().map(transaction -> {
             Account account = transaction.getSourceAccount();
             User user = accountRepository.findById(account.getAccountId()).orElseThrow().getUser();
@@ -43,8 +41,7 @@ public class MovementDataLoader {
             );
         }).toList();
 
-        // Guardar los movimientos en el repositorio
-        List<Movement> movementsList = movementRepository.saveAll(movements);
+       movementRepository.saveAll(movements);
 
     }
 }

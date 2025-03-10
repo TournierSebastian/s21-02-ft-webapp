@@ -22,19 +22,19 @@ public class UserDataLoader {
 
         // Crear usuarios con contraseñas encriptadas
         User user1 = new User(
-                null, // ID generado automáticamente
-                "Juan Pérez", // Nombre completo
-                "12345678", // DNI
-                "jindrg@gmail.com", // Email
-                "+541112345678", // Teléfono
-                passwordEncoder.encode("password123"), // Contraseña encriptada
-                LocalDateTime.now(), // Fecha de creación
-                LocalDateTime.now(), // Fecha de actualización
-                true, // Estado activo
-                null, // Listado de cuentas
-                null, // Listado de notificaciones
-                null,  // Listado de tarjetas
-                null, // Listado de movimientos
+                null,
+                "Juan Pérez",
+                "12345678",
+                "jindrg@gmail.com",
+                "+541112345678",
+                passwordEncoder.encode("password123"),
+                LocalDateTime.now(),
+                LocalDateTime.now(),
+                true,
+                null,
+                null,
+                null,
+                null,
                 null,
                 false
         );
@@ -45,7 +45,7 @@ public class UserDataLoader {
                 "87654321",
                 "maria.gomez@dominio.com",
                 "+541198765432",
-                passwordEncoder.encode("password456"), // Contraseña encriptada
+                passwordEncoder.encode("password456"),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 true,
@@ -63,7 +63,7 @@ public class UserDataLoader {
                 "56789123",
                 "carlos.lopez@dominio.com",
                 "+541112345679",
-                passwordEncoder.encode("password789"), // Contraseña encriptada
+                passwordEncoder.encode("password789"),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 true,
@@ -81,7 +81,7 @@ public class UserDataLoader {
                 "23456789",
                 "ana.torres@dominio.com",
                 "+541112345680",
-                passwordEncoder.encode("password012"), // Contraseña encriptada
+                passwordEncoder.encode("password012"),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 true,
@@ -99,7 +99,7 @@ public class UserDataLoader {
                 "34567891",
                 "luis.mendez@dominio.com",
                 "+541112345681",
-                passwordEncoder.encode("password345"), // Contraseña encriptada
+                passwordEncoder.encode("password345"),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 true,
@@ -117,7 +117,7 @@ public class UserDataLoader {
                 "71699949",
                 "support@mercadopago.com",
                 faker.numerify("+54##########"),
-                passwordEncoder.encode("password345"), // Contraseña encriptada
+                passwordEncoder.encode("password345"),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 false,
@@ -135,7 +135,7 @@ public class UserDataLoader {
                 "71221356",
                 "tesoreria@wallex.com",
                 faker.numerify("+54##########"),
-                passwordEncoder.encode("qwertyui"), // Contraseña encriptada
+                passwordEncoder.encode("qwertyui"),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 false,
@@ -154,7 +154,7 @@ public class UserDataLoader {
                 "71135628",
                 "visa@testing.com",
                 faker.numerify("+54##########"),
-                passwordEncoder.encode("qwertyui"), // Contraseña encriptada
+                passwordEncoder.encode("qwertyui"),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 false,
@@ -172,7 +172,7 @@ public class UserDataLoader {
                 "71003569",
                 "mastercard@testing.com",
                 faker.numerify("+54##########"),
-                passwordEncoder.encode("qwertyui"), // Contraseña encriptada
+                passwordEncoder.encode("qwertyui"),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 false,
@@ -190,7 +190,7 @@ public class UserDataLoader {
                 "73100620",
                 "amex@testing.com",
                 faker.numerify("+54##########"),
-                passwordEncoder.encode("qwertyui"), // Contraseña encriptada
+                passwordEncoder.encode("qwertyui"),
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 false,
@@ -202,7 +202,6 @@ public class UserDataLoader {
                 true
         );
 
-        // Guardar los usuarios en la base de datos
         userRepository.saveAll(List.of(user1, user2, user3, user4, user5, user6, user7, user8, user9, user10));
     }
 

@@ -21,19 +21,17 @@ public class NotificationDataLoader {
     private final UserRepository userRepository;
 
     public void load() {
-        // Obtener algunos usuarios para asociar con las notificaciones
         User user1 = userRepository.findById(1L).orElseThrow();
         User user2 = userRepository.findById(2L).orElseThrow();
         User user3 = userRepository.findById(4L).orElseThrow();
 
-        // Crear las notificaciones para el usuario 1
         Notification notification1 = new Notification(
-                null,  // ID se genera automáticamente
-                user1, // Relación con el usuario 1
-                NotificationType.EMAIL, // Tipo de notificación
-                "Este es un mensaje informativo", // Mensaje
-                LocalDateTime.now(), // Fecha de envío
-                NotificationStatus.READ // Estado de la notificación
+                null,
+                user1,
+                NotificationType.EMAIL,
+                "Este es un mensaje informativo",
+                LocalDateTime.now(),
+                NotificationStatus.READ
         );
 
         Notification notification2 = new Notification(
@@ -64,7 +62,6 @@ public class NotificationDataLoader {
                 NotificationStatus.SENT
         );
 
-        // Guardar las notificaciones en el repositorio
         notificationRepository.saveAll(List.of(notification1, notification2, notification3, notification4)); // Guardar las notificaciones
     }
 }
