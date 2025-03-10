@@ -31,13 +31,13 @@ public class NotificationDataLoader {
                 NotificationType.EMAIL,
                 "Este es un mensaje informativo",
                 LocalDateTime.now(),
-                NotificationStatus.READ
+                NotificationStatus.SENT
         );
 
         Notification notification2 = new Notification(
                 null,
                 user1,
-                NotificationType.SMS,
+                NotificationType.EMAIL,
                 "Este es un mensaje de alerta",
                 LocalDateTime.now(),
                 NotificationStatus.SENT
