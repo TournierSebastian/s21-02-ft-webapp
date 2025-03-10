@@ -26,9 +26,10 @@ function Actividad() {
           <div className="w-full max-w-md bg-BlackBlue rounded-3xl shadow-lg p-6 space-y-6 text-black ">
             <h2 className="text-xl font-semibold text-white">Tu última actividad</h2>
             <select
-              onChange={(e) => setOrder(e.target.value)} 
+              onChange={(e) => setOrder(e.target.value)}
               className="bg-white text-black rounded p-2"
             >
+              <option value="" disabled selected>Ordenar por fecha</option> {/* Opción no seleccionable */}
               <option value="desc">Descendente</option>
               <option value="asc">Ascendente</option>
             </select>
