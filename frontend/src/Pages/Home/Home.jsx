@@ -1,27 +1,95 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './home.css'
 import Navbar from '../../components/navbar/Navbar'
+import { ChevronRightIcon } from 'lucide-react'
+import logo from '../../assets/Icons/Logo.png'
+import mastercard from '../../assets/Icons/Mastercard.png'
+import UseAccounts from '../../Hooks/Accounts/UseAccounts'
+import ActivityItem from '../../components/Activity/ActivityItem'
+import UseMovements from '../../Hooks/Movements/UseMovements'
 const Home = () => {
-  const [balance] = useState(0)
+  const {FetchAccountsbyid} = UseAccounts();
+  const {FetchMovementsbyuser} = UseMovements();
+  const [Accounts, SetAccounts] = useState([]);
+  const [Movements, SetMovements] = useState([])
+  const [activities] = useState([
+    {
+      date: '15 de Febrero, 2025',
+      username: 'Carlos Rodriguez',
+      reason: 'Transferencia de dinero',
+      amount: '-150.00',
+      time: '14:30',
+      icon: "🔃",
+    },
+    {
+      date: '14 de Febrero, 2025',
+      username: 'María González',
+      reason: 'Pago de servicios',
+      amount: '-75.50',
+      time: '11:20',
+      icon: "🍔",
+    },
+    {
+      date: '14 de Febrero, 2025',
+      username: 'Juan Pérez',
+      reason: 'Transferencia recibida',
+      amount: '+200.00',
+      time: '09:45',
+      icon: "🔃",
+    },
+    {
+      date: '13 de Febrero, 2025',
+      username: 'Ana Silva',
+      reason: 'Pago de alquiler',
+      amount: '-300.00',
+      time: '16:15',
+      icon: "💵",
+    },
+    {
+      date: '13 de Febrero, 2025',
+      username: 'Luis Torres',
+      reason: 'Depósito',
+      amount: '+450.00',
+      time: '10:00',
+      icon: "💰",
+    },
+  ])
 
+
+  const fetchData = async () => {
+          try {
+              const dataAccounts = await FetchAccountsbyid();
+              const dataMovements = await FetchMovementsbyuser();
+              SetMovements(dataMovements)
+              SetAccounts(dataAccounts || [])
+              console.log(dataMovements)
+          } catch (error) {
+              SetCurrencies([]);
+          }
+      };
+      useEffect(() => {
+  
+          fetchData();
+      }, [])
+  
   return (
     <div className='Contenido'>
       <nav><Navbar/></nav>
       <main>
-      <div className='flex justify-center items-center mt-10'>
+      <div className='flex flex-col justify-center items-center mt-10'>
 
       <div className=" w-full max-w-md bg-BlackBlue rounded-xl shadow-lg p-6 space-y-6 text-white">
       {/* Gaston: Cabecera de la tarjeta*/}
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold">Dinero Disponible</h2>
-        <button className="px-4 py-1 bg-LightGolden text-gray-900 rounded-lg cursor-pointer hover:bg-DarkGolden transition-colors">
+        <a className="px-4 py-1 bg-LightGolden text-gray-900 rounded-lg cursor-pointer hover:bg-DarkGolden transition-colors" href='/CVU'>
           Tu CVU
-        </button>
+        </a>
       </div>
 
       {/*Gaston: Dinero disponible*/}
       <div className="text-3xl font-bold text-left">
-        ${balance.toFixed(2)}
+        ${Accounts.balance}
       </div>
 
       {/* Gaston: Botones de accion*/}
@@ -33,26 +101,38 @@ const Home = () => {
           Transferir Dinero
         </button>
       </div>
-
+        <div className='flex justify-between'>        
       {/*Gaston: Marca de la tarjeta*/}
       {/*Gaston: Falta agregar los iconos */}
-      <div className="w-3/4 border-LightGolden px-4 py-1 border-6 rounded-xl ">
+      <a className="w-3/4 border-LightGolden px-4 py-1 border-6 rounded-xl " href='/tutarjeta'>
         <div className='flex flex-row gap-3 '>
-          <svg className='fill-none w-18 -h-12'  viewBox="0 -9 58 58" >
-            <rect x="0.5" y="0.5" rx="3.5"  />
-            <path d="M34.3102 28.9765H23.9591V10.5122H34.3102V28.9765Z" fill="#FF5F00"/>
-            <path d="M24.6223 19.7429C24.6223 15.9973 26.3891 12.6608 29.1406 10.5107C27.1285 8.93843 24.5892 7.99998 21.8294 7.99998C15.2961 7.99998 10 13.2574 10 19.7429C10 26.2283 15.2961 31.4857 21.8294 31.4857C24.5892 31.4857 27.1285 30.5473 29.1406 28.975C26.3891 26.8249 24.6223 23.4884 24.6223 19.7429" fill="#EB001B"/>
-            <path d="M48.2706 19.7429C48.2706 26.2283 42.9745 31.4857 36.4412 31.4857C33.6814 31.4857 31.1421 30.5473 29.1293 28.975C31.8815 26.8249 33.6483 23.4884 33.6483 19.7429C33.6483 15.9973 31.8815 12.6608 29.1293 10.5107C31.1421 8.93843 33.6814 7.99998 36.4412 7.99998C42.9745 7.99998 48.2706 13.2574 48.2706 19.7429" fill="#F79E1B"/>
-          </svg>
-        
-
+          <img src ={mastercard} className='w-10 h-10'></img>
+          <img src = {logo} className='w-10 h-10'></img>
         </div>
-
-        <div>
-          <span className="text-sm text-blue-200 italic">Tarjeta Wallex</span>
+     
+        <div className='flex justify-between'>
+          <span className="text-1xl text-blue-200 italic ">Tarjeta Wallex</span>
+          <ChevronRightIcon size={20} color="#F5E7BE" strokeWidth={2} />
         </div>
+      </a>
+
+        <img src={logo} className='w-15 h-15'></img>
       </div>
     </div>
+    
+    <div className="w-full max-w-md bg-BlackBlue rounded-3xl shadow-lg p-6 space-y-6 text-black mt-10">
+          <h2 className="text-xl font-semibold text-white">Tu última actividad</h2>
+
+          <div className="space-y-2 ">
+            {Movements.map((movements, index) => (
+              <ActivityItem key={index} {...movements} />
+            ))}
+          </div>
+
+          <button className="w-full text-xl py-3 text-gray-300 text-left px-2 rounded-lg cursor-pointer hover:text-white transition-colors font-medium">
+            Ver toda la actividad
+          </button>
+        </div>
   </div>
       </main>
       
