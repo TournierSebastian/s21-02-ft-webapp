@@ -1,5 +1,5 @@
 <h1 align="center">
-  <a href=""><img src="https://media.discordapp.net/attachments/1338664601998594108/1346274826494545962/image.png?ex=67c797a3&is=67c64623&hm=249e7b11fe1f2ecab715914df8bddc6fbd953af1e7a1192c3e8c3dae04da8df3&=&format=webp&quality=lossless&width=627&height=296" width="400" alt="Logo"></a>
+  <a href=""><img src="https://media.discordapp.net/attachments/1338664601998594108/1346274826494545962/image.png?ex=67d02963&is=67ced7e3&hm=1db9744e90a883f87b2a31b25de1fc851053b31b5aaf66954c97660baae19f23&=&format=webp&quality=lossless&width=585&height=276" width="400" alt="Logo"></a>
 </h1>
 
 <h3 align="center">📌 Alcance del Proyecto: Wallex - Sistema de Gestión Financiera</h3>
