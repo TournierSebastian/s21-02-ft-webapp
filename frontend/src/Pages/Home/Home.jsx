@@ -12,48 +12,7 @@ const Home = () => {
   const { FetchMovementsbyuser } = UseMovements();
   const [Accounts, SetAccounts] = useState([]);
   const [Movements, SetMovements] = useState([])
-  const [activities] = useState([
-    {
-      date: '15 de Febrero, 2025',
-      username: 'Carlos Rodriguez',
-      reason: 'Transferencia de dinero',
-      amount: '-150.00',
-      time: '14:30',
-      icon: "🔃",
-    },
-    {
-      date: '14 de Febrero, 2025',
-      username: 'María González',
-      reason: 'Pago de servicios',
-      amount: '-75.50',
-      time: '11:20',
-      icon: "🍔",
-    },
-    {
-      date: '14 de Febrero, 2025',
-      username: 'Juan Pérez',
-      reason: 'Transferencia recibida',
-      amount: '+200.00',
-      time: '09:45',
-      icon: "🔃",
-    },
-    {
-      date: '13 de Febrero, 2025',
-      username: 'Ana Silva',
-      reason: 'Pago de alquiler',
-      amount: '-300.00',
-      time: '16:15',
-      icon: "💵",
-    },
-    {
-      date: '13 de Febrero, 2025',
-      username: 'Luis Torres',
-      reason: 'Depósito',
-      amount: '+450.00',
-      time: '10:00',
-      icon: "💰",
-    },
-  ])
+ 
 
 
   const fetchData = async () => {
@@ -121,7 +80,7 @@ const Home = () => {
           </div>
 
           <div className="w-full max-w-md bg-BlackBlue rounded-3xl shadow-lg p-6 space-y-6 text-black mt-10">
-            <h2 className="text-xl font-semibold text-white">Tu última actividad</h2>
+            <h2 className="text-xl font-semibold text-white">Tus movimientos</h2>
 
             <div className="space-y-2 ">
               {Movements.map((movement, index) => (

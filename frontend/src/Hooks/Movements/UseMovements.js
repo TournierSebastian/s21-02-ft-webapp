@@ -6,7 +6,6 @@ const UseMovements = () =>{
     const {FetchMovementsService} = MovementsService();
     const FetchMovementsbyuser = async ()=>{
             const response = await FetchMovementsService();
-            console.log(response.status)
             if(response.status == 200){
                 return response.data;
             }
