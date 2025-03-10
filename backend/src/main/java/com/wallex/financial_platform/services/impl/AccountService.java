@@ -188,4 +188,9 @@ public class AccountService implements IAccountService {
                 reserve.getDescription()
         );
     }
+
+    public List<AccountResponseDTO> getAll() {
+        List<Account> accountList = this.accountRepository.findAll();
+        return accountList.stream().map(this::mapToDTO).toList();
+    }
 }

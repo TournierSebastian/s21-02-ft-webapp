@@ -28,6 +28,11 @@ public class AccountController {
     private AccountService accountService;
     private MovementService movementService;
 
+    @GetMapping("/all")
+    public ResponseEntity<List<AccountResponseDTO>> getAccountsAll() {
+        return ResponseEntity.ok(accountService.getAll());
+    }
+
     @GetMapping
     public ResponseEntity<List<AccountResponseDTO>> getAccounts() {
         return ResponseEntity.ok(accountService.getByUser());

@@ -54,16 +54,6 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean existsByEmail(String email) {
-        return this.userRepository.existsByEmail(email);
-    }
-
-    @Override
-    public boolean existsByDni(String dni) {
-        return this.userRepository.existsByDni(dni);
-    }
-
-    @Override
     public List<CheckAccountResponseDTO> getDestinationAccounts() {
         User user = userContextService.getAuthenticatedUser();
         return user.getDestinationAccounts().stream().map(this::mapToCheckDTO).toList();

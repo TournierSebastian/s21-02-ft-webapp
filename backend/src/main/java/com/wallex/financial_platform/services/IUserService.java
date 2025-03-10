@@ -12,8 +12,6 @@ public interface IUserService {
     UserResponseDTO getUserById(Long id);
     UserResponseDTO getUserByDni(String username);
     List<UserResponseDTO> getUserOnline();
-    boolean existsByEmail(String email);
-    boolean existsByDni(String dni);
     List<CheckAccountResponseDTO> getDestinationAccounts();
     List<CheckAccountResponseDTO> addDestinationAccount(CheckAccountRequestDto account);
 }
