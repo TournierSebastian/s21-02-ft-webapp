@@ -88,6 +88,11 @@ public class CardService implements ICardService {
     }
 
     @Override
+    public List<String> getAllProviders() {
+        return userRepository.findByIsCardProvider(true).stream().map(User::getFullName).toList();
+    }
+
+    @Override
     public List<CardResponseDTO> getAllCardsByUserOnline() {
         List<Card> cards = cardRepository.findByUserId(userContextService.getAuthenticatedUser().getId());
         if (cards.isEmpty()) {

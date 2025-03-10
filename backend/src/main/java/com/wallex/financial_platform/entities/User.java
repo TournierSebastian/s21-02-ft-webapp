@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -65,12 +66,23 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Movement> movements;
 
+    @JsonManagedReference
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name="user_destination_accounts",
+            joinColumns = @JoinColumn(name="user_id"),
+            inverseJoinColumns = @JoinColumn(name="destination_account_id"))
+    private List<Account> destinationAccounts;
+
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
         updatedAt =  LocalDateTime.now();
         active = true;
     }
+
+    @Column(name="is_card_provider")
+    private boolean isCardProvider;
 
     @PreUpdate
     protected void onUpdate() {

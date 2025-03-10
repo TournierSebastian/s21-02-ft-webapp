@@ -7,10 +7,12 @@ import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.repositories.AccountRepository;
 import com.wallex.financial_platform.repositories.MovementRepository;
 import com.wallex.financial_platform.repositories.TransactionRepository;
+import com.wallex.financial_platform.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -20,6 +22,7 @@ public class MovementDataLoader {
     private final MovementRepository movementRepository;
     private final AccountRepository accountRepository;
     private final TransactionRepository transactionRepository;
+    private final UserRepository userRepository;
 
 
     public void load() {
@@ -41,6 +44,7 @@ public class MovementDataLoader {
         }).toList();
 
         // Guardar los movimientos en el repositorio
-        movementRepository.saveAll(movements);
+        List<Movement> movementsList = movementRepository.saveAll(movements);
+
     }
 }

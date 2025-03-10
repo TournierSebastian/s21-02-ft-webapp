@@ -30,10 +30,7 @@ services:
     environment:
       VITE_BACKEND_URL: http://localhost:9091
     networks:
-      - trackmyfix_net
-    depends_on:
-      db-trackmyfix:
-        condition: service_healthy
+      - wallex_net
 networks:
   wallex_net:
     driver: bridge

@@ -3,9 +3,11 @@ package com.wallex.financial_platform.controllers;
 import com.wallex.financial_platform.dtos.requests.RegisterCardRequestDTO;
 import com.wallex.financial_platform.dtos.requests.DniRequestDTO;
 import com.wallex.financial_platform.dtos.responses.CardResponseDTO;
+import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.services.impl.CardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,6 +47,11 @@ public class CardController {
     public ResponseEntity<List<String>> getCardTypes() {
         List<String>cardTypes = this.cardService.getAllCardTypes();
         return ResponseEntity.ok(cardTypes);
+    }
+
+    @GetMapping("/providers")
+    public ResponseEntity<List<String>> getAllCardProviders(){
+        return ResponseEntity.ok(cardService.getAllProviders());
     }
 
 }

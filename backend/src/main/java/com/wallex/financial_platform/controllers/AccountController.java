@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 
+import com.wallex.financial_platform.dtos.officialBank.CurrencyExchangeRate;
+import com.wallex.financial_platform.dtos.officialBank.StadisticResponseDto;
+import com.wallex.financial_platform.dtos.officialBank.StadisticVariableResponseDto;
 import com.wallex.financial_platform.dtos.requests.AccountRequestDTO;
 import com.wallex.financial_platform.dtos.requests.CheckAccountRequestDto;
 import com.wallex.financial_platform.dtos.responses.*;
@@ -39,9 +42,6 @@ public class AccountController {
 
     @PostMapping("/check")
     public ResponseEntity<CheckAccountResponseDTO> createDestinationAccount(@RequestBody @Valid CheckAccountRequestDto accountData) {
-        if (accountData.alias().isBlank() && accountData.cbu().isBlank()) {
-            throw new IllegalArgumentException("Alias or cbu is required");
-        }
         return ResponseEntity.ok(accountService.checkAccount(accountData));
     }
 
@@ -66,5 +66,13 @@ public class AccountController {
     public ResponseEntity<List<String>> getCurrencies() {
         List<String> currencies = this.accountService.getCurrencies();
         return ResponseEntity.ok(currencies);
+    }
+    @GetMapping("/currencies/exchange")
+    public ResponseEntity<List<CurrencyExchangeRate>> getCurrenciesExchanges() {
+        return ResponseEntity.ok(this.accountService.getAllCurrenciesExhange());
+    }
+    @GetMapping("/investment-rate")
+    public ResponseEntity<StadisticVariableResponseDto> getInvestmentRates() {
+        return ResponseEntity.ok(this.accountService.getInvestmentRates());
     }
 }

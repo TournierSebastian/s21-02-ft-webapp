@@ -1,11 +1,17 @@
 package com.wallex.financial_platform.services.impl;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.wallex.financial_platform.dtos.requests.CheckAccountRequestDto;
+import com.wallex.financial_platform.dtos.responses.CheckAccountResponseDTO;
 import com.wallex.financial_platform.dtos.responses.UserResponseDTO;
+import com.wallex.financial_platform.entities.Account;
+import com.wallex.financial_platform.exceptions.account.AccountErrorException;
 import com.wallex.financial_platform.exceptions.auth.UserNotFoundException;
+import com.wallex.financial_platform.repositories.AccountRepository;
 import com.wallex.financial_platform.services.IUserService;
 import com.wallex.financial_platform.services.utils.UserContextService;
 import org.springframework.stereotype.Service;
@@ -20,6 +26,8 @@ import lombok.AllArgsConstructor;
 public class UserService implements IUserService {
     private final UserRepository userRepository;
     private final UserContextService userContextService;
+    private final AccountService accountService;
+    private final AccountRepository accountRepository;
 
     @Override
     public UserResponseDTO getUserByEmail(String email) {
@@ -55,6 +63,27 @@ public class UserService implements IUserService {
         return this.userRepository.existsByDni(dni);
     }
 
+    @Override
+    public List<CheckAccountResponseDTO> getDestinationAccounts() {
+        User user = userContextService.getAuthenticatedUser();
+        return user.getDestinationAccounts().stream().map(this::mapToCheckDTO).toList();
+    }
+
+    @Override
+    public List<CheckAccountResponseDTO> addDestinationAccount(CheckAccountRequestDto account) {
+        User user = userContextService.getAuthenticatedUser();
+        CheckAccountResponseDTO acc = accountService.checkAccount(account);
+        Account accountValidated = accountRepository.findByCbuOrAlias(acc.cbu(),null).orElseThrow();
+        List<Account> userDestinations = user.getDestinationAccounts();
+        if (userDestinations.contains(accountValidated)) {
+            throw new AccountErrorException("La cuenta ya se encuentra en los destinatarios");
+        }
+        userDestinations.add(accountValidated);
+        user.setDestinationAccounts(userDestinations);
+        userRepository.save(user);
+        return userDestinations.stream().map(this::mapToCheckDTO).toList();
+    }
+
     private UserResponseDTO convertToDTO(User user) {
 
         return new UserResponseDTO(
@@ -66,6 +95,16 @@ public class UserService implements IUserService {
                 user.getCreatedAt(),
                 user.getUpdatedAt(),
                 user.getActive()
+        );
+    }
+
+    private CheckAccountResponseDTO mapToCheckDTO(Account account) {
+        return new CheckAccountResponseDTO(
+                account.getCbu(),
+                account.getAlias(),
+                account.getCurrency(),
+                account.getUser().getFullName(),
+                account.getUser().getDni()
         );
     }
 
