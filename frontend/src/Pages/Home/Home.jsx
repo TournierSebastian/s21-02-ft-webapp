@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import './home.css'
 import Navbar from '../../components/navbar/Navbar'
 import { ChevronRightIcon } from 'lucide-react'
 import logo from '../../assets/Icons/Logo.png'
