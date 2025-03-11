@@ -29,12 +29,12 @@ const TransactionsService = () => {
             type: "TRANSFER",
             reason: Reason
         }
-        
+
         console.log(formdata)
         try {
             const response = await api.post('/api/transactions', formdata);
             if(response.status){
-                window.location.href = '/home'
+                 window.location.href = '/home'
             }
             return '';
         } catch (error) {
