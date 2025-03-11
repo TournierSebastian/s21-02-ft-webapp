@@ -8,7 +8,7 @@ function ActivityItem({ data }) {
 
   const formattedDate = data.createdAt ? data.createdAt.split("T")[0] : data.date.split("T")[0]; 
   const [year, month, day] = formattedDate.split("-");
-
+  console.log(data)
   const monthNames = [
     "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
     "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"

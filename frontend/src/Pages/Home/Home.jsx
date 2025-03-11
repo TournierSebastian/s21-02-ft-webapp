@@ -56,9 +56,9 @@ const Home = () => {
               <button className="px-4 py-1 bg-LightGolden  cursor-pointer text-blue-900 rounded-lg hover:bg-DarkGolden transition-colors font-medium">
                 Ingresar Dinero
               </button>
-              <button className="px-4 py-1 bg-LightGolden cursor-pointer text-blue-900 rounded-lg hover:bg-DarkGolden transition-colors font-medium">
+              <a href='transferir' className=" text-center px-4 py-1 bg-LightGolden cursor-pointer text-blue-900 rounded-lg hover:bg-DarkGolden transition-colors font-medium">
                 Transferir Dinero
-              </button>
+              </a>
             </div>
             <div className='flex justify-between'>
               {/*Gaston: Marca de la tarjeta*/}
