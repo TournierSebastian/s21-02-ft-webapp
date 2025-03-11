@@ -98,7 +98,9 @@ public class AccountService implements IAccountService {
 
     @Override
     public List<TransactionResumeResponseDTO> getTransactions(Long id) {
-        Account account = accountRepository.findById(id).orElseThrow(()-> new AccountNotFoundException("Account not found"));
+        User user = userContextService.getAuthenticatedUser();
+        Account account = user.getAccounts().stream().filter(acc -> Objects.equals(acc.getAccountId(), id))
+                .findAny().orElseThrow(()-> new AccountNotFoundException("No se encontró la cuenta"));
         List<Transaction> transactions = Stream.of(
                 account.getDestinationTransactions(),
                 account.getSourceTransactions())
