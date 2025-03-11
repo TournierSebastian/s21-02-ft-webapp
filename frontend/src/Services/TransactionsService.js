@@ -6,8 +6,10 @@ const TransactionsService = () => {
     const { FetchAccountsbyid } = UseAccounts();
 
     const FetchTransactionsServicee = async () => {
+        const id = localStorage.getItem('Account');
+     
         try {
-            const response = await api.get('/api/accounts/1/transactions');
+            const response = await api.get(`/api/accounts/${id}/transactions`);
 
             return response;
         } catch (error) {

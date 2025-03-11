@@ -3,8 +3,10 @@ import api from "./api";
 const ReserveService = () => {
 
     const FetchReserveService = async () => {
+        const id = localStorage.getItem('Account');
+
         try {
-            const response = await api.get('api/accounts/1/reservations');
+            const response = await api.get(`/api/accounts/${id}/reservations`);
             
             return response.data; 
     
@@ -14,7 +16,11 @@ const ReserveService = () => {
         }
     };
     
-    const CreateReserveService = async (amount, accountId, description)=>{
+    const CreateReserveService = async (amount, description)=>{
+
+        const accountId = localStorage.getItem('Account');
+       
+
         try {
             await api.post("/api/reservations", { amount, accountId, description });
             return '';

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../../components/navbar/Navbar";
 import UseFetchReserve from "../../Hooks/Reserve/UseFetchReserve";
-import iconchancho from '../../assets/General/chancho.png';
+import iconchancho from '../../assets/Icons/chancho.png';
 import ReserveService from "../../Services/ReserveService";
 import logo from '../../assets/Icons/logo.png'
 import { ArrowBigDown, ArrowBigUp, DollarSign, Plus } from "lucide-react";
+import UseAccounts from "../../Hooks/Accounts/UseAccounts";
 
 const TuReserva = () => {
   const { FetchReserve } = UseFetchReserve();
@@ -15,13 +16,19 @@ const TuReserva = () => {
   const [Retirar, SetRetirar] = useState(false)
   const [Reservar, SetReservar] = useState(false)
   const [Errro, Seterror] = useState('')
+  const [AcountAmount, SetAcountAmount] = useState()
   const { CreateReserveService } = ReserveService();
+
+  const {FetchAccountsbyid} = UseAccounts();
 
   useEffect(() => {
 
     const fetchData = async () => {
       try {
         const data = await FetchReserve();
+        const acaount = await FetchAccountsbyid();
+        console.log(acaount)
+        SetAcountAmount(acaount.balance)
         setReserve(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -35,7 +42,7 @@ const TuReserva = () => {
   const HandleCreateReserve = async () => {
 
     try {
-      const data = await CreateReserveService(Amount, 1, Name);
+      const data = await CreateReserveService(Amount, Name);
       Seterror(data)
       const updatedata = await FetchReserve();
       setReserve(updatedata);
@@ -157,7 +164,7 @@ const TuReserva = () => {
                 onChange={(e) => { SetAmount(e.target.value); }}
                 className="placeholder-white text-white text-5xl bg-transparent border-none focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none ml-2 w-full text-center"
               />
-              <p className="text-white">$10.10 disponibles</p>
+              <p className="text-white"> Dinero disponible: ${AcountAmount}</p>
 
               <button className="bg-LightGolden hover:bg-DarkGolden px-4 py-2 rounded-2xl mt-3" onClick={HandleCreateReserve}>
                 Reservar

@@ -7,7 +7,7 @@ const UseMovements = () =>{
     const FetchMovementsbyuser = async ()=>{
             const response = await FetchMovementsService();
             if(response.status == 200){
-                return response.data;
+                return response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
             }
 
 

@@ -2,13 +2,15 @@ import compras from '../../assets/Icons/bolsa.png';
 import transferencia from '../../assets/Icons/Enviodedinero.png';
 import deposito from '../../assets/Icons/Deposito.png';
 import iconoGenerico from '../../assets/Icons/Dinero.png'; 
+import chancho from '../../assets/Icons/chancho.png'
 import { useEffect, useState } from 'react';
 
 function ActivityItem({ data }) {
 
+  const name = localStorage.getItem('Name');
+  
   const formattedDate = data.createdAt ? data.createdAt.split("T")[0] : data.date.split("T")[0]; 
   const [year, month, day] = formattedDate.split("-");
-  console.log(data)
   const monthNames = [
     "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
     "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
@@ -25,13 +27,20 @@ function ActivityItem({ data }) {
     icon = transferencia;
   } else if (data.type === "DEPOSIT") {
     icon = deposito;
+  }else if (data.type === "com.wallex.financial_platform.entities.Reservation") {
+    icon = chancho; 
   } else {
     icon = iconoGenerico; 
   }
 
 
-  const owner = data.destinationAccount ? data.destinationAccount.owner : data.accountOwner; 
-  const typeText = data.type === 'DEPOSIT' ? 'Ingreso de dinero' : data.type;
+  const owner =
+  data.destinationAccount &&
+  data.destinationAccount.owner?.trim().toLowerCase() === name?.toLowerCase()
+    ? data.sourceAccount.owner 
+    : data.destinationAccount.owner; 
+
+  const typeText = data.type === 'com.wallex.financial_platform.entities.Reservation' ? 'Reserva' : data.type;
 
   return (
     <div className="border-b bg-white border-blue-800 rounded-3xl py-4 px-3">
