@@ -2,14 +2,14 @@ package com.wallex.financial_platform.controllers;
 
 import com.wallex.financial_platform.dtos.requests.ReservationRequestDTO;
 import com.wallex.financial_platform.dtos.responses.ReservationResponseDto;
+import com.wallex.financial_platform.entities.Reservation;
 import com.wallex.financial_platform.services.impl.ReservationService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/reservations")
@@ -18,7 +18,17 @@ public class ReservationController {
     private ReservationService reservationService;
 
     @PostMapping
-    private ResponseEntity<ReservationResponseDto> postReservation(@RequestBody @Valid ReservationRequestDTO reservation){
+    public ResponseEntity<ReservationResponseDto> postReservation(@RequestBody @Valid ReservationRequestDTO reservation){
         return ResponseEntity.ok(reservationService.saveReservation(reservation));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ReservationResponseDto>> getAllReservations() {
+        return ResponseEntity.ok(reservationService.getAllUserReservations());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ReservationResponseDto> getAllReservationById(@PathVariable Long id) {
+        return ResponseEntity.ok(reservationService.getReservationsById(id));
     }
 }

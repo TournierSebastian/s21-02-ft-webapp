@@ -1,11 +1,10 @@
 package com.wallex.financial_platform.controllers;
 
-import com.wallex.financial_platform.dtos.responses.MovementResponseDTO;
-import com.wallex.financial_platform.services.impl.MovementService;
+import com.wallex.financial_platform.dtos.responses.ActivityResponseDTO;
+import com.wallex.financial_platform.services.impl.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,17 +14,10 @@ import java.util.List;
 @RequestMapping("/api/movements")
 @AllArgsConstructor
 public class MovementController {
-    private MovementService movementService;
-
-    @GetMapping("/{movement_id}")
-    private ResponseEntity<MovementResponseDTO> getMovementById(
-            @PathVariable("movement_id") Long movementId
-    ){
-        return ResponseEntity.ok(movementService.getMovementById(movementId));
-    }
+    private UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<MovementResponseDTO>> getMovementsByAccount(){
-        return ResponseEntity.ok(movementService.getUserMovements());
+    public ResponseEntity<List<ActivityResponseDTO>> getMovementsByAccount(){
+        return ResponseEntity.ok(userService.GetUserActivity());
     }
 }

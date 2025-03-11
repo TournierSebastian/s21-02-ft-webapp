@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -48,6 +49,13 @@ public class Card {
 
     @Column(nullable = false)
     private LocalDateTime registrationDate;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name="card_transactions",
+            joinColumns = @JoinColumn(name="card_id"),
+            inverseJoinColumns = @JoinColumn(name="transaction_id"))
+    private List<Transaction> transactions;
 
     @PrePersist
     protected void onCreate() {

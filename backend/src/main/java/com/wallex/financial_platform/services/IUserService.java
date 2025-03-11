@@ -1,6 +1,7 @@
 package com.wallex.financial_platform.services;
 
 import com.wallex.financial_platform.dtos.requests.CheckAccountRequestDto;
+import com.wallex.financial_platform.dtos.responses.ActivityResponseDTO;
 import com.wallex.financial_platform.dtos.responses.CheckAccountResponseDTO;
 import com.wallex.financial_platform.dtos.responses.UserResponseDTO;
 
@@ -14,4 +15,5 @@ public interface IUserService {
     List<UserResponseDTO> getUserOnline();
     List<CheckAccountResponseDTO> getDestinationAccounts();
     List<CheckAccountResponseDTO> addDestinationAccount(CheckAccountRequestDto account);
+    List<ActivityResponseDTO> GetUserActivity();
 }

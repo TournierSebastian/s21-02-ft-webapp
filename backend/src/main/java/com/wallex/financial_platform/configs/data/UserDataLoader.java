@@ -35,7 +35,6 @@ public class UserDataLoader {
                 null,
                 null,
                 null,
-                null,
                 false
         );
 
@@ -49,7 +48,6 @@ public class UserDataLoader {
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 true,
-                null,
                 null,
                 null,
                 null,
@@ -71,7 +69,6 @@ public class UserDataLoader {
                 null,
                 null,
                 null,
-                null,
                 false
         );
 
@@ -85,7 +82,6 @@ public class UserDataLoader {
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 true,
-                null,
                 null,
                 null,
                 null,
@@ -107,7 +103,6 @@ public class UserDataLoader {
                 null,
                 null,
                 null,
-                null,
                 false
         );
 
@@ -125,7 +120,6 @@ public class UserDataLoader {
                 null,
                 null,
                 null,
-                null,
                 false
         );
 
@@ -139,7 +133,6 @@ public class UserDataLoader {
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 false,
-                null,
                 null,
                 null,
                 null,
@@ -162,7 +155,6 @@ public class UserDataLoader {
                 null,
                 null,
                 null,
-                null,
                 true
         );
 
@@ -180,7 +172,6 @@ public class UserDataLoader {
                 null,
                 null,
                 null,
-                null,
                 true
         );
 
@@ -194,7 +185,6 @@ public class UserDataLoader {
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 false,
-                null,
                 null,
                 null,
                 null,

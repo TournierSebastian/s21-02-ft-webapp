@@ -26,7 +26,7 @@ public class DataLoader {
             cardDataLoader.load();
             transactionDataLoader.load();
             reservationDataLoader.load();
-            movementDataLoader.load();
+            //movementDataLoader.load();
             userDestinationAccountDataLoader.load();
         };
     }

@@ -8,4 +8,6 @@ import java.util.List;
 public interface IReservationService {
     List<ReservationResponseDto> getReservationsByAccountId(Long accountId);
     ReservationResponseDto saveReservation(ReservationRequestDTO reservationReq);
+    List<ReservationResponseDto> getAllUserReservations();
+    ReservationResponseDto getReservationsById(Long id);
 }

@@ -1,22 +1,17 @@
 package com.wallex.financial_platform.dtos.responses;
 
-import com.wallex.financial_platform.entities.enums.CurrencyType;
-import com.wallex.financial_platform.entities.enums.TransactionStatus;
-import com.wallex.financial_platform.entities.enums.TransactionType;
+import com.wallex.financial_platform.entities.Transaction;
+import lombok.Builder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public record MovementResponseDTO(
-        Long movementId,
-        Long transactionId,
-        CheckAccountResponseDTO sourceAccount,
-        CheckAccountResponseDTO destinationAccount,
-        LocalDateTime createdAt,
-        String description,
-        TransactionType type,
-        TransactionStatus status,
-        CurrencyType currency,
-        BigDecimal amount
-) {
+@Builder
+public class MovementResponseDTO {
+    private Long movementId;
+    private Transaction transaction;
+    private CheckAccountResponseDTO accountOwner;
+    private LocalDateTime createdAt;
+    private String description;
+    private BigDecimal amount;
 }
