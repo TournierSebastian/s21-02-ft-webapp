@@ -3,7 +3,7 @@ import Navbar from "../../components/navbar/Navbar";
 import UseFetchReserve from "../../Hooks/Reserve/UseFetchReserve";
 import iconchancho from '../../assets/Icons/chancho.png';
 import ReserveService from "../../Services/ReserveService";
-import logo from '../../assets/Icons/logo.png'
+import logo from '../../assets/Icons/Logo.png'
 import { ArrowBigDown, ArrowBigUp, DollarSign, Plus } from "lucide-react";
 import UseAccounts from "../../Hooks/Accounts/UseAccounts";
 
