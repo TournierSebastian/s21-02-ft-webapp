@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface IMovementService {
     MovementResponseDTO save(Transaction transaction);
-    MovementResponseDTO save(Movement movement);
     MovementResponseDTO getMovementById(Long movementId);
-    List<MovementResponseDTO> getUserMovements();
+    List<MovementResponseDTO> getUserAccountMovements(Long accountId);
 }

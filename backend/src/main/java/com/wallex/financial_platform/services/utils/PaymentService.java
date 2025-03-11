@@ -15,11 +15,14 @@ import com.wallex.financial_platform.dtos.requests.payment.PaymentRequestDTO;
 import com.wallex.financial_platform.dtos.responses.CheckAccountResponseDTO;
 import com.wallex.financial_platform.dtos.responses.TransactionResponseDTO;
 import com.wallex.financial_platform.entities.Account;
+import com.wallex.financial_platform.entities.Card;
 import com.wallex.financial_platform.entities.Transaction;
 import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.entities.enums.TransactionStatus;
 import com.wallex.financial_platform.entities.enums.TransactionType;
 import com.wallex.financial_platform.exceptions.account.AccountNotFoundException;
+import com.wallex.financial_platform.exceptions.card.CardNotFoundException;
+import com.wallex.financial_platform.repositories.CardRepository;
 import com.wallex.financial_platform.repositories.TransactionRepository;
 import com.wallex.financial_platform.repositories.UserRepository;
 import lombok.AllArgsConstructor;
@@ -40,6 +43,8 @@ public class PaymentService {
     private UserContextService userContextService;
     private TransactionRepository transactionRepository;
     private UserRepository userRepository;
+    private CardRepository cardRepository;
+    private EncryptionService encryptionService;
 
     @SneakyThrows
     public Payment createPaymentCard(PaymentRequestDTO paymentReq) {
@@ -104,6 +109,8 @@ public class PaymentService {
     private List<Transaction> createTransaction(Payment payment, PaymentRequestDTO paymentReq){
         User user = userContextService.getAuthenticatedUser();
         User wallexUser = userRepository.findByDni("71221356").orElseThrow();
+        Card userCard = user.getCards().stream().filter(card -> card.getCardId() == paymentReq.cardId())
+                .findAny().orElseThrow(()-> new CardNotFoundException("tarjeta no encontrada"));
         Account destinationAccount = user.getAccounts().stream().filter(acc -> acc.getAccountId() == paymentReq.payer().accountId())
                 .findAny().orElseThrow(()-> new AccountNotFoundException("account not found for the user"));
         Account wallexAccount = wallexUser.getAccounts().stream().filter(acc -> Objects.equals(acc.getCurrency().toString(), payment.getCurrencyId()))
@@ -153,7 +160,10 @@ public class PaymentService {
                 .reason("MP Transaction Id: #"+payment.getId())
                 .build();
 
-        List<Transaction> saved = transactionRepository.saveAll(List.of(transaction, feeMP, cobroPendiente));
+        // para que guarde en la tabla intermedia de card_transactions
+        userCard.getTransactions().add(transaction);
+        cardRepository.save(userCard);
+        List<Transaction> saved = transactionRepository.saveAll(List.of(feeMP, cobroPendiente));
         return saved;
     }
 

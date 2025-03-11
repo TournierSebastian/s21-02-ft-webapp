@@ -42,7 +42,6 @@ public class SampleDataTest {
                 .password("qwertyui")
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
-                .movements(new ArrayList<>())
                 .accounts(new ArrayList<>())
                 .notifications(new ArrayList<>())
                 .cards(new ArrayList<>())

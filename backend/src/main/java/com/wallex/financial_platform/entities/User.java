@@ -51,7 +51,7 @@ public class User {
     private Boolean active ;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    //@JsonManagedReference
+    @JsonManagedReference
     private List<Account> accounts;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -61,10 +61,6 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Card> cards;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Movement> movements;
 
     @JsonManagedReference
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

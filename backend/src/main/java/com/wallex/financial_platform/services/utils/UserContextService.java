@@ -2,6 +2,7 @@ package com.wallex.financial_platform.services.utils;
 
 import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.repositories.UserRepository;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,7 +22,7 @@ public class UserContextService {
         }
 
         String email = authentication.getName();
-        return userRepository.findByEmail(email)
+        return this.userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
     }
 }

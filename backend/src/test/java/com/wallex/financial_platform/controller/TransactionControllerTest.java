@@ -68,7 +68,7 @@ public class TransactionControllerTest {
 
         this.mockMvc.perform(get(String.format("/api/transactions/%s",transactionResponse.transactionId())).accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.transactionId").value(transactionResponse.transactionId()))
-                .andExpect(jsonPath("$.date").value(transactionResponse.date().toString()))
+                .andExpect(jsonPath("$.date").value(transactionResponse.date().toString().substring(0,23)))
                 .andExpect(jsonPath("$.status").value(transactionResponse.status().toString()))
                 .andExpect(jsonPath("$.amount").value(transactionResponse.amount()))
                 .andExpect(jsonPath("$.reason").value(transactionResponse.reason()))

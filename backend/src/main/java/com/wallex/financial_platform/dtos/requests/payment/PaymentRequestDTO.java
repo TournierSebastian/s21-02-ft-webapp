@@ -14,7 +14,8 @@ public record PaymentRequestDTO(
         Integer installments,
         String description,
         @JsonProperty(namespace = "payer")
-        Payer payer
+        Payer payer,
+        Long cardId
 ) {
 }
 

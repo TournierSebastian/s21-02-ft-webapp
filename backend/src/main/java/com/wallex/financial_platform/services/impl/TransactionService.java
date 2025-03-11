@@ -15,6 +15,7 @@ import com.wallex.financial_platform.exceptions.transaction.TransactionErrorExce
 import com.wallex.financial_platform.exceptions.transaction.TransactionNotFoundException;
 import com.wallex.financial_platform.exceptions.card.CardNotFoundException;
 import com.wallex.financial_platform.repositories.AccountRepository;
+import com.wallex.financial_platform.repositories.CardRepository;
 import com.wallex.financial_platform.services.ITransactionService;
 import com.wallex.financial_platform.services.utils.EncryptionService;
 import com.wallex.financial_platform.services.utils.UserContextService;
@@ -35,6 +36,7 @@ public class TransactionService implements ITransactionService {
     private UserContextService userContextService;
     private MovementService movementService;
     private EncryptionService encryptionService;
+    private CardRepository cardRepository;
 
     @Override
     @SneakyThrows
@@ -82,23 +84,26 @@ public class TransactionService implements ITransactionService {
                 .orElseThrow(()-> new AccountNotFoundException("Destination Account not found"));
         Account providerAccount = originCard.getProvider().getAccounts().stream().filter(acc -> acc.getCurrency() == destinationAccount.getCurrency())
                 .findAny().orElseThrow(()-> new AccountNotFoundException("Card provider doesn't have any account with the same destination account currency"));
-        Transaction cardTransaction = transactionRepository.save(Transaction.builder()
+        Transaction cardTransaction = Transaction.builder()
                 .sourceAccount(providerAccount)
                 .destinationAccount(destinationAccount)
                 .amount(transactionReq.amount())
                 .type(TransactionType.TRANSFER)
                 .status(TransactionStatus.COMPLETED)
-                .reason(transactionReq.reason())
-                .build());
-        movementService.save(Movement.builder()
-                .transaction(cardTransaction)
-                .description("Pago con tarjeta "
+                .reason(transactionReq.reason()+". Tarjeta "
                         +originCard.getProvider().getFullName()
                         +" **** **** **** "+transactionReq.cardNumber().substring(12))
-                .amount(transactionReq.amount())
-                .user(user)
-                .build());
-        return mapToDTO(cardTransaction);
+                .build();
+        originCard.getTransactions().add(cardTransaction);
+        Card saved = cardRepository.save(originCard);
+        Transaction savedT = saved.getTransactions().stream()
+                .filter(transaction -> !originCard.getTransactions().contains(cardTransaction))
+                .findAny().orElseThrow(()-> new TransactionErrorException("Transaction not found in card transaction list"));
+//        movementService.save(Movement.builder()
+//                .transaction(cardTransaction)
+//                .user(user)
+//                .build());
+        return mapToDTO(savedT);
     }
 
     public TransactionResponseDTO mapToDTO(Transaction transaction) {

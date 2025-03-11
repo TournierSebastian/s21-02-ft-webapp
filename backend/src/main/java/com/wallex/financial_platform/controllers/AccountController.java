@@ -5,7 +5,6 @@ import java.util.List;
 
 
 import com.wallex.financial_platform.dtos.officialBank.CurrencyExchangeRate;
-import com.wallex.financial_platform.dtos.officialBank.StadisticResponseDto;
 import com.wallex.financial_platform.dtos.officialBank.StadisticVariableResponseDto;
 import com.wallex.financial_platform.dtos.requests.AccountRequestDTO;
 import com.wallex.financial_platform.dtos.requests.CheckAccountRequestDto;

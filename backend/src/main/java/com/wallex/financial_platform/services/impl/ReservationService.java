@@ -7,6 +7,7 @@ import com.wallex.financial_platform.entities.Reservation;
 import com.wallex.financial_platform.entities.User;
 import com.wallex.financial_platform.entities.enums.ReservationStatus;
 import com.wallex.financial_platform.exceptions.account.AccountNotFoundException;
+import com.wallex.financial_platform.exceptions.reservations.ReservationNotFoundException;
 import com.wallex.financial_platform.exceptions.transaction.InsufficientFundsException;
 import com.wallex.financial_platform.repositories.ReservationRepository;
 import com.wallex.financial_platform.services.IReservationService;
@@ -43,6 +44,29 @@ public class ReservationService implements IReservationService {
         }
         return mapToDTO(reservationRepository.save(mapToEntity(reservationReq, account)));
     }
+
+    @Override
+    public List<ReservationResponseDto> getAllUserReservations() {
+        User user = userContextService.getAuthenticatedUser();
+        List<Reservation> reservationList = user.getAccounts().stream()
+                .map(Account::getReservations)
+                .flatMap(List::stream)
+                .toList();
+        return reservationList.stream().map(this::mapToDTO).toList();
+    }
+
+    @Override
+    public ReservationResponseDto getReservationsById(Long id) {
+        User user = userContextService.getAuthenticatedUser();
+        Reservation reservation = user.getAccounts().stream()
+                .map(Account::getReservations)
+                .flatMap(List::stream)
+                .filter(res -> Objects.equals(res.getReservationId(), id))
+                .findAny()
+                .orElseThrow(()-> new ReservationNotFoundException("Reservation Not Found"));
+        return mapToDTO(reservation);
+    }
+
     private Reservation mapToEntity(ReservationRequestDTO reserve, Account account) {
         return Reservation.builder()
                 .reservedAmount(reserve.amount())

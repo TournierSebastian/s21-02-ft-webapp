@@ -155,9 +155,9 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<environmentVariables>
-						<JWT_SECRET_KEY></JWT_SECRET_KEY>
-						<MAIL_USERNAME></MAIL_USERNAME>
-						<MAIL_PASSWORD></MAIL_PASSWORD>
+						<JWT_SECRET_KEY>SECRETOMUYSEGURODEMASDE256BITS...........</JWT_SECRET_KEY>
+						<MAIL_USERNAME>romero474747@gmail.com</MAIL_USERNAME>
+						<MAIL_PASSWORD>fqae urem gitx udre</MAIL_PASSWORD>
 					</environmentVariables>
 				</configuration>
 			</plugin>
